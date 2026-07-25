@@ -223,4 +223,5 @@ Multi-stage build onto a distroless nonroot image — no shell, no pip in the ru
 
 ## License
 
-See [license](license).
+Proprietary — All Rights Reserved (Daniel Fonseca da Silva). See [license](license).
+Use and run allowed; modification and derivative works require written permission.
