@@ -1,0 +1,43 @@
+{
+  "vehicle": {
+    "brand": "Volkswagen",
+    "model": "Polo",
+    "name": "Polo 6C",
+    "year": 2015,
+    "engine": "1.2 TSI",
+    "fuelType": "gasoline",
+    "doors": 5,
+    "techSpecs": {
+      "transmission": "manual"
+    }
+  },
+  "knownIssues": [
+    {
+      "title": "Timing chain tensioner wear (EA211 1.2 TSI)",
+      "description": "Early EA211 1.2 TSI engines can suffer premature timing chain tensioner wear, leading to chain rattle on cold start and, in severe cases, chain skip.",
+      "severity": "high",
+      "typicalKm": 80000,
+      "sources": ["VW owner forums", "Manufacturer technical bulletins"],
+      "fixes": [
+        {
+          "summary": "Replace timing chain, tensioner and guides",
+          "steps": "Remove the timing cover, replace the chain, tensioner and guide rails as a set, then reset timing to factory marks.",
+          "estimatedCostEur": 650
+        }
+      ]
+    },
+    {
+      "title": "Coil pack / ignition coil failure",
+      "description": "Ignition coils on this engine family can fail intermittently, causing misfires and a rough idle, especially in damp weather.",
+      "severity": "medium",
+      "typicalKm": 100000,
+      "fixes": [
+        {
+          "summary": "Replace faulty ignition coil(s)",
+          "steps": "Identify the misfiring cylinder via OBD-II fault codes, then replace the affected coil pack(s).",
+          "estimatedCostEur": 120
+        }
+      ]
+    }
+  ]
+}

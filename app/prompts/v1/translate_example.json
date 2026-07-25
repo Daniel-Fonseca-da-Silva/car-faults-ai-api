@@ -1,0 +1,31 @@
+{
+  "knownIssues": [
+    {
+      "title": "Falha na tensão da corrente de distribuição (EA211 1.2 TSI)",
+      "description": "Os motores EA211 1.2 TSI de início de produção podem sofrer desgaste prematuro do tensor da corrente de distribuição, causando ruído a frio e, em casos graves, salto da corrente.",
+      "severity": "high",
+      "typicalKm": 80000,
+      "sources": ["Fóruns de proprietários VW", "Boletins técnicos do fabricante"],
+      "fixes": [
+        {
+          "summary": "Substituir corrente de distribuição, tensor e guias",
+          "steps": "Remover a tampa da distribuição, substituir a corrente, o tensor e as guias em conjunto, depois repor a distribuição nas marcas de fábrica.",
+          "estimatedCostEur": 650
+        }
+      ]
+    },
+    {
+      "title": "Falha das bobinas de ignição",
+      "description": "As bobinas de ignição desta família de motores podem falhar de forma intermitente, causando falhas de combustão e marcha lenta irregular, sobretudo em tempo húmido.",
+      "severity": "medium",
+      "typicalKm": 100000,
+      "fixes": [
+        {
+          "summary": "Substituir a(s) bobina(s) de ignição avariada(s)",
+          "steps": "Identificar o cilindro com falha através dos códigos de erro OBD-II e substituir a(s) bobina(s) afetada(s).",
+          "estimatedCostEur": 120
+        }
+      ]
+    }
+  ]
+}
