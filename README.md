@@ -48,11 +48,11 @@ Nest lookup path: Redis → Postgres → **this service** on miss. Then Nest per
 
 ```mermaid
 flowchart LR
-  Nest[car-faults-api] -->|POST /lookup Bearer| Py[car-faults-ai-api]
+  Nest[car-faults-api] -->|"POST /lookup Bearer"| Py[car-faults-ai-api]
   Py --> Gemini
   Gemini -->|fail| Groq
   Groq -->|fail| OpenRouter
-  Py -->|AiLookupResult JSON| Nest
+  Py -->|"AiLookupResult JSON"| Nest
 ```
 
 Wire Nest’s `.env`:
