@@ -54,6 +54,16 @@ async def test_translate_with_unknown_language_returns_422(async_client, auth_he
     assert response.status_code == 422
 
 
+async def test_translate_with_es_es_target_language_returns_200(
+    async_client, auth_headers
+):
+    payload = {**VALID_PAYLOAD, "targetLanguage": "es-ES"}
+
+    response = await async_client.post("/translate", json=payload, headers=auth_headers)
+
+    assert response.status_code == 200
+
+
 async def test_translate_with_valid_request_returns_stub_result(
     async_client, auth_headers
 ):

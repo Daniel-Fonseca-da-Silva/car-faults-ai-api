@@ -54,7 +54,7 @@ async def test_lookup_with_valid_request_returns_stub_result(
         "engine": "1.2 TSI",
         "fuelType": "gasoline",
         "doors": 5,
-        "techSpecs": None,
+        "techSpecs": {"power_hp": 90},
     }
     assert len(body["knownIssues"]) == 1
 
@@ -102,6 +102,14 @@ async def test_lookup_without_language_defaults_to_en_gb(async_client, auth_head
 
 async def test_lookup_with_explicit_language_returns_200(async_client, auth_headers):
     payload = {**VALID_PAYLOAD, "language": "pt-PT"}
+
+    response = await async_client.post("/lookup", json=payload, headers=auth_headers)
+
+    assert response.status_code == 200
+
+
+async def test_lookup_with_es_es_language_returns_200(async_client, auth_headers):
+    payload = {**VALID_PAYLOAD, "language": "es-ES"}
 
     response = await async_client.post("/lookup", json=payload, headers=auth_headers)
 
