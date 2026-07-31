@@ -206,8 +206,11 @@ Copy [`.env.example`](.env.example) to `.env`:
 ruff check app tests
 ruff format --check app tests
 
-# tests + coverage
-pytest --cov=app --cov-report=term-missing --cov-fail-under=90
+# tests
+make test
+
+# tests + coverage (prints TOTAL summary + per-file missing lines)
+make test-coverage
 ```
 
 Tests load `.env.test` (`AI_PROVIDER_MODE=stub`) so the suite never calls a real provider. Coverage gate: **90%+**. PRs and pushes to `main` run lint (Ruff) and `pytest` with this gate in CI (see [`.github/workflows/ci.yml`](.github/workflows/ci.yml)).
