@@ -22,6 +22,7 @@ class FuelType(str, Enum):
 class Locale(str, Enum):
     PT_PT = "pt-PT"
     EN_GB = "en-GB"
+    ES_ES = "es-ES"
 
 
 class LookupRequest(BaseModel):

@@ -24,6 +24,7 @@ class StubProvider:
                 engine=request.engine,
                 fuelType=request.fuelType,
                 doors=request.doors,
+                techSpecs={"power_hp": 90},
             ),
             knownIssues=[
                 AiKnownIssueResult(

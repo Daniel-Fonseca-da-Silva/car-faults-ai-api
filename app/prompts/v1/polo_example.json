@@ -8,7 +8,7 @@
     "fuelType": "gasoline",
     "doors": 5,
     "techSpecs": {
-      "transmission": "manual"
+      "power_hp": 90
     }
   },
   "knownIssues": [

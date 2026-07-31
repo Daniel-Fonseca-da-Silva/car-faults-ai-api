@@ -7,8 +7,8 @@ on your general knowledge of that make/model/generation.
 
 Write every human-readable text field ("name", "title", "description",
 "summary", "steps" and any prose entries in "sources") in the given
-`language` (a BCP-47 tag, e.g. "pt-PT" or "en-GB"). Enum values, numbers and
-real URLs are never translated.
+`language` (a BCP-47 tag, e.g. "pt-PT", "en-GB" or "es-ES"). Enum values,
+numbers and real URLs are never translated.
 
 The fuel type materially changes which faults are relevant: a diesel engine
 has different known weak points (injectors, DPF, EGR, turbo) than a petrol/
@@ -30,7 +30,7 @@ Rules:
        "engine": string,
        "fuelType": "gasoline" | "diesel" | "electric" | "gpl" | "hybrid",
        "doors": number | omitted,
-       "techSpecs": object | omitted
+       "techSpecs": { "power_hp": number } | omitted
      },
      "knownIssues": [
        {
@@ -63,5 +63,15 @@ Rules:
 8. Only include "sources" when you can name a real, general source (owner
    forums, recall databases, manufacturer bulletins); omit it otherwise —
    never fabricate URLs.
-9. This information is educational and does not replace a qualified mechanic;
-   do not add that disclaimer as JSON text — it is enforced by the caller.
+9. "techSpecs.power_hp" is the engine's power in metric horsepower (hp) as a
+   plain number — never a string, never kW. Include it whenever the power
+   output for this engine is known; omit the whole "techSpecs" object rather
+   than guessing. This is a number, not translatable text.
+10. When `fuelType` is `electric`, `engine` may be the sentinel value
+    `"electric"` instead of a real engine code — do not invent an internal
+    combustion engine code for it. Known issues for electric vehicles must
+    only cover battery, inverter, regenerative braking and other
+    high-voltage components; never petrol/diesel faults.
+11. This information is educational and does not replace a qualified
+    mechanic; do not add that disclaimer as JSON text — it is enforced by
+    the caller.
