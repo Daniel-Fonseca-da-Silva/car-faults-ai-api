@@ -2,7 +2,7 @@
 
 AI microservice for **Car Faults** — generates structured **chronic reliability** lookups by vehicle make / model / year / engine, and translates known-issue content between product locales.
 
-Consumed by [`car-faults-api`](../car-faults-api) (Nest backend) when Redis and Postgres miss. Product languages: `pt-PT` and `en-GB`. Initial market: **Portugal**.
+Consumed by [`car-faults-api`](../car-faults-api) (Nest backend) when Redis and Postgres miss. Product languages: `pt-PT`, `en-GB` and `es-ES`. Initial market: **Portugal**.
 
 ## What we are
 
@@ -37,7 +37,7 @@ Nest needs structured known-issue JSON without embedding provider SDKs, prompts,
 ## What this service does
 
 1. `POST /lookup` — known issues + fixes (+ tech specs) for a vehicle
-2. `POST /translate` — translate existing `knownIssues` between `pt-PT` and `en-GB`
+2. `POST /translate` — translate existing `knownIssues` between `pt-PT`, `en-GB` and `es-ES`
 3. `GET /health` — liveness only (no auth, no external calls)
 4. Provider chain with sequential failover; stub mode for local/CI
 5. Versioned prompts (bump folder to `v2` without changing provider code)
@@ -95,8 +95,10 @@ Swagger: http://localhost:8000/docs — ReDoc at `/redoc`.
 }
 ```
 
-`language` defaults to `en-GB` (`pt-PT` | `en-GB`).
-`fuelType`: `gasoline` | `diesel` | `electric` | `gpl` | `hybrid`.
+`language` defaults to `en-GB` (`pt-PT` | `en-GB` | `es-ES`).
+`fuelType`: `gasoline` | `diesel` | `electric` | `gpl` | `hybrid`. When
+`electric`, `engine` may be the sentinel `"electric"` instead of a real
+engine code.
 
 **Response** (`200`, mirrors `AiLookupResult`):
 
@@ -110,7 +112,7 @@ Swagger: http://localhost:8000/docs — ReDoc at `/redoc`.
     "engine": "1.2 TSI",
     "fuelType": "gasoline",
     "doors": 5,
-    "techSpecs": { "transmission": "manual" }
+    "techSpecs": { "power_hp": 90 }
   },
   "knownIssues": [
     {
