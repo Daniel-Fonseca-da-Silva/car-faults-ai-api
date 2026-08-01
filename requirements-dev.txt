@@ -4,3 +4,4 @@ httpx==0.28.1
 pytest-cov==6.1.0
 python-dotenv==1.0.1
 ruff==0.16.0
+mypy==1.14.1

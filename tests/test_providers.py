@@ -15,6 +15,7 @@ from app.schemas.translate import TranslateRequest
 from app.services.providers.base import ProviderError
 from app.services.providers.gemini import GeminiProvider
 from app.services.providers.groq import GroqProvider
+from app.services.providers.openai_compatible import OpenAICompatibleProvider
 from app.services.providers.openrouter import OpenRouterProvider
 
 REQUEST = LookupRequest(
@@ -235,6 +236,35 @@ async def test_groq_translate_success_parses_response():
     assert result.knownIssues[0].title == "Caixa de velocidades"
 
 
+async def test_groq_extra_top_level_field_in_response_raises():
+    provider = GroqProvider(_settings(GROQ_API_KEY="key"))
+    payload = {**VALID_RESULT, "evil": True}
+    fake = FakeResponse(
+        200,
+        {"choices": [{"message": {"content": __import__("json").dumps(payload)}}]},
+    )
+
+    with patch("httpx.AsyncClient.post", new=AsyncMock(return_value=fake)):
+        with pytest.raises(ProviderError):
+            await provider.generate(REQUEST)
+
+
+async def test_groq_extra_field_in_vehicle_raises():
+    provider = GroqProvider(_settings(GROQ_API_KEY="key"))
+    payload = {
+        **VALID_RESULT,
+        "vehicle": {**VALID_RESULT["vehicle"], "evil": "smuggled"},
+    }
+    fake = FakeResponse(
+        200,
+        {"choices": [{"message": {"content": __import__("json").dumps(payload)}}]},
+    )
+
+    with patch("httpx.AsyncClient.post", new=AsyncMock(return_value=fake)):
+        with pytest.raises(ProviderError):
+            await provider.generate(REQUEST)
+
+
 # --- OpenRouter -----------------------------------------------------------
 
 
@@ -296,3 +326,53 @@ async def test_openrouter_translate_success_parses_response():
         result = await provider.translate(TRANSLATE_REQUEST)
 
     assert result.knownIssues[0].title == "Caixa de velocidades"
+
+
+# --- OpenAICompatibleProvider (shared base) --------------------------------
+
+
+def _openai_compatible_provider(
+    api_key: str | None = "key",
+) -> OpenAICompatibleProvider:
+    return OpenAICompatibleProvider(
+        name="custom",
+        url="https://example.test/v1/chat/completions",
+        api_key=api_key,
+        model="model-x",
+        timeout=5.0,
+        missing_key_env="CUSTOM_API_KEY",
+    )
+
+
+async def test_openai_compatible_missing_api_key_raises():
+    provider = _openai_compatible_provider(api_key=None)
+
+    with pytest.raises(ProviderError, match="CUSTOM_API_KEY"):
+        await provider.generate(REQUEST)
+
+
+async def test_openai_compatible_success_parses_response():
+    provider = _openai_compatible_provider()
+    fake = FakeResponse(
+        200,
+        {"choices": [{"message": {"content": __import__("json").dumps(VALID_RESULT)}}]},
+    )
+
+    with patch("httpx.AsyncClient.post", new=AsyncMock(return_value=fake)):
+        result = await provider.generate(REQUEST)
+
+    assert result.vehicle.brand == "Volkswagen"
+
+
+async def test_openai_compatible_non_200_raises():
+    provider = _openai_compatible_provider()
+    fake = FakeResponse(500, {})
+
+    with patch("httpx.AsyncClient.post", new=AsyncMock(return_value=fake)):
+        with pytest.raises(ProviderError):
+            await provider.generate(REQUEST)
+
+
+async def test_groq_and_openrouter_share_openai_compatible_base():
+    assert issubclass(GroqProvider, OpenAICompatibleProvider)
+    assert issubclass(OpenRouterProvider, OpenAICompatibleProvider)

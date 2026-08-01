@@ -5,6 +5,7 @@ from app.schemas.lookup import (
     IssueSeverity,
     LookupRequest,
     LookupResponse,
+    TechSpecs,
 )
 from app.schemas.translate import TranslateRequest, TranslateResponse
 
@@ -24,7 +25,7 @@ class StubProvider:
                 engine=request.engine,
                 fuelType=request.fuelType,
                 doors=request.doors,
-                techSpecs={"power_hp": 90},
+                techSpecs=TechSpecs(power_hp=90),
             ),
             knownIssues=[
                 AiKnownIssueResult(

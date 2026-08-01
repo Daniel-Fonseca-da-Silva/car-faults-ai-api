@@ -1,3 +1,5 @@
+from typing import cast
+
 import httpx
 
 from app.core.config import Settings
@@ -18,7 +20,7 @@ _URL = "https://generativelanguage.googleapis.com/v1beta/models/{model}:generate
 class GeminiProvider:
     name = "gemini"
 
-    def __init__(self, settings: Settings):
+    def __init__(self, settings: Settings) -> None:
         self._api_key = settings.GEMINI_API_KEY
         self._model = settings.GEMINI_MODEL
         self._timeout = settings.AI_TIMEOUT_SECONDS
@@ -67,6 +69,6 @@ class GeminiProvider:
 
         try:
             data = response.json()
-            return data["candidates"][0]["content"]["parts"][0]["text"]
+            return cast(str, data["candidates"][0]["content"]["parts"][0]["text"])
         except (KeyError, IndexError, ValueError, TypeError) as exc:
             raise ProviderError(f"Gemini returned an invalid response: {exc}") from exc

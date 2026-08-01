@@ -7,3 +7,14 @@ select = ["E", "F", "I", "UP"]
 # UP042: str+Enum -> enum.StrEnum changes __str__ output, risky for schemas
 # serialized as API responses; not worth it for a lint-only pass.
 ignore = ["UP042"]
+
+[tool.mypy]
+python_version = "3.11"
+packages = ["app"]
+plugins = ["pydantic.mypy"]
+strict = true
+
+[tool.pydantic-mypy]
+init_forbid_extra = true
+init_typed = true
+warn_required_dynamic_aliases = true

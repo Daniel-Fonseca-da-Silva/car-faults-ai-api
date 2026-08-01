@@ -2,6 +2,7 @@ from fastapi import Depends
 
 from app.core.config import Settings, get_settings
 from app.services.lookup_service import LookupService
+from app.services.providers.base import AiLookupProvider
 from app.services.providers.chain import ProviderChain
 from app.services.providers.gemini import GeminiProvider
 from app.services.providers.groq import GroqProvider
@@ -14,7 +15,7 @@ def build_provider_chain(settings: Settings) -> ProviderChain:
     if settings.AI_PROVIDER_MODE == "stub":
         return ProviderChain([StubProvider()])
 
-    providers = []
+    providers: list[AiLookupProvider] = []
     if settings.GEMINI_API_KEY:
         providers.append(GeminiProvider(settings))
     if settings.GROQ_API_KEY:
