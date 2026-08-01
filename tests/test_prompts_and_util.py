@@ -128,6 +128,45 @@ def test_build_translate_user_prompt_includes_languages_and_known_issues():
     assert "Gearbox" in prompt
 
 
+def test_build_user_prompt_wraps_vehicle_data_in_delimiters():
+    request = LookupRequest(
+        brand="Seat",
+        model="Ibiza",
+        year=2019,
+        engine="1.0 TSI",
+        fuelType=FuelType.DIESEL,
+    )
+
+    prompt = build_user_prompt(request)
+
+    assert "<<<VEHICLE_DATA>>>" in prompt
+    assert "<<<END_VEHICLE_DATA>>>" in prompt
+    assert prompt.index("<<<VEHICLE_DATA>>>") < prompt.index("brand=Seat")
+    assert prompt.index("brand=Seat") < prompt.index("<<<END_VEHICLE_DATA>>>")
+
+
+def test_build_translate_user_prompt_wraps_known_issues_in_delimiters():
+    request = TranslateRequest(
+        sourceLanguage=Locale.EN_GB,
+        targetLanguage=Locale.PT_PT,
+        knownIssues=[
+            AiKnownIssueResult(
+                title="Gearbox",
+                description="Wears out",
+                severity=IssueSeverity.HIGH,
+                fixes=[],
+            )
+        ],
+    )
+
+    prompt = build_translate_user_prompt(request)
+
+    assert "<<<VEHICLE_DATA>>>" in prompt
+    assert "<<<END_VEHICLE_DATA>>>" in prompt
+    assert prompt.index("<<<VEHICLE_DATA>>>") < prompt.index("Gearbox")
+    assert prompt.index("Gearbox") < prompt.index("<<<END_VEHICLE_DATA>>>")
+
+
 def test_extract_json_object_plain():
     assert extract_json_object('{"a": 1}') == {"a": 1}
 

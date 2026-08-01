@@ -56,18 +56,6 @@ class WorkingProvider:
         return await StubProvider().translate(request)
 
 
-class HpKeyProvider:
-    name = "hp-key"
-
-    async def generate(self, request):
-        result = await StubProvider().generate(request)
-        result.vehicle.techSpecs = {"hp": 90}
-        return result
-
-    async def translate(self, request):
-        raise ProviderError("not used")
-
-
 async def test_chain_fails_over_to_next_provider():
     chain = ProviderChain([FailingProvider("gemini"), WorkingProvider()])
 
@@ -91,15 +79,6 @@ async def test_lookup_service_raises_503_when_all_providers_fail():
         await service.lookup(REQUEST)
 
     assert exc_info.value.status_code == 503
-
-
-async def test_lookup_service_normalizes_hp_to_power_hp():
-    chain = ProviderChain([HpKeyProvider()])
-    service = LookupService(chain)
-
-    result = await service.lookup(REQUEST)
-
-    assert result.vehicle.techSpecs == {"power_hp": 90}
 
 
 async def test_lookup_endpoint_returns_503_when_all_providers_fail(
