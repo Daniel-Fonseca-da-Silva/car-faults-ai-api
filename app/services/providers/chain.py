@@ -16,7 +16,7 @@ class AllProvidersFailedError(Exception):
 
 
 class ProviderChain:
-    def __init__(self, providers: list[AiLookupProvider]):
+    def __init__(self, providers: list[AiLookupProvider]) -> None:
         self._providers = providers
 
     async def generate(self, request: LookupRequest) -> LookupResponse:

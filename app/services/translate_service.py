@@ -5,7 +5,7 @@ from app.services.providers.chain import AllProvidersFailedError, ProviderChain
 
 
 class TranslateService:
-    def __init__(self, chain: ProviderChain):
+    def __init__(self, chain: ProviderChain) -> None:
         self._chain = chain
 
     async def translate(self, request: TranslateRequest) -> TranslateResponse:
