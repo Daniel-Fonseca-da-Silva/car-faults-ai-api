@@ -1,10 +1,11 @@
 import json
 import re
+from typing import Any, cast
 
 _FENCED_JSON = re.compile(r"```(?:json)?\s*(\{.*\})\s*```", re.DOTALL)
 
 
-def extract_json_object(text: str) -> dict:
+def extract_json_object(text: str) -> dict[str, Any]:
     """Pull a JSON object out of an LLM text response.
 
     Models sometimes wrap the JSON in markdown code fences or add stray
@@ -20,4 +21,4 @@ def extract_json_object(text: str) -> dict:
         end = text.rfind("}")
         if start != -1 and end != -1 and end > start:
             text = text[start : end + 1]
-    return json.loads(text)
+    return cast(dict[str, Any], json.loads(text))
