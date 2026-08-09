@@ -60,6 +60,7 @@ Wire Nest’s `.env`:
 ```bash
 AI_PROVIDER=http
 AI_API_URL=http://localhost:8000/lookup
+AI_TRANSLATE_URL=http://localhost:8000/translate
 AI_API_KEY=<same value as API_KEY here>
 ```
 
@@ -75,9 +76,11 @@ Auth on `/lookup` and `/translate`: `Authorization: Bearer {API_KEY}`.
 |--------|------|
 | **401** | Missing or wrong Bearer token |
 | **422** | Invalid body |
+| **429** | Rate limit exceeded (`RATE_LIMIT`, default `60/minute`) |
 | **503** | Every provider in the chain failed |
 
-Swagger: http://localhost:8000/docs — ReDoc at `/redoc`.
+Swagger: http://localhost:8000/docs — ReDoc at `/redoc`. Disabled entirely
+when `APP_ENV=production` (or `prod`).
 
 ### Lookup — `POST /lookup`
 
@@ -192,7 +195,8 @@ Copy [`.env.example`](.env.example) to `.env`:
 |---|---|
 | `APP_ENV` | `development` / `production` / `test` |
 | `API_KEY` | Shared secret Nest sends as Bearer token |
-| `CORS_ALLOWED_ORIGINS` | JSON array of origins (empty → `*`) |
+| `CORS_ALLOWED_ORIGINS` | JSON array of explicit allowed origins. Empty/omitted → no CORS middleware is registered at all (never falls back to `*`) |
+| `RATE_LIMIT` | Limit applied to `POST /lookup` and `POST /translate`, e.g. `60/minute` (default) |
 | `AI_PROVIDER_MODE` | `stub` (no network) or `chain` (real providers) |
 | `GEMINI_API_KEY` / `GROQ_API_KEY` / `OPENROUTER_API_KEY` | Omit a key to skip that provider |
 | `GEMINI_MODEL` / `GROQ_MODEL` / `OPENROUTER_MODEL` | Model ids per provider |
@@ -200,6 +204,9 @@ Copy [`.env.example`](.env.example) to `.env`:
 | `LOG_LEVEL` | Python logging level |
 
 `AI_PROVIDER_MODE=chain` with no provider keys falls back to the stub automatically.
+
+**In production (`APP_ENV=production` or `prod`), the stub is never used as a fallback:**
+`build_provider_chain` (`app/api/dependencies.py`) raises `RuntimeError` at request time if `AI_PROVIDER_MODE=stub`, or if `chain` mode has no provider key configured — instead of silently serving fake AI content. Outside production, both cases still fall back to the stub so local dev and CI don't need real provider keys.
 
 ## Tests
 
