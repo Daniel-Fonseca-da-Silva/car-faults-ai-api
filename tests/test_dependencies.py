@@ -1,3 +1,5 @@
+import pytest
+
 from app.api.dependencies import build_provider_chain
 from app.core.config import get_settings
 from app.services.providers.gemini import GeminiProvider
@@ -26,6 +28,26 @@ def test_chain_mode_without_any_key_falls_back_to_stub():
     )
 
     assert [p.name for p in chain._providers] == ["stub"]
+
+
+@pytest.mark.parametrize("app_env", ["production", "prod"])
+def test_stub_mode_raises_in_production(app_env):
+    with pytest.raises(RuntimeError, match="AI_PROVIDER_MODE"):
+        build_provider_chain(_settings(APP_ENV=app_env, AI_PROVIDER_MODE="stub"))
+
+
+@pytest.mark.parametrize("app_env", ["production", "prod"])
+def test_chain_mode_without_any_key_raises_in_production(app_env):
+    with pytest.raises(RuntimeError, match="No AI provider API key"):
+        build_provider_chain(
+            _settings(
+                APP_ENV=app_env,
+                AI_PROVIDER_MODE="chain",
+                GEMINI_API_KEY=None,
+                GROQ_API_KEY=None,
+                OPENROUTER_API_KEY=None,
+            )
+        )
 
 
 def test_chain_mode_includes_only_configured_providers():
