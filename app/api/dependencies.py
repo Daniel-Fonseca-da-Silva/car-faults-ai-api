@@ -10,9 +10,18 @@ from app.services.providers.openrouter import OpenRouterProvider
 from app.services.providers.stub import StubProvider
 from app.services.translate_service import TranslateService
 
+PRODUCTION_APP_ENVS = {"production", "prod"}
+
 
 def build_provider_chain(settings: Settings) -> ProviderChain:
+    is_production = settings.APP_ENV in PRODUCTION_APP_ENVS
+
     if settings.AI_PROVIDER_MODE == "stub":
+        if is_production:
+            raise RuntimeError(
+                "AI_PROVIDER_MODE must not be 'stub' in production "
+                f"(APP_ENV={settings.APP_ENV!r})"
+            )
         return ProviderChain([StubProvider()])
 
     providers: list[AiLookupProvider] = []
@@ -24,6 +33,12 @@ def build_provider_chain(settings: Settings) -> ProviderChain:
         providers.append(OpenRouterProvider(settings))
 
     if not providers:
+        if is_production:
+            raise RuntimeError(
+                "No AI provider API key configured in production "
+                f"(APP_ENV={settings.APP_ENV!r}); "
+                "refusing to fall back to the stub provider"
+            )
         # No real provider configured (e.g. running tests without keys) —
         # fall back to the stub instead of failing every request.
         providers.append(StubProvider())
