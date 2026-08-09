@@ -23,6 +23,8 @@ class Settings(BaseSettings):
 
     LOG_LEVEL: str = "INFO"
 
+    RATE_LIMIT: str = "60/minute"
+
     model_config = SettingsConfigDict(
         env_file=".env",
         env_file_encoding="utf-8",
