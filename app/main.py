@@ -19,7 +19,7 @@ logger = logging.getLogger(__name__)
 is_production = settings.APP_ENV in PRODUCTION_APP_ENVS
 
 app = FastAPI(
-    title="Car Faults AI API",
+    title="Auto Crónica AI API",
     version="1.0.0",
     description=(
         "Lean FastAPI microservice that generates structured known-issue "
