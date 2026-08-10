@@ -4,7 +4,7 @@ async def test_health_returns_ok(async_client):
     assert response.status_code == 200
     body = response.json()
     assert body["status"] == "ok"
-    assert body["service"] == "Car Faults AI API"
+    assert body["service"] == "Auto Crónica AI API"
     assert "version" in body
 
 

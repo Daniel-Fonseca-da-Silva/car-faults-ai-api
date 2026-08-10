@@ -1,4 +1,4 @@
-.PHONY: test test-coverage typecheck
+.PHONY: test test-coverage typecheck docker-build docker-up docker-down
 
 test:
 	pytest
@@ -8,3 +8,12 @@ test-coverage:
 
 typecheck:
 	mypy app
+
+docker-build:
+	docker build -t car-faults-ai-api .
+
+docker-up:
+	docker compose down && docker compose up -d --build
+
+docker-down:
+	docker compose down

@@ -1,6 +1,6 @@
 # Car Faults AI API
 
-AI microservice for **Car Faults** — generates structured **chronic reliability** lookups by vehicle make / model / year / engine, and translates known-issue content between product locales.
+AI microservice for **Auto Crónica** — generates structured **chronic reliability** lookups by vehicle make / model / year / engine, and translates known-issue content between product locales.
 
 Consumed by [`car-faults-api`](../car-faults-api) (Nest backend) when Redis and Postgres miss. Product languages: `pt-PT`, `en-GB` and `es-ES`. Initial market: **Portugal**.
 
@@ -227,11 +227,26 @@ Tests load `.env.test` (`AI_PROVIDER_MODE=stub`) so the suite never calls a real
 ## Docker
 
 ```bash
+docker compose down && docker compose up -d --build
+```
+
+This service is stateless — no Postgres/Redis required, just the `ai-api` container on port 8000.
+
+Or without compose:
+
+```bash
 docker build -t car-faults-ai-api .
 docker run --rm -p 8000:8000 --env-file .env car-faults-ai-api
 ```
 
-Multi-stage build onto a distroless nonroot image — no shell, no pip in the runtime layer.
+Multi-stage build onto a **distroless nonroot** image — no shell, no
+package manager, no `pip` in the runtime layer. That means no `docker exec`
+shell for debugging and no `curl`-based healthcheck; the image's
+`HEALTHCHECK` calls `GET /health` with stdlib `urllib` instead.
+
+Runs standalone — no Postgres/Redis (this service is stateless). It's
+consumed by `car-faults-api` (Nest), which points `AI_API_URL` /
+`AI_TRANSLATE_URL` at wherever this container is reachable.
 
 ## License
 

@@ -19,10 +19,10 @@ pytest.ini
 htmlcov/
 .coverage
 .coverage.*
-/prompts/
 README.md
 license
 .cursor/
 .agents/
 .claude/
+.github/
 skills-lock.json
