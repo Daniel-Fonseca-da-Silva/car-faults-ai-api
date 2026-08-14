@@ -4,7 +4,7 @@ from typing import Annotated, Any
 from pydantic import BaseModel, ConfigDict, Field, model_validator
 
 # Vehicle input fields: letters (incl. common European accents), digits,
-# spaces and automotive punctuation only — rejects control chars/newlines
+# spaces and automotive punctuation only - rejects control chars/newlines
 # that could be used to smuggle instructions into the LLM prompt.
 _VEHICLE_FIELD_MAX_LENGTH = 64
 _VEHICLE_FIELD_PATTERN = r"^[A-Za-zÀ-ÖØ-öø-ÿ0-9 .\-/()+]+$"
@@ -61,7 +61,7 @@ class LookupRequest(BaseModel):
 
 
 class TechSpecs(BaseModel):
-    """Structured, alignment-checked technical specs — no free-form dict."""
+    """Structured, alignment-checked technical specs - no free-form dict."""
 
     model_config = ConfigDict(extra="forbid")
 

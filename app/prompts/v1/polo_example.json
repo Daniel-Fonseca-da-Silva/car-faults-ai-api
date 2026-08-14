@@ -13,16 +13,24 @@
   },
   "knownIssues": [
     {
-      "title": "Timing chain tensioner wear (EA211 1.2 TSI)",
-      "description": "Early EA211 1.2 TSI engines can suffer premature timing chain tensioner wear, leading to chain rattle on cold start and, in severe cases, chain skip.",
-      "severity": "high",
-      "typicalKm": 80000,
-      "sources": ["VW owner forums", "Manufacturer technical bulletins"],
+      "title": "Air conditioning problems",
+      "description": "The air conditioning system on this generation can lose refrigerant charge over time and suffer compressor or condenser faults, leading to weak, intermittent or no cooling.",
+      "severity": "medium",
+      "typicalKm": 90000,
+      "sources": ["https://www.auto-doc.pt/info/volkswagen-polo-problemas-associados"],
       "fixes": [
         {
-          "summary": "Replace timing chain, tensioner and guides",
-          "steps": "Remove the timing cover, replace the chain, tensioner and guide rails as a set, then reset timing to factory marks.",
-          "estimatedCostEur": 650
+          "summary": "Recharge refrigerant and check for leaks",
+          "steps": "Vacuum test the A/C circuit, locate and seal any leak, then recharge to the specified refrigerant weight."
+        },
+        {
+          "summary": "Replace a seized or noisy A/C compressor",
+          "steps": "Remove the drive belt, disconnect the refrigerant lines, replace the compressor and receiver-drier, then evacuate and recharge the system.",
+          "estimatedCostEur": 550
+        },
+        {
+          "summary": "Clean or replace a blocked condenser",
+          "steps": "Inspect the condenser for debris or damage, clean it or replace it if bent fins or a leak are found, then recharge the system."
         }
       ]
     },

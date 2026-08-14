@@ -12,5 +12,5 @@ class HealthResponse(BaseModel):
 
 @router.get("/health", response_model=HealthResponse)
 async def health_check() -> HealthResponse:
-    """Liveness probe — no auth, no external calls."""
+    """Liveness probe - no auth, no external calls."""
     return HealthResponse(status="ok", service="Auto Crónica AI API", version="1.0.0")

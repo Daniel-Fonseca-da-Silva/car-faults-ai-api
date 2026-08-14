@@ -9,7 +9,7 @@ def extract_json_object(text: str) -> dict[str, Any]:
     """Pull a JSON object out of an LLM text response.
 
     Models sometimes wrap the JSON in markdown code fences or add stray
-    text around it despite instructions not to — this recovers the object
+    text around it despite instructions not to - this recovers the object
     in both cases before falling back to a strict parse.
     """
     text = text.strip()
