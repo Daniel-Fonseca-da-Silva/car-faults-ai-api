@@ -32,6 +32,21 @@ def test_load_example_matches_polo_shape():
     assert example["knownIssues"]
 
 
+def test_load_example_first_issue_uses_a_real_source_url():
+    example = load_example()
+
+    sources = example["knownIssues"][0]["sources"]
+
+    assert sources
+    assert sources[0].startswith("https://")
+
+
+def test_load_example_second_issue_has_no_sources():
+    example = load_example()
+
+    assert "sources" not in example["knownIssues"][1]
+
+
 def test_build_user_prompt_includes_vehicle_fields():
     request = LookupRequest(
         brand="Seat",
@@ -105,6 +120,16 @@ def test_load_translate_example_matches_known_issues_shape():
 
     assert example["knownIssues"]
     assert "title" in example["knownIssues"][0]
+
+
+def test_load_translate_example_first_issue_uses_same_real_source_url():
+    example = load_example()
+    translated = load_translate_example()
+
+    translated_sources = translated["knownIssues"][0]["sources"]
+    example_sources = example["knownIssues"][0]["sources"]
+
+    assert translated_sources == example_sources
 
 
 def test_build_translate_user_prompt_includes_languages_and_known_issues():

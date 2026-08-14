@@ -39,7 +39,7 @@ def build_provider_chain(settings: Settings) -> ProviderChain:
                 f"(APP_ENV={settings.APP_ENV!r}); "
                 "refusing to fall back to the stub provider"
             )
-        # No real provider configured (e.g. running tests without keys) —
+        # No real provider configured (e.g. running tests without keys) -
         # fall back to the stub instead of failing every request.
         providers.append(StubProvider())
 

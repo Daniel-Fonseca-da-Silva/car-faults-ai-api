@@ -1,6 +1,6 @@
 # Car Faults AI API
 
-AI microservice for **Auto Crónica** — generates structured **chronic reliability** lookups by vehicle make / model / year / engine, and translates known-issue content between product locales.
+AI microservice for **Auto Crónica** - generates structured **chronic reliability** lookups by vehicle make / model / year / engine, and translates known-issue content between product locales.
 
 Consumed by [`car-faults-api`](../car-faults-api) (Nest backend) when Redis and Postgres miss. Product languages: `pt-PT`, `en-GB` and `es-ES`. Initial market: **Portugal**.
 
@@ -15,9 +15,9 @@ We return camelCase JSON that matches Nest’s
 ## What we are not
 
 - Not the public user-facing API (that is Nest + the Next.js frontend).
-- Not a database or cache — this service is **stateless** by design.
+- Not a database or cache - this service is **stateless** by design.
 - Not VIN history, odometer fraud checks, or accident records (same boundary as the product).
-- Not a substitute for a mechanic — results are **indicative**, AI-generated, and should be treated as such in product copy.
+- Not a substitute for a mechanic - results are **indicative**, AI-generated, and should be treated as such in product copy.
 
 ## Problem we solve
 
@@ -36,9 +36,9 @@ Nest needs structured known-issue JSON without embedding provider SDKs, prompts,
 
 ## What this service does
 
-1. `POST /lookup` — known issues + fixes (+ tech specs) for a vehicle
-2. `POST /translate` — translate existing `knownIssues` between `pt-PT`, `en-GB` and `es-ES`
-3. `GET /health` — liveness only (no auth, no external calls)
+1. `POST /lookup` - known issues + fixes (+ tech specs) for a vehicle
+2. `POST /translate` - translate existing `knownIssues` between `pt-PT`, `en-GB` and `es-ES`
+3. `GET /health` - liveness only (no auth, no external calls)
 4. Provider chain with sequential failover; stub mode for local/CI
 5. Versioned prompts (bump folder to `v2` without changing provider code)
 
@@ -79,10 +79,10 @@ Auth on `/lookup` and `/translate`: `Authorization: Bearer {API_KEY}`.
 | **429** | Rate limit exceeded (`RATE_LIMIT`, default `60/minute`) |
 | **503** | Every provider in the chain failed |
 
-Swagger: http://localhost:8000/docs — ReDoc at `/redoc`. Disabled entirely
+Swagger: http://localhost:8000/docs - ReDoc at `/redoc`. Disabled entirely
 when `APP_ENV=production` (or `prod`).
 
-### Lookup — `POST /lookup`
+### Lookup - `POST /lookup`
 
 **Request:**
 
@@ -119,16 +119,15 @@ engine code.
   },
   "knownIssues": [
     {
-      "title": "Timing chain tensioner wear (EA211 1.2 TSI)",
+      "title": "Air conditioning problems",
       "description": "...",
-      "severity": "high",
-      "typicalKm": 80000,
-      "sources": ["VW owner forums"],
+      "severity": "medium",
+      "typicalKm": 90000,
+      "sources": ["https://www.auto-doc.pt/info/volkswagen-polo-problemas-associados"],
       "fixes": [
         {
-          "summary": "Replace timing chain, tensioner and guides",
-          "steps": "...",
-          "estimatedCostEur": 650
+          "summary": "Recharge refrigerant and check for leaks",
+          "steps": "..."
         }
       ]
     }
@@ -136,9 +135,11 @@ engine code.
 }
 ```
 
-`severity`: `low` | `medium` | `high` | `critical`.
+`severity`: `low` | `medium` | `high` | `critical`. `sources` entries are
+real `https://` URLs when the model knows a reliable one, a short source
+name otherwise, or the field is omitted - never a fabricated URL.
 
-### Translate — `POST /translate`
+### Translate - `POST /translate`
 
 **Request:**
 
@@ -148,16 +149,15 @@ engine code.
   "targetLanguage": "pt-PT",
   "knownIssues": [
     {
-      "title": "Timing chain tensioner wear (EA211 1.2 TSI)",
+      "title": "Air conditioning problems",
       "description": "...",
-      "severity": "high",
-      "typicalKm": 80000,
-      "sources": ["VW owner forums"],
+      "severity": "medium",
+      "typicalKm": 90000,
+      "sources": ["https://www.auto-doc.pt/info/volkswagen-polo-problemas-associados"],
       "fixes": [
         {
-          "summary": "Replace timing chain, tensioner and guides",
-          "steps": "...",
-          "estimatedCostEur": 650
+          "summary": "Recharge refrigerant and check for leaks",
+          "steps": "..."
         }
       ]
     }
@@ -206,7 +206,7 @@ Copy [`.env.example`](.env.example) to `.env`:
 `AI_PROVIDER_MODE=chain` with no provider keys falls back to the stub automatically.
 
 **In production (`APP_ENV=production` or `prod`), the stub is never used as a fallback:**
-`build_provider_chain` (`app/api/dependencies.py`) raises `RuntimeError` at request time if `AI_PROVIDER_MODE=stub`, or if `chain` mode has no provider key configured — instead of silently serving fake AI content. Outside production, both cases still fall back to the stub so local dev and CI don't need real provider keys.
+`build_provider_chain` (`app/api/dependencies.py`) raises `RuntimeError` at request time if `AI_PROVIDER_MODE=stub`, or if `chain` mode has no provider key configured - instead of silently serving fake AI content. Outside production, both cases still fall back to the stub so local dev and CI don't need real provider keys.
 
 ## Tests
 
@@ -230,7 +230,7 @@ Tests load `.env.test` (`AI_PROVIDER_MODE=stub`) so the suite never calls a real
 docker compose down && docker compose up -d --build
 ```
 
-This service is stateless — no Postgres/Redis required, just the `ai-api` container on port 8000.
+This service is stateless - no Postgres/Redis required, just the `ai-api` container on port 8000.
 
 Or without compose:
 
@@ -239,16 +239,16 @@ docker build -t car-faults-ai-api .
 docker run --rm -p 8000:8000 --env-file .env car-faults-ai-api
 ```
 
-Multi-stage build onto a **distroless nonroot** image — no shell, no
+Multi-stage build onto a **distroless nonroot** image - no shell, no
 package manager, no `pip` in the runtime layer. That means no `docker exec`
 shell for debugging and no `curl`-based healthcheck; the image's
 `HEALTHCHECK` calls `GET /health` with stdlib `urllib` instead.
 
-Runs standalone — no Postgres/Redis (this service is stateless). It's
+Runs standalone - no Postgres/Redis (this service is stateless). It's
 consumed by `car-faults-api` (Nest), which points `AI_API_URL` /
 `AI_TRANSLATE_URL` at wherever this container is reachable.
 
 ## License
 
-Proprietary — All Rights Reserved (Daniel Fonseca da Silva). See [license](license).
+Proprietary - All Rights Reserved (Daniel Fonseca da Silva). See [license](license).
 Use and run allowed; modification and derivative works require written permission.

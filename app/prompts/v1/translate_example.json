@@ -1,16 +1,24 @@
 {
   "knownIssues": [
     {
-      "title": "Falha na tensão da corrente de distribuição (EA211 1.2 TSI)",
-      "description": "Os motores EA211 1.2 TSI de início de produção podem sofrer desgaste prematuro do tensor da corrente de distribuição, causando ruído a frio e, em casos graves, salto da corrente.",
-      "severity": "high",
-      "typicalKm": 80000,
-      "sources": ["Fóruns de proprietários VW", "Boletins técnicos do fabricante"],
+      "title": "Problemas no ar condicionado",
+      "description": "O sistema de ar condicionado desta geração pode perder carga de refrigerante ao longo do tempo e sofrer avarias no compressor ou no condensador, resultando em arrefecimento fraco, intermitente ou nulo.",
+      "severity": "medium",
+      "typicalKm": 90000,
+      "sources": ["https://www.auto-doc.pt/info/volkswagen-polo-problemas-associados"],
       "fixes": [
         {
-          "summary": "Substituir corrente de distribuição, tensor e guias",
-          "steps": "Remover a tampa da distribuição, substituir a corrente, o tensor e as guias em conjunto, depois repor a distribuição nas marcas de fábrica.",
-          "estimatedCostEur": 650
+          "summary": "Recarregar o refrigerante e verificar fugas",
+          "steps": "Fazer o teste de vácuo ao circuito de A/C, localizar e vedar eventuais fugas, depois recarregar com o peso de refrigerante especificado."
+        },
+        {
+          "summary": "Substituir um compressor de A/C gripado ou ruidoso",
+          "steps": "Remover a correia de acessórios, desligar as linhas de refrigerante, substituir o compressor e o filtro secador, depois evacuar e recarregar o sistema.",
+          "estimatedCostEur": 550
+        },
+        {
+          "summary": "Limpar ou substituir um condensador obstruído",
+          "steps": "Inspecionar o condensador quanto a detritos ou danos, limpar ou substituir se encontradas alhetas dobradas ou uma fuga, depois recarregar o sistema."
         }
       ]
     },

@@ -43,7 +43,7 @@ def build_user_prompt(request: LookupRequest, version: str = CURRENT_VERSION) ->
         f"language={request.language.value}\n"
         f"{_DATA_END}\n\n"
         "Respond ONLY with a JSON object in the exact shape below "
-        "(this example is for a DIFFERENT vehicle — do not copy its content, "
+        "(this example is for a DIFFERENT vehicle - do not copy its content, "
         "only its shape):\n"
         f"{json.dumps(example, ensure_ascii=False)}"
     )
@@ -83,7 +83,7 @@ def build_translate_user_prompt(
         f"{json.dumps(known_issues, ensure_ascii=False)}\n"
         f"{_DATA_END}\n\n"
         "Respond ONLY with a JSON object in the exact shape below "
-        "(this example is for a DIFFERENT vehicle/language pair — do not copy "
+        "(this example is for a DIFFERENT vehicle/language pair - do not copy "
         "its content, only its shape):\n"
         f"{json.dumps(example, ensure_ascii=False)}"
     )
