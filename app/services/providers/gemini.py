@@ -58,7 +58,7 @@ class GeminiProvider:
             async with httpx.AsyncClient(timeout=self._timeout) as client:
                 response = await client.post(
                     _URL.format(model=self._model),
-                    params={"key": self._api_key},
+                    headers={"x-goog-api-key": cast(str, self._api_key)},
                     json={"contents": [{"parts": [{"text": prompt}]}]},
                 )
         except httpx.HTTPError as exc:
