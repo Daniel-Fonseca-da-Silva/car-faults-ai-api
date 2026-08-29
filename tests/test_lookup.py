@@ -183,6 +183,38 @@ async def test_lookup_with_valid_punctuation_in_engine_returns_200(
     assert response.status_code == 200
 
 
+async def test_lookup_with_year_below_minimum_returns_422(async_client, auth_headers):
+    payload = {**VALID_PAYLOAD, "year": 1800}
+
+    response = await async_client.post("/lookup", json=payload, headers=auth_headers)
+
+    assert response.status_code == 422
+
+
+async def test_lookup_with_year_above_maximum_returns_422(async_client, auth_headers):
+    payload = {**VALID_PAYLOAD, "year": 2031}
+
+    response = await async_client.post("/lookup", json=payload, headers=auth_headers)
+
+    assert response.status_code == 422
+
+
+async def test_lookup_with_doors_above_maximum_returns_422(async_client, auth_headers):
+    payload = {**VALID_PAYLOAD, "doors": 99}
+
+    response = await async_client.post("/lookup", json=payload, headers=auth_headers)
+
+    assert response.status_code == 422
+
+
+async def test_lookup_with_negative_doors_returns_422(async_client, auth_headers):
+    payload = {**VALID_PAYLOAD, "doors": -1}
+
+    response = await async_client.post("/lookup", json=payload, headers=auth_headers)
+
+    assert response.status_code == 422
+
+
 # --- Output hardening (TechSpecs alias + extra="forbid") --------------------
 
 

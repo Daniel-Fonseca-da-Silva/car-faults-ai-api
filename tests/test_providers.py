@@ -117,6 +117,30 @@ async def test_gemini_success_parses_response():
     assert result.knownIssues[0].title == "Issue"
 
 
+async def test_gemini_sends_api_key_as_header_not_query_param():
+    provider = GeminiProvider(_settings(GEMINI_API_KEY="key"))
+    fake = FakeResponse(
+        200,
+        {
+            "candidates": [
+                {
+                    "content": {
+                        "parts": [{"text": __import__("json").dumps(VALID_RESULT)}]
+                    }
+                }
+            ]
+        },
+    )
+    mock_post = AsyncMock(return_value=fake)
+
+    with patch("httpx.AsyncClient.post", new=mock_post):
+        await provider.generate(REQUEST)
+
+    _, kwargs = mock_post.call_args
+    assert kwargs.get("headers", {}).get("x-goog-api-key") == "key"
+    assert "params" not in kwargs
+
+
 async def test_gemini_non_200_raises():
     provider = GeminiProvider(_settings(GEMINI_API_KEY="key"))
     fake = FakeResponse(500, {})
