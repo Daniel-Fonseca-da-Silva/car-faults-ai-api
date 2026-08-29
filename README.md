@@ -36,7 +36,15 @@ Nest needs structured known-issue JSON without embedding provider SDKs, prompts,
 
 ## What this service does
 
-1. `POST /lookup` - known issues + fixes (+ tech specs) for a vehicle
+1. `POST /lookup` - known issues + fixes (+ tech specs) for a vehicle. Covers
+   any motorized vehicle (cars, motorcycles, EV/hybrid, trucks, buses,
+   tractors, locomotives, boats, aircraft, etc), inferring the vehicle
+   category from brand/model/engine/fuelType rather than requiring a
+   separate `vehicleType` field. `description` and `fixes.steps` follow a
+   detailed diagnosis -> tools/parts -> procedure -> verification ->
+   when-to-escalate format, and the model is instructed to stay cautious
+   (fewer issues, no invented costs/mileage) for obscure or poorly
+   documented vehicles.
 2. `POST /translate` - translate existing `knownIssues` between `pt-PT`, `en-GB` and `es-ES`
 3. `GET /health` - liveness only (no auth, no external calls)
 4. Provider chain with sequential failover; stub mode for local/CI
