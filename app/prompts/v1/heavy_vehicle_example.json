@@ -1,0 +1,68 @@
+{
+  "vehicle": {
+    "brand": "Scania",
+    "model": "R-series",
+    "name": "Scania R-series (P/R generation)",
+    "year": 2016,
+    "engine": "DC13",
+    "fuelType": "diesel",
+    "techSpecs": {
+      "power_hp": 450
+    }
+  },
+  "knownIssues": [
+    {
+      "title": "AdBlue/SCR dosing system faults triggering derate",
+      "description": "The selective catalytic reduction (SCR) dosing module or NOx sensors can fail or clog, causing incorrect AdBlue dosing that trips an emissions fault and puts the engine into a power/speed derate mode until reset. It typically appears from around 300,000-500,000 km of commercial duty cycle use, is more common with poor-quality AdBlue, and directly impacts uptime and delivery schedules even though it is not a safety-critical failure.",
+      "severity": "high",
+      "typicalKm": 400000,
+      "sources": ["https://www.scania.com/"],
+      "fixes": [
+        {
+          "summary": "Diagnose SCR fault codes with fleet diagnostic tool",
+          "steps": "1) Confirm the derate is SCR-related by reading fault codes with a fleet-level diagnostic tool (not generic OBD-II) and checking AdBlue quality/level and NOx sensor readings. 2) Tools/parts: manufacturer or fleet diagnostic scanner, AdBlue quality tester. 3) A technician isolates whether the fault is the dosing module, a NOx sensor, or contaminated AdBlue by cross-checking sensor data against expected values. 4) Verify by clearing codes and running the engine through a duty cycle to confirm the derate does not re-trigger. 5) This diagnostic step should be done at a commercial vehicle workshop with fleet-level tooling.",
+          "estimatedCostEur": 150
+        },
+        {
+          "summary": "Replace a faulty NOx sensor or dosing module",
+          "steps": "1) Confirm the specific faulty component (NOx sensor vs. dosing module vs. dosing injector) from the diagnostic step before ordering parts. 2) Tools/parts: replacement NOx sensor or dosing module, sensor removal tools. 3) Remove and replace the confirmed faulty component, ensuring correct torque and connector seating. 4) Verify with a post-repair diagnostic scan and a road test confirming no derate recurs. 5) Escalate to an authorized commercial workshop - SCR system work affects emissions compliance and typically requires calibration tools beyond a general garage.",
+          "estimatedCostEur": 800
+        }
+      ]
+    },
+    {
+      "title": "Turbocharger wear under sustained high-load duty cycles",
+      "description": "Operating at high load for extended motorway hauls accelerates turbocharger bearing and seal wear compared to passenger-car use, producing whining noise, excess oil consumption, or visible exhaust smoke. It typically appears from around 500,000-700,000 km depending on load patterns and maintenance history, and left unaddressed can lead to a sudden loss of power or engine damage from ingested debris.",
+      "severity": "high",
+      "typicalKm": 600000,
+      "fixes": [
+        {
+          "summary": "Inspect turbo shaft play and oil supply",
+          "steps": "1) Confirm diagnosis via whining noise under boost, visible oil in the intake/exhaust, or a boost-pressure fault code, then check turbo shaft play by hand once removed or via borescope. 2) Tools/parts: boost/vacuum gauge, borescope if available, replacement oil feed line if degraded. 3) Check the oil feed and return lines for restriction and inspect turbo shaft play for excessive movement. 4) Verify by confirming boost pressure reaches spec and no abnormal noise remains on a load test. 5) This inspection can be done at a heavy-vehicle workshop; escalate immediately if metal debris is found in the oil, indicating internal turbo failure.",
+          "estimatedCostEur": 250
+        },
+        {
+          "summary": "Replace the turbocharger unit",
+          "steps": "1) Confirm the turbo itself has failed (excessive shaft play, seized bearing, or debris in oil) rather than a boost-control or wastegate fault. 2) Tools/parts: replacement turbocharger unit, gaskets, engine oil and filter change. 3) Remove the failed turbo, replace gaskets, fit the new unit, and pre-lubricate it before first start to avoid immediate bearing wear. 4) Verify with an idle oil-pressure check, a road test under load, and a follow-up boost-pressure check. 5) Escalate to an authorized commercial diesel workshop - this job requires load testing and torque specs specific to commercial turbo units.",
+          "estimatedCostEur": 2200
+        }
+      ]
+    },
+    {
+      "title": "Air-brake system leaks and compressor wear",
+      "description": "The compressed-air system supplying the brakes and clutch/gear actuation can develop leaks at hose fittings or air-dryer cartridges, or the air compressor itself wears out, causing slow air pressure build-up, an audible hiss, or a dashboard low-air-pressure warning. This is safety-relevant because insufficient air pressure limits braking performance, and it typically appears progressively with age and duty cycle rather than at a fixed mileage.",
+      "severity": "critical",
+      "fixes": [
+        {
+          "summary": "Locate and repair air system leaks",
+          "steps": "1) Confirm diagnosis with the vehicle stationary, engine running: listen for hissing at hose joints, valves and the air dryer, and check gauge time-to-build-pressure against spec. 2) Tools/parts: soapy water or ultrasonic leak detector, replacement hose fittings/O-rings, air-dryer cartridge if contaminated. 3) Apply soapy water at suspect joints to visually confirm leaks, tighten or replace faulty fittings, and replace the air-dryer cartridge if it shows oil/moisture contamination. 4) Verify by confirming pressure build-up time returns to spec and no warning light remains after a full brake-system pressure cycle. 5) Air-brake work directly affects braking safety - always have leak repairs verified by a certified heavy-vehicle brake technician before returning to service."
+        },
+        {
+          "summary": "Replace a worn air compressor",
+          "steps": "1) Confirm the compressor itself is worn (excessive oil carryover into the air system, or failure to reach governor cut-out pressure) rather than a downstream leak. 2) Tools/parts: replacement air compressor unit, gaskets, drive belt if applicable. 3) Remove the worn compressor, fit the replacement, and bleed/prime the air system before testing. 4) Verify pressure build-up time and governor cut-out/cut-in points match specification. 5) Must be done at a certified heavy-vehicle workshop given the direct safety impact on braking.",
+          "estimatedCostEur": 900
+        }
+      ]
+    }
+  ]
+}
