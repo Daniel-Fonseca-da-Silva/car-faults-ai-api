@@ -400,3 +400,133 @@ async def test_openai_compatible_non_200_raises():
 async def test_groq_and_openrouter_share_openai_compatible_base():
     assert issubclass(GroqProvider, OpenAICompatibleProvider)
     assert issubclass(OpenRouterProvider, OpenAICompatibleProvider)
+
+
+# --- JSON mode --------------------------------------------------------------
+
+
+async def test_openai_compatible_requests_json_object_mode():
+    provider = _openai_compatible_provider()
+    fake = FakeResponse(
+        200,
+        {"choices": [{"message": {"content": __import__("json").dumps(VALID_RESULT)}}]},
+    )
+    mock_post = AsyncMock(return_value=fake)
+
+    with patch("httpx.AsyncClient.post", new=mock_post):
+        await provider.generate(REQUEST)
+
+    _, kwargs = mock_post.call_args
+    assert kwargs["json"]["response_format"] == {"type": "json_object"}
+
+
+async def test_gemini_requests_json_mime_type_and_response_schema():
+    provider = GeminiProvider(_settings(GEMINI_API_KEY="key"))
+    fake = FakeResponse(
+        200,
+        {
+            "candidates": [
+                {
+                    "content": {
+                        "parts": [{"text": __import__("json").dumps(VALID_RESULT)}]
+                    }
+                }
+            ]
+        },
+    )
+    mock_post = AsyncMock(return_value=fake)
+
+    with patch("httpx.AsyncClient.post", new=mock_post):
+        await provider.generate(REQUEST)
+
+    _, kwargs = mock_post.call_args
+    generation_config = kwargs["json"]["generationConfig"]
+    assert generation_config["responseMimeType"] == "application/json"
+    assert "responseSchema" in generation_config
+    assert "systemInstruction" in kwargs["json"]
+    assert "contents" in kwargs["json"]
+
+
+# --- Metrics ------------------------------------------------------------
+
+
+async def test_openai_compatible_records_metrics_on_success():
+    provider = _openai_compatible_provider()
+    fake = FakeResponse(
+        200,
+        {
+            "choices": [
+                {"message": {"content": __import__("json").dumps(VALID_RESULT)}}
+            ],
+            "usage": {"prompt_tokens": 800, "completion_tokens": 1200},
+        },
+    )
+
+    with patch("httpx.AsyncClient.post", new=AsyncMock(return_value=fake)):
+        await provider.generate(REQUEST)
+
+    assert provider.last_metrics is not None
+    assert provider.last_metrics.provider == "custom"
+    assert provider.last_metrics.tokens_in == 800
+    assert provider.last_metrics.tokens_out == 1200
+
+
+async def test_gemini_records_metrics_on_success():
+    provider = GeminiProvider(_settings(GEMINI_API_KEY="key"))
+    fake = FakeResponse(
+        200,
+        {
+            "candidates": [
+                {
+                    "content": {
+                        "parts": [{"text": __import__("json").dumps(VALID_RESULT)}]
+                    }
+                }
+            ],
+            "usageMetadata": {"promptTokenCount": 500, "candidatesTokenCount": 300},
+        },
+    )
+
+    with patch("httpx.AsyncClient.post", new=AsyncMock(return_value=fake)):
+        await provider.generate(REQUEST)
+
+    assert provider.last_metrics is not None
+    assert provider.last_metrics.tokens_in == 500
+    assert provider.last_metrics.tokens_out == 300
+
+
+# --- Retry with backoff ------------------------------------------------------
+
+
+async def test_openai_compatible_retries_on_429_then_succeeds():
+    provider = _openai_compatible_provider()
+    success = FakeResponse(
+        200,
+        {"choices": [{"message": {"content": __import__("json").dumps(VALID_RESULT)}}]},
+    )
+    rate_limited = FakeResponse(429, {})
+    mock_post = AsyncMock(side_effect=[rate_limited, rate_limited, success])
+
+    with (
+        patch("httpx.AsyncClient.post", new=mock_post),
+        patch("app.services.providers.retry.asyncio.sleep", new=AsyncMock()),
+    ):
+        result = await provider.generate(REQUEST)
+
+    assert result.vehicle.brand == "Volkswagen"
+    assert mock_post.call_count == 3
+
+
+async def test_openai_compatible_gives_up_after_max_retries():
+    provider = _openai_compatible_provider()
+    rate_limited = FakeResponse(429, {})
+    mock_post = AsyncMock(return_value=rate_limited)
+
+    with (
+        patch("httpx.AsyncClient.post", new=mock_post),
+        patch("app.services.providers.retry.asyncio.sleep", new=AsyncMock()),
+    ):
+        with pytest.raises(ProviderError):
+            await provider.generate(REQUEST)
+
+    assert mock_post.call_count == 3
