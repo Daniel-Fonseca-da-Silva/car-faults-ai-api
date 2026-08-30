@@ -20,11 +20,11 @@ _DOMAIN_PATTERN = re.compile(
 def _is_safe_source_url(source: str) -> bool:
     parsed = urlparse(source)
     hostname = parsed.hostname
-    return (
-        parsed.scheme == _ALLOWED_SCHEME
-        and bool(hostname)
-        and bool(_DOMAIN_PATTERN.match(hostname))
-    )
+    if hostname is None:
+        return False
+    if parsed.scheme != _ALLOWED_SCHEME:
+        return False
+    return _DOMAIN_PATTERN.match(hostname) is not None
 
 
 def sanitize_sources(sources: list[str] | None) -> list[str] | None:
