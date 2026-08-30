@@ -1,7 +1,7 @@
 from enum import Enum
 from typing import Annotated, Any
 
-from pydantic import BaseModel, ConfigDict, Field, model_validator
+from pydantic import BaseModel, BeforeValidator, ConfigDict, Field, model_validator
 
 # Vehicle input fields: letters (incl. common European accents), digits,
 # spaces and automotive punctuation only - rejects control chars/newlines
@@ -12,10 +12,38 @@ _VEHICLE_FIELD_PATTERN = r"^[A-Za-zÀ-ÖØ-öø-ÿ0-9 .\-/()+]+$"
 # Free-text fields (titles, descriptions, summaries, steps): same idea as
 # VehicleField but with common prose punctuation allowed, including the
 # "[pt-PT] " style locale-tag prefix used by the translate stub/providers.
-# The allow-list excludes "<", ">", "&", quotes and control chars by
+# "'" and "%" are included because they show up in ordinary LLM prose
+# (contractions, EV charge percentages - see app/prompts/v1/electric_example.json).
+# The allow-list excludes "<", ">", "&", double quotes and control chars by
 # construction, so it also rejects control-char and basic HTML/script
 # injection attempts without needing separate denylist checks.
-_SAFE_TEXT_PATTERN = r"^[A-Za-zÀ-ÖØ-öø-ÿ0-9 .\-/()+,\n!?;:\[\]]+$"
+_SAFE_TEXT_PATTERN = r"^[A-Za-zÀ-ÖØ-öø-ÿ0-9 .\-/()+,\n!?;:\[\]'%]+$"
+
+# Unicode punctuation that well-behaved LLM prose commonly uses but that
+# falls outside the safe-text allow-list. Normalized to its closest ASCII
+# equivalent *before* pattern validation so legitimate prose isn't rejected.
+# This is a small, explicit translation table - not a generic "strip
+# anything invalid" pass, which would turn "<script>alert(1)</script>" into
+# text that passes the pattern.
+_PROSE_PUNCTUATION_NORMALIZATION = {
+    "‘": "'",  # left single quotation mark
+    "’": "'",  # right single quotation mark / apostrophe
+    "ʼ": "'",  # modifier letter apostrophe
+    "–": "-",  # en dash
+    "—": "-",  # em dash
+    "“": "",  # left double quotation mark
+    "”": "",  # right double quotation mark
+    "…": "...",  # horizontal ellipsis
+}
+
+
+def _normalize_prose_punctuation(value: Any) -> Any:
+    if not isinstance(value, str):
+        return value
+    for source, replacement in _PROSE_PUNCTUATION_NORMALIZATION.items():
+        value = value.replace(source, replacement)
+    return value
+
 
 _NAME_MAX_LENGTH = 200
 _TITLE_MAX_LENGTH = 200
@@ -34,9 +62,26 @@ VehicleField = Annotated[
 ]
 Source = Annotated[str, Field(max_length=_SOURCE_MAX_LENGTH)]
 
-
-def _safe_text_field(max_length: int) -> Any:
-    return Field(max_length=max_length, pattern=_SAFE_TEXT_PATTERN)
+TitleField = Annotated[
+    str,
+    BeforeValidator(_normalize_prose_punctuation),
+    Field(max_length=_TITLE_MAX_LENGTH, pattern=_SAFE_TEXT_PATTERN),
+]
+DescriptionField = Annotated[
+    str,
+    BeforeValidator(_normalize_prose_punctuation),
+    Field(max_length=_DESCRIPTION_MAX_LENGTH, pattern=_SAFE_TEXT_PATTERN),
+]
+SummaryField = Annotated[
+    str,
+    BeforeValidator(_normalize_prose_punctuation),
+    Field(max_length=_SUMMARY_MAX_LENGTH, pattern=_SAFE_TEXT_PATTERN),
+]
+StepsField = Annotated[
+    str,
+    BeforeValidator(_normalize_prose_punctuation),
+    Field(max_length=_STEPS_MAX_LENGTH, pattern=_SAFE_TEXT_PATTERN),
+]
 
 
 class IssueSeverity(str, Enum):
@@ -93,16 +138,16 @@ class TechSpecs(BaseModel):
 class AiFixResult(BaseModel):
     model_config = ConfigDict(extra="forbid")
 
-    summary: str = _safe_text_field(_SUMMARY_MAX_LENGTH)
-    steps: str = _safe_text_field(_STEPS_MAX_LENGTH)
+    summary: SummaryField
+    steps: StepsField
     estimatedCostEur: float | None = None
 
 
 class AiKnownIssueResult(BaseModel):
     model_config = ConfigDict(extra="forbid")
 
-    title: str = _safe_text_field(_TITLE_MAX_LENGTH)
-    description: str = _safe_text_field(_DESCRIPTION_MAX_LENGTH)
+    title: TitleField
+    description: DescriptionField
     severity: IssueSeverity
     typicalKm: int | None = None
     sources: list[Source] | None = None
