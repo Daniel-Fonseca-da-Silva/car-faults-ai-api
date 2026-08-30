@@ -1,4 +1,5 @@
 import asyncio
+from collections.abc import Mapping
 
 import httpx
 
@@ -10,7 +11,11 @@ BACKOFF_SECONDS = [1.0, 2.0]
 
 
 async def post_with_retry(
-    client: httpx.AsyncClient, url: str, **kwargs: object
+    client: httpx.AsyncClient,
+    url: str,
+    *,
+    headers: Mapping[str, str] | None = None,
+    json: Mapping[str, object] | None = None,
 ) -> httpx.Response:
     """POST with a short backoff retry on 429/502/503/504.
 
@@ -20,7 +25,7 @@ async def post_with_retry(
     """
     attempt = 0
     while True:
-        response = await client.post(url, **kwargs)
+        response = await client.post(url, headers=headers, json=json)
         if response.status_code not in RETRYABLE_STATUS_CODES or attempt >= MAX_RETRIES:
             return response
         await asyncio.sleep(BACKOFF_SECONDS[attempt])
