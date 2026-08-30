@@ -23,7 +23,7 @@ def build_provider_chain(settings: Settings) -> ProviderChain:
                 "AI_PROVIDER_MODE must not be 'stub' in production "
                 f"(APP_ENV={settings.APP_ENV!r})"
             )
-        return ProviderChain([StubProvider()])
+        return ProviderChain([StubProvider()], log_metrics=settings.AI_LOG_METRICS)
 
     providers: list[AiLookupProvider] = []
     if settings.GEMINI_API_KEY:
@@ -44,7 +44,7 @@ def build_provider_chain(settings: Settings) -> ProviderChain:
         # fall back to the stub instead of failing every request.
         providers.append(StubProvider())
 
-    return ProviderChain(providers)
+    return ProviderChain(providers, log_metrics=settings.AI_LOG_METRICS)
 
 
 def get_lookup_service(settings: Settings = Depends(get_settings)) -> LookupService:

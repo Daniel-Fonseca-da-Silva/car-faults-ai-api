@@ -1,3 +1,4 @@
+import time
 from typing import cast
 
 import httpx
@@ -10,7 +11,9 @@ from app.prompts.loader import (
 )
 from app.schemas.lookup import LookupRequest, LookupResponse
 from app.schemas.translate import TranslateRequest, TranslateResponse
+from app.services.ai_metrics import AiCallMetrics
 from app.services.providers.base import ProviderError
+from app.services.providers.retry import post_with_retry
 from app.services.providers.util import extract_json_object
 from app.services.retrieval.models import KnowledgeChunk
 
@@ -34,6 +37,11 @@ class OpenAICompatibleProvider:
         self._model = model
         self._timeout = timeout
         self._missing_key_env = missing_key_env
+        self._last_metrics: AiCallMetrics | None = None
+
+    @property
+    def last_metrics(self) -> AiCallMetrics | None:
+        return self._last_metrics
 
     async def generate(
         self,
@@ -73,9 +81,11 @@ class OpenAICompatibleProvider:
             raise ProviderError(f"{self._missing_key_env} is not configured")
 
     async def _complete(self, system_prompt: str, user_prompt: str) -> str:
+        started = time.perf_counter()
         try:
             async with httpx.AsyncClient(timeout=self._timeout) as client:
-                response = await client.post(
+                response = await post_with_retry(
+                    client,
                     self._url,
                     headers={"Authorization": f"Bearer {self._api_key}"},
                     json={
@@ -85,6 +95,7 @@ class OpenAICompatibleProvider:
                             {"role": "user", "content": user_prompt},
                         ],
                         "temperature": 0.2,
+                        "response_format": {"type": "json_object"},
                     },
                 )
         except httpx.HTTPError as exc:
@@ -97,8 +108,17 @@ class OpenAICompatibleProvider:
 
         try:
             data = response.json()
-            return cast(str, data["choices"][0]["message"]["content"])
+            content = cast(str, data["choices"][0]["message"]["content"])
         except (KeyError, IndexError, ValueError, TypeError) as exc:
             raise ProviderError(
                 f"{self.name} returned an invalid response: {exc}"
             ) from exc
+
+        usage = data.get("usage") or {}
+        self._last_metrics = AiCallMetrics(
+            provider=self.name,
+            latency_ms=int((time.perf_counter() - started) * 1000),
+            tokens_in=usage.get("prompt_tokens"),
+            tokens_out=usage.get("completion_tokens"),
+        )
+        return content

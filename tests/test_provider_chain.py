@@ -5,10 +5,12 @@ from app.api.dependencies import get_lookup_service, get_translate_service
 from app.main import app
 from app.schemas.lookup import (
     AiKnownIssueResult,
+    AiVehicleResult,
     FuelType,
     IssueSeverity,
     Locale,
     LookupRequest,
+    LookupResponse,
 )
 from app.schemas.translate import TranslateRequest
 from app.services.lookup_service import LookupService
@@ -69,6 +71,36 @@ async def test_chain_raises_when_all_providers_fail():
 
     with pytest.raises(AllProvidersFailedError):
         await chain.generate(REQUEST)
+
+
+class EmptyIssuesProvider:
+    """Returns a structurally valid but low-quality (0 issues) response."""
+
+    name = "empty-issues"
+
+    async def generate(self, request, retrieved_chunks=None):
+        return LookupResponse(
+            vehicle=AiVehicleResult(
+                brand=request.brand,
+                model=request.model,
+                name=f"{request.brand} {request.model}",
+                year=request.year,
+                engine=request.engine,
+            ),
+            knownIssues=[],
+        )
+
+    async def translate(self, request):
+        raise NotImplementedError
+
+
+async def test_chain_fails_over_when_quality_gate_rejects_empty_issues():
+    chain = ProviderChain([EmptyIssuesProvider(), WorkingProvider()])
+
+    result = await chain.generate(REQUEST)
+
+    assert result.vehicle.brand == "Renault"
+    assert result.knownIssues
 
 
 async def test_lookup_service_raises_503_when_all_providers_fail():
