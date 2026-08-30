@@ -1,0 +1,11 @@
+{
+  "id": "honda-civic-9-electrics",
+  "brand": "Honda",
+  "model": "Civic",
+  "yearFrom": 2011,
+  "yearTo": 2017,
+  "engine": "1.8",
+  "issue": "Infotainment and touchscreen glitches",
+  "content": "Some ninth-generation Civic units have an infotainment unit prone to freezing or slow response, and occasional Bluetooth pairing issues. A firmware update usually resolves it; a comfort issue with no impact on drivability or safety, reported from various mileages.",
+  "severity": "low"
+}

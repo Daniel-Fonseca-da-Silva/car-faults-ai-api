@@ -1,0 +1,12 @@
+{
+  "id": "dacia-sandero-2-suspension",
+  "brand": "Dacia",
+  "model": "Sandero",
+  "yearFrom": 2012,
+  "yearTo": 2020,
+  "engine": "1.5 dCi",
+  "issue": "Front suspension bush and lower arm wear",
+  "content": "Front lower control arm bushes wear faster than average on the Sandero given its budget-tuned suspension, producing knocking noises over bumps and uneven front tyre wear if left unaddressed. Low-cost part, typically from 80,000-100,000 km.",
+  "severity": "low",
+  "typicalKm": 90000
+}

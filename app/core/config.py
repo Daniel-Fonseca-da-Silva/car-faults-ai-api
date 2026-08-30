@@ -1,4 +1,5 @@
 from functools import lru_cache
+from pathlib import Path
 from typing import Literal
 
 from pydantic_settings import BaseSettings, SettingsConfigDict
@@ -27,6 +28,13 @@ class Settings(BaseSettings):
     REDIS_URL: str | None = None
 
     MAX_REQUEST_BODY_BYTES: int = 262_144
+
+    # RAG (Fase 1 - keyword search over app/knowledge/, no vector store).
+    # Applies only to /lookup. Off in tests so the stub-provider fixtures
+    # stay deterministic regardless of the knowledge corpus.
+    RAG_ENABLED: bool = True
+    RAG_MAX_CHUNKS: int = 5
+    KNOWLEDGE_DIR: Path = Path("app/knowledge")
 
     model_config = SettingsConfigDict(
         env_file=".env",

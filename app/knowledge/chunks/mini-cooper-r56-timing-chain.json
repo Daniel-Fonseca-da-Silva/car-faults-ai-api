@@ -1,0 +1,12 @@
+{
+  "id": "mini-cooper-r56-timing-chain",
+  "brand": "Mini",
+  "model": "Cooper",
+  "yearFrom": 2007,
+  "yearTo": 2013,
+  "engine": "1.6",
+  "issue": "Timing chain guide failure (N14/N18 engines)",
+  "content": "The N14/N18 turbo and naturally aspirated engines in the R56 Cooper are known for timing chain guides that can break, allowing the chain to slip or detach entirely, causing sudden engine failure. A well-documented reliability risk; any rattling noise on start-up warrants immediate inspection.",
+  "severity": "critical",
+  "typicalKm": 70000
+}

@@ -1,0 +1,12 @@
+{
+  "id": "toyota-yaris-2-suspension",
+  "brand": "Toyota",
+  "model": "Yaris",
+  "yearFrom": 2005,
+  "yearTo": 2011,
+  "engine": "1.4 D-4D",
+  "issue": "Rear suspension bush and shock absorber wear",
+  "content": "Rear suspension bushes and shock absorbers wear faster than average on this generation Yaris given its light rear end, producing knocking noises over bumps and slightly reduced handling precision. From around 120,000 km; a routine, low-cost wear item rather than a reliability concern.",
+  "severity": "low",
+  "typicalKm": 120000
+}

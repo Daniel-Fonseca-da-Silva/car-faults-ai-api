@@ -1,0 +1,12 @@
+{
+  "id": "nissan-qashqai-j10-timing-chain",
+  "brand": "Nissan",
+  "model": "Qashqai",
+  "yearFrom": 2007,
+  "yearTo": 2013,
+  "engine": "1.6 dCi",
+  "issue": "Timing chain and tensioner wear",
+  "content": "The first-generation Qashqai 1.6 dCi can develop a timing chain rattle from tensioner wear, particularly if oil changes were extended beyond the recommended interval. If unaddressed it risks chain skip and engine damage; inspect promptly if a rattle is heard on cold start.",
+  "severity": "high",
+  "typicalKm": 110000
+}

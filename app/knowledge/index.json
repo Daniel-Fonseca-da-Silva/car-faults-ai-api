@@ -1,0 +1,333 @@
+[
+  {
+    "id": "vw-polo-6c-ac",
+    "brand": "Volkswagen",
+    "model": "Polo",
+    "yearFrom": 2014,
+    "yearTo": 2017,
+    "engine": "1.2 TSI",
+    "tags": [
+      "Air conditioning compressor and refrigerant leak"
+    ],
+    "sourceUrl": "https://www.auto-doc.pt/info/volkswagen-polo-problemas-associados"
+  },
+  {
+    "id": "vw-polo-6r-dsg",
+    "brand": "Volkswagen",
+    "model": "Polo",
+    "yearFrom": 2009,
+    "yearTo": 2014,
+    "engine": "1.2 TSI",
+    "tags": [
+      "DSG dual-clutch gearbox mechatronic unit wear"
+    ]
+  },
+  {
+    "id": "vw-golf-mk7-carbon",
+    "brand": "Volkswagen",
+    "model": "Golf",
+    "yearFrom": 2013,
+    "yearTo": 2019,
+    "engine": "2.0 TDI",
+    "tags": [
+      "Intake manifold and EGR carbon buildup"
+    ]
+  },
+  {
+    "id": "vw-golf-mk6-timing-chain",
+    "brand": "Volkswagen",
+    "model": "Golf",
+    "yearFrom": 2008,
+    "yearTo": 2013,
+    "engine": "1.4 TSI",
+    "tags": [
+      "Timing chain tensioner premature wear"
+    ]
+  },
+  {
+    "id": "renault-clio-4-injectors",
+    "brand": "Renault",
+    "model": "Clio",
+    "yearFrom": 2012,
+    "yearTo": 2019,
+    "engine": "1.5 dCi",
+    "tags": [
+      "Fuel injector seal and pump wear on 1.5 dCi"
+    ]
+  },
+  {
+    "id": "renault-clio-4-electrics",
+    "brand": "Renault",
+    "model": "Clio",
+    "yearFrom": 2012,
+    "yearTo": 2019,
+    "engine": "1.2 16V",
+    "tags": [
+      "UCH body control unit and window regulator faults"
+    ]
+  },
+  {
+    "id": "renault-megane-3-dpf",
+    "brand": "Renault",
+    "model": "Megane",
+    "yearFrom": 2008,
+    "yearTo": 2015,
+    "engine": "1.5 dCi",
+    "tags": [
+      "DPF clogging on short urban journeys"
+    ]
+  },
+  {
+    "id": "peugeot-208-1-2-puretech",
+    "brand": "Peugeot",
+    "model": "208",
+    "yearFrom": 2012,
+    "yearTo": 2019,
+    "engine": "1.2 PureTech",
+    "tags": [
+      "Timing chain elongation on 1.2 PureTech three-cylinder"
+    ]
+  },
+  {
+    "id": "peugeot-308-1-6-hdi-turbo",
+    "brand": "Peugeot",
+    "model": "308",
+    "yearFrom": 2007,
+    "yearTo": 2014,
+    "engine": "1.6 HDi",
+    "tags": [
+      "Turbocharger failure from oil starvation"
+    ]
+  },
+  {
+    "id": "opel-corsa-d-clutch",
+    "brand": "Opel",
+    "model": "Corsa",
+    "yearFrom": 2006,
+    "yearTo": 2014,
+    "engine": "1.3 CDTI",
+    "tags": [
+      "Clutch and dual-mass flywheel wear"
+    ]
+  },
+  {
+    "id": "fiat-punto-3-electrics",
+    "brand": "Fiat",
+    "model": "Punto",
+    "yearFrom": 2005,
+    "yearTo": 2018,
+    "engine": "1.2 8V",
+    "tags": [
+      "Central electrics and dashboard warning light faults"
+    ]
+  },
+  {
+    "id": "citroen-c3-2-egr",
+    "brand": "Citroen",
+    "model": "C3",
+    "yearFrom": 2009,
+    "yearTo": 2016,
+    "engine": "1.4 HDi",
+    "tags": [
+      "EGR valve clogging and limp mode"
+    ]
+  },
+  {
+    "id": "seat-ibiza-6j-coilpack",
+    "brand": "Seat",
+    "model": "Ibiza",
+    "yearFrom": 2008,
+    "yearTo": 2017,
+    "engine": "1.4 TSI",
+    "tags": [
+      "Ignition coil pack failure causing misfires"
+    ]
+  },
+  {
+    "id": "seat-leon-1-mk3-water-pump",
+    "brand": "Seat",
+    "model": "Leon",
+    "yearFrom": 2012,
+    "yearTo": 2020,
+    "engine": "1.4 TSI",
+    "tags": [
+      "Electric water pump premature failure"
+    ]
+  },
+  {
+    "id": "toyota-corolla-e12-hybrid-na",
+    "brand": "Toyota",
+    "model": "Corolla",
+    "yearFrom": 2000,
+    "yearTo": 2007,
+    "engine": "1.4 D-4D",
+    "tags": [
+      "Diesel injector wear on early D-4D units"
+    ]
+  },
+  {
+    "id": "toyota-yaris-2-suspension",
+    "brand": "Toyota",
+    "model": "Yaris",
+    "yearFrom": 2005,
+    "yearTo": 2011,
+    "engine": "1.4 D-4D",
+    "tags": [
+      "Rear suspension bush and shock absorber wear"
+    ]
+  },
+  {
+    "id": "nissan-qashqai-j10-timing-chain",
+    "brand": "Nissan",
+    "model": "Qashqai",
+    "yearFrom": 2007,
+    "yearTo": 2013,
+    "engine": "1.6 dCi",
+    "tags": [
+      "Timing chain and tensioner wear"
+    ]
+  },
+  {
+    "id": "ford-focus-mk3-dpf",
+    "brand": "Ford",
+    "model": "Focus",
+    "yearFrom": 2011,
+    "yearTo": 2018,
+    "engine": "1.6 TDCi",
+    "tags": [
+      "DPF and EGR clogging from urban use"
+    ]
+  },
+  {
+    "id": "audi-a3-8p-carbon",
+    "brand": "Audi",
+    "model": "A3",
+    "yearFrom": 2003,
+    "yearTo": 2012,
+    "engine": "2.0 TFSI",
+    "tags": [
+      "Intake valve carbon buildup on direct-injection FSI/TFSI"
+    ]
+  },
+  {
+    "id": "hyundai-i20-1-electrics",
+    "brand": "Hyundai",
+    "model": "i20",
+    "yearFrom": 2008,
+    "yearTo": 2014,
+    "engine": "1.2",
+    "tags": [
+      "Alternator and battery drain issues"
+    ]
+  },
+  {
+    "id": "kia-sportage-3-dpf",
+    "brand": "Kia",
+    "model": "Sportage",
+    "yearFrom": 2010,
+    "yearTo": 2015,
+    "engine": "1.7 CRDi",
+    "tags": [
+      "DPF regeneration issues on 1.7 CRDi"
+    ]
+  },
+  {
+    "id": "skoda-octavia-2-dsg",
+    "brand": "Skoda",
+    "model": "Octavia",
+    "yearFrom": 2004,
+    "yearTo": 2013,
+    "engine": "1.6 FSI",
+    "tags": [
+      "DSG gearbox mechatronic unit wear"
+    ]
+  },
+  {
+    "id": "dacia-sandero-2-suspension",
+    "brand": "Dacia",
+    "model": "Sandero",
+    "yearFrom": 2012,
+    "yearTo": 2020,
+    "engine": "1.5 dCi",
+    "tags": [
+      "Front suspension bush and lower arm wear"
+    ]
+  },
+  {
+    "id": "mini-cooper-r56-timing-chain",
+    "brand": "Mini",
+    "model": "Cooper",
+    "yearFrom": 2007,
+    "yearTo": 2013,
+    "engine": "1.6",
+    "tags": [
+      "Timing chain guide failure (N14/N18 engines)"
+    ]
+  },
+  {
+    "id": "volvo-v40-2-turbo",
+    "brand": "Volvo",
+    "model": "V40",
+    "yearFrom": 2012,
+    "yearTo": 2019,
+    "engine": "2.0 D3",
+    "tags": [
+      "Turbocharger actuator and EGR wear"
+    ]
+  },
+  {
+    "id": "honda-civic-9-electrics",
+    "brand": "Honda",
+    "model": "Civic",
+    "yearFrom": 2011,
+    "yearTo": 2017,
+    "engine": "1.8",
+    "tags": [
+      "Infotainment and touchscreen glitches"
+    ]
+  },
+  {
+    "id": "mazda-3-2-clutch",
+    "brand": "Mazda",
+    "model": "3",
+    "yearFrom": 2013,
+    "yearTo": 2018,
+    "engine": "2.2 SkyActiv-D",
+    "tags": [
+      "Dual-mass flywheel wear on 2.2 SkyActiv-D"
+    ]
+  },
+  {
+    "id": "suzuki-swift-4-clutch",
+    "brand": "Suzuki",
+    "model": "Swift",
+    "yearFrom": 2010,
+    "yearTo": 2017,
+    "engine": "1.2",
+    "tags": [
+      "Clutch wear from urban driving"
+    ]
+  },
+  {
+    "id": "bmw-3-e90-vanos",
+    "brand": "BMW",
+    "model": "3 Series",
+    "yearFrom": 2005,
+    "yearTo": 2012,
+    "engine": "2.0i",
+    "tags": [
+      "VANOS variable valve timing solenoid wear"
+    ]
+  },
+  {
+    "id": "mercedes-c-w204-balance-shaft",
+    "brand": "Mercedes-Benz",
+    "model": "C-Class",
+    "yearFrom": 2007,
+    "yearTo": 2014,
+    "engine": "2.2 CDI",
+    "tags": [
+      "Balance shaft gear and oil pump chain wear"
+    ]
+  }
+]

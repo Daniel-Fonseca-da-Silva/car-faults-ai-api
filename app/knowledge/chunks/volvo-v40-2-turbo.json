@@ -1,0 +1,12 @@
+{
+  "id": "volvo-v40-2-turbo",
+  "brand": "Volvo",
+  "model": "V40",
+  "yearFrom": 2012,
+  "yearTo": 2019,
+  "engine": "2.0 D3",
+  "issue": "Turbocharger actuator and EGR wear",
+  "content": "The 2.0 D3/D4 diesel engines in this V40 generation can develop turbo actuator faults or EGR clogging, causing reduced power and an engine warning light. Not a widespread failure but reported from around 120,000 km; usually a repairable component rather than a full turbo replacement.",
+  "severity": "medium",
+  "typicalKm": 120000
+}

@@ -1,0 +1,12 @@
+{
+  "id": "vw-golf-mk6-timing-chain",
+  "brand": "Volkswagen",
+  "model": "Golf",
+  "yearFrom": 2008,
+  "yearTo": 2013,
+  "engine": "1.4 TSI",
+  "issue": "Timing chain tensioner premature wear",
+  "content": "Early 1.4 TSI units in the Golf Mk6 suffer from a timing chain tensioner that wears faster than expected, producing a rattle on cold start that fades as oil pressure builds. If ignored the chain can skip teeth and cause serious internal engine damage - this is a safety-relevant issue and should be inspected promptly.",
+  "severity": "high",
+  "typicalKm": 60000
+}

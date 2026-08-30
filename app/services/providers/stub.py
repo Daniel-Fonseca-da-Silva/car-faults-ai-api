@@ -8,6 +8,7 @@ from app.schemas.lookup import (
     TechSpecs,
 )
 from app.schemas.translate import TranslateRequest, TranslateResponse
+from app.services.retrieval.models import KnowledgeChunk
 
 
 class StubProvider:
@@ -15,7 +16,11 @@ class StubProvider:
 
     name = "stub"
 
-    async def generate(self, request: LookupRequest) -> LookupResponse:
+    async def generate(
+        self,
+        request: LookupRequest,
+        retrieved_chunks: list[KnowledgeChunk] | None = None,
+    ) -> LookupResponse:
         return LookupResponse(
             vehicle=AiVehicleResult(
                 brand=request.brand,

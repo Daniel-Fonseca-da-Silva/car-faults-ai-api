@@ -13,6 +13,7 @@ from app.schemas.lookup import LookupRequest, LookupResponse
 from app.schemas.translate import TranslateRequest, TranslateResponse
 from app.services.providers.base import ProviderError
 from app.services.providers.util import extract_json_object
+from app.services.retrieval.models import KnowledgeChunk
 
 _URL = "https://generativelanguage.googleapis.com/v1beta/models/{model}:generateContent"
 
@@ -25,11 +26,16 @@ class GeminiProvider:
         self._model = settings.GEMINI_MODEL
         self._timeout = settings.AI_TIMEOUT_SECONDS
 
-    async def generate(self, request: LookupRequest) -> LookupResponse:
+    async def generate(
+        self,
+        request: LookupRequest,
+        retrieved_chunks: list[KnowledgeChunk] | None = None,
+    ) -> LookupResponse:
         if not self._api_key:
             raise ProviderError("GEMINI_API_KEY is not configured")
 
-        prompt = f"{load_system_prompt()}\n\n{build_user_prompt(request)}"
+        user_prompt = build_user_prompt(request, retrieved_chunks=retrieved_chunks)
+        prompt = f"{load_system_prompt()}\n\n{user_prompt}"
         text = await self._generate_content(prompt)
 
         try:

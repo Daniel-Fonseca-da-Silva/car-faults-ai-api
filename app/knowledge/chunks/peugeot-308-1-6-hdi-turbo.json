@@ -1,0 +1,12 @@
+{
+  "id": "peugeot-308-1-6-hdi-turbo",
+  "brand": "Peugeot",
+  "model": "308",
+  "yearFrom": 2007,
+  "yearTo": 2014,
+  "engine": "1.6 HDi",
+  "issue": "Turbocharger failure from oil starvation",
+  "content": "The 1.6 HDi (shared with the Mini/Citroen/Ford DV6 family) can suffer turbo failure when oil changes are neglected or the oil feed pipe partially clogs, producing whistling noise, blue smoke and reduced power. Regular oil changes at the recommended interval significantly reduce risk; typically appears from 110,000 km.",
+  "severity": "high",
+  "typicalKm": 110000
+}

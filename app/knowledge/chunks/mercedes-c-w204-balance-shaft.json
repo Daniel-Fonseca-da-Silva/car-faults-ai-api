@@ -1,0 +1,12 @@
+{
+  "id": "mercedes-c-w204-balance-shaft",
+  "brand": "Mercedes-Benz",
+  "model": "C-Class",
+  "yearFrom": 2007,
+  "yearTo": 2014,
+  "engine": "2.2 CDI",
+  "issue": "Balance shaft gear and oil pump chain wear",
+  "content": "Early OM651 2.2 CDI engines in the W204 C-Class can suffer wear on the balance shaft gear and oil pump drive chain, producing a rattling noise and, if ignored, a risk of reduced oil pressure. A known factory-addressed issue on later production dates; inspect if the characteristic rattle is present.",
+  "severity": "high",
+  "typicalKm": 100000
+}

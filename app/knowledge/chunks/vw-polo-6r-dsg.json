@@ -1,0 +1,12 @@
+{
+  "id": "vw-polo-6r-dsg",
+  "brand": "Volkswagen",
+  "model": "Polo",
+  "yearFrom": 2009,
+  "yearTo": 2014,
+  "engine": "1.2 TSI",
+  "issue": "DSG dual-clutch gearbox mechatronic unit wear",
+  "content": "Jerky low-speed engagement, hesitation from a stop, or a mechatronic fault code on the 7-speed DSG. Root cause is clutch pack wear or mechatronic unit electronics degrading with age and high stop-start use, typically from 100,000 km. Left unaddressed it can strand the car in limp mode.",
+  "severity": "medium",
+  "typicalKm": 100000
+}

@@ -1,0 +1,12 @@
+{
+  "id": "kia-sportage-3-dpf",
+  "brand": "Kia",
+  "model": "Sportage",
+  "yearFrom": 2010,
+  "yearTo": 2015,
+  "engine": "1.7 CRDi",
+  "issue": "DPF regeneration issues on 1.7 CRDi",
+  "content": "The 1.7 CRDi Sportage can struggle with DPF regeneration when used mainly for short trips, causing a warning light and a noticeably higher idle during forced regeneration cycles. Not usually a durability problem if occasional longer drives are included; from around 90,000 km.",
+  "severity": "medium",
+  "typicalKm": 90000
+}

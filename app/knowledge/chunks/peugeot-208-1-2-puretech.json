@@ -1,0 +1,12 @@
+{
+  "id": "peugeot-208-1-2-puretech",
+  "brand": "Peugeot",
+  "model": "208",
+  "yearFrom": 2012,
+  "yearTo": 2019,
+  "engine": "1.2 PureTech",
+  "issue": "Timing chain elongation on 1.2 PureTech three-cylinder",
+  "content": "Early 1.2 PureTech engines are known for timing chain stretch, producing a rattling noise on start-up and, in severe cases, a sudden loss of power or engine failure. A recognised issue across the PSA group; if the rattle is heard the timing chain and tensioner should be inspected without delay.",
+  "severity": "high",
+  "typicalKm": 70000
+}

@@ -1,0 +1,12 @@
+{
+  "id": "suzuki-swift-4-clutch",
+  "brand": "Suzuki",
+  "model": "Swift",
+  "yearFrom": 2010,
+  "yearTo": 2017,
+  "engine": "1.2",
+  "issue": "Clutch wear from urban driving",
+  "content": "The light and low-cost clutch on this Swift generation wears faster than average with heavy urban stop-start use, producing slipping under load or a burning smell. A routine, low-cost wear item rather than a reliability defect; typically from 90,000 km.",
+  "severity": "low",
+  "typicalKm": 90000
+}

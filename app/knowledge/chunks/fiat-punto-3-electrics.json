@@ -1,0 +1,12 @@
+{
+  "id": "fiat-punto-3-electrics",
+  "brand": "Fiat",
+  "model": "Punto",
+  "yearFrom": 2005,
+  "yearTo": 2018,
+  "engine": "1.2 8V",
+  "issue": "Central electrics and dashboard warning light faults",
+  "content": "Older Punto models are prone to intermittent dashboard warning lights and central locking glitches caused by connector corrosion and a body control module sensitive to battery voltage drops. Mostly a comfort issue, common from 100,000 km or with an ageing battery.",
+  "severity": "low",
+  "typicalKm": 100000
+}
