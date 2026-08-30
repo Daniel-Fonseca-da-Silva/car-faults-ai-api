@@ -49,6 +49,9 @@ Nest needs structured known-issue JSON without embedding provider SDKs, prompts,
 3. `GET /health` - liveness only (no auth, no external calls)
 4. Provider chain with sequential failover; stub mode for local/CI
 5. Versioned prompts (bump folder to `v2` without changing provider code)
+6. RAG grounding on `/lookup` - a curated corpus of known issues is
+   keyword-matched to the vehicle and injected into the prompt so the model
+   answers from vetted data first (see [Knowledge base (RAG)](#knowledge-base-rag))
 
 ## How it fits
 
@@ -175,6 +178,57 @@ name otherwise, or the field is omitted - never a fabricated URL.
 
 **Response** (`200`): `{ "knownIssues": [ … ] }` with the same shape, translated to `targetLanguage`.
 
+## Knowledge base (RAG)
+
+`/lookup` grounds its answer in a small, curated corpus before falling back
+to the model's general knowledge - **Fase 1** of the RAG plan: plain keyword
+search over files, no vector DB. Applies only to `/lookup` (never
+`/translate`), and the service stays stateless - the corpus is versioned in
+the repo, not a database.
+
+```
+app/knowledge/
+  index.json          # lightweight metadata (id, brand, model, year range, engine) for scoring
+  chunks/
+    vw-polo-6c-ac.json # full chunk: issue, content, severity, typicalKm, sourceUrl
+    ...
+```
+
+Flow: `KeywordRetriever` (`app/services/retrieval/keyword_retriever.py`)
+scores `index.json` entries against the request (brand match required,
+then model/year-range/engine bonuses), loads the top `RAG_MAX_CHUNKS`
+matching chunk files, and `build_user_prompt` injects them between
+`<<<RETRIEVED_CONTEXT>>>` / `<<<END_RETRIEVED_CONTEXT>>>` markers - the
+system prompt instructs the model to ground matching `knownIssues` in that
+context and only cite a `sourceUrl` that appears in it. After the LLM call,
+`sanitize_known_issues` (`app/services/response_safety.py`) drops any
+`sources` entry that isn't one of the retrieved chunks' `sourceUrl` values,
+so a hallucinated URL can't ride on a real chunk's credibility. No chunks
+retrieved (unknown brand/model, or `RAG_ENABLED=false`) means no
+`RETRIEVED_CONTEXT` block and no grounding restriction - identical to
+pre-RAG behaviour.
+
+**Adding a chunk:**
+
+```bash
+python scripts/ingest_chunk.py \
+  --id vw-golf-mk7-carbon \
+  --brand Volkswagen --model Golf \
+  --year-from 2013 --year-to 2019 \
+  --engine "2.0 TDI" \
+  --issue "Intake manifold and EGR carbon buildup" \
+  --content "Direct-injection diesel Golf Mk7 2.0 TDI engines accumulate carbon deposits..." \
+  --severity medium --typical-km 120000 \
+  --source-url "https://example.com/some-real-source"
+```
+
+This writes/overwrites `app/knowledge/chunks/<id>.json` and upserts the
+matching entry in `app/knowledge/index.json`. Omit `--source-url` rather
+than inventing one - the honesty rule in the system prompt applies to
+curated content too. Fase 2 (embeddings + a vector store, once the corpus
+outgrows keyword search) is documented but not implemented - see
+[`solutions/03-rag.plan.md`](solutions/03-rag.plan.md).
+
 ## Getting started
 
 ```bash
@@ -210,6 +264,9 @@ Copy [`.env.example`](.env.example) to `.env`:
 | `GEMINI_MODEL` / `GROQ_MODEL` / `OPENROUTER_MODEL` | Model ids per provider |
 | `AI_TIMEOUT_SECONDS` | Per-provider request timeout |
 | `LOG_LEVEL` | Python logging level |
+| `RAG_ENABLED` | Enable keyword-search grounding on `/lookup` (default `true`; forced `false` in `.env.test`) |
+| `RAG_MAX_CHUNKS` | Max knowledge chunks injected into the prompt per request (default `5`) |
+| `KNOWLEDGE_DIR` | Path to the knowledge corpus (default `app/knowledge`) |
 
 `AI_PROVIDER_MODE=chain` with no provider keys falls back to the stub automatically.
 
