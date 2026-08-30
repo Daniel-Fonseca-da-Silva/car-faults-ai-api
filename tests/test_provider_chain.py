@@ -39,7 +39,7 @@ class FailingProvider:
     def __init__(self, name: str):
         self.name = name
 
-    async def generate(self, request):
+    async def generate(self, request, retrieved_chunks=None):
         raise ProviderError(f"{self.name} failed")
 
     async def translate(self, request):
@@ -49,8 +49,8 @@ class FailingProvider:
 class WorkingProvider:
     name = "working"
 
-    async def generate(self, request):
-        return await StubProvider().generate(request)
+    async def generate(self, request, retrieved_chunks=None):
+        return await StubProvider().generate(request, retrieved_chunks)
 
     async def translate(self, request):
         return await StubProvider().translate(request)

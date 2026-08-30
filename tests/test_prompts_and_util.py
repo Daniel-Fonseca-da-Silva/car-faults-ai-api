@@ -21,6 +21,7 @@ from app.schemas.lookup import (
 )
 from app.schemas.translate import TranslateRequest
 from app.services.providers.util import extract_json_object
+from app.services.retrieval.models import KnowledgeChunk
 
 
 def test_load_system_prompt_mentions_json_shape():
@@ -271,6 +272,83 @@ def test_build_user_prompt_includes_requested_language():
     prompt = build_user_prompt(request)
 
     assert "language=pt-PT" in prompt
+
+
+def test_load_system_prompt_mentions_retrieved_context():
+    prompt = load_system_prompt()
+
+    assert "<<<RETRIEVED_CONTEXT>>>" in prompt
+    assert "<<<END_RETRIEVED_CONTEXT>>>" in prompt
+
+
+# --- RAG (RETRIEVED_CONTEXT injection) ---------------------------------------
+
+_CHUNK = KnowledgeChunk(
+    id="vw-polo-6c-ac",
+    brand="Volkswagen",
+    model="Polo",
+    yearFrom=2014,
+    yearTo=2017,
+    engine="1.2 TSI",
+    issue="Air conditioning compressor failure",
+    content="Weak cooling common on the Polo 6C 1.2 TSI from 90,000 km.",
+    sourceUrl="https://example.com/vw-polo-ac",
+    severity="medium",
+    typicalKm=90000,
+)
+
+
+def test_build_user_prompt_without_chunks_omits_retrieved_context():
+    request = LookupRequest(
+        brand="Seat",
+        model="Ibiza",
+        year=2019,
+        engine="1.0 TSI",
+        fuelType=FuelType.DIESEL,
+        doors=5,
+    )
+
+    prompt = build_user_prompt(request)
+
+    assert "<<<RETRIEVED_CONTEXT>>>" not in prompt
+
+
+def test_build_user_prompt_with_chunks_includes_retrieved_context():
+    request = LookupRequest(
+        brand="Volkswagen",
+        model="Polo",
+        year=2015,
+        engine="1.2 TSI",
+        fuelType=FuelType.GASOLINE,
+        doors=5,
+    )
+
+    prompt = build_user_prompt(request, retrieved_chunks=[_CHUNK])
+
+    assert "<<<RETRIEVED_CONTEXT>>>" in prompt
+    assert "<<<END_RETRIEVED_CONTEXT>>>" in prompt
+    assert "Air conditioning compressor failure" in prompt
+    assert "https://example.com/vw-polo-ac" in prompt
+
+
+def test_build_user_prompt_places_retrieved_context_between_vehicle_data_and_examples():
+    request = LookupRequest(
+        brand="Volkswagen",
+        model="Polo",
+        year=2015,
+        engine="1.2 TSI",
+        fuelType=FuelType.GASOLINE,
+        doors=5,
+    )
+
+    prompt = build_user_prompt(request, retrieved_chunks=[_CHUNK])
+
+    vehicle_end = prompt.index("<<<END_VEHICLE_DATA>>>")
+    context_start = prompt.index("<<<RETRIEVED_CONTEXT>>>")
+    context_end = prompt.index("<<<END_RETRIEVED_CONTEXT>>>")
+    examples_marker = prompt.index("Below are two examples")
+
+    assert vehicle_end < context_start < context_end < examples_marker
 
 
 def test_load_translate_system_prompt_mentions_json_shape():

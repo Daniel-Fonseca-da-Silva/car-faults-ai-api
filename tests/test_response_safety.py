@@ -55,3 +55,48 @@ def test_sanitize_known_issues_keeps_valid_sources():
     sanitize_known_issues([issue])
 
     assert issue.sources == ["https://example.com/a"]
+
+
+# --- RAG grounding (allowed_sources) -----------------------------------------
+
+
+def test_sanitize_known_issues_drops_sources_not_in_allowed_sources():
+    issue = _known_issue(["https://fabricated.example.com/b"])
+
+    sanitize_known_issues([issue], allowed_sources={"https://chunk.example.com/a"})
+
+    assert issue.sources is None
+
+
+def test_sanitize_known_issues_keeps_sources_that_are_in_allowed_sources():
+    issue = _known_issue(["https://chunk.example.com/a"])
+
+    sanitize_known_issues([issue], allowed_sources={"https://chunk.example.com/a"})
+
+    assert issue.sources == ["https://chunk.example.com/a"]
+
+
+def test_sanitize_known_issues_filters_mixed_sources_against_allowed_sources():
+    issue = _known_issue(
+        ["https://chunk.example.com/a", "https://fabricated.example.com/b"]
+    )
+
+    sanitize_known_issues([issue], allowed_sources={"https://chunk.example.com/a"})
+
+    assert issue.sources == ["https://chunk.example.com/a"]
+
+
+def test_sanitize_known_issues_without_allowed_sources_keeps_any_valid_url():
+    issue = _known_issue(["https://any-valid.example.com/x"])
+
+    sanitize_known_issues([issue], allowed_sources=None)
+
+    assert issue.sources == ["https://any-valid.example.com/x"]
+
+
+def test_sanitize_known_issues_with_empty_allowed_sources_keeps_any_valid_url():
+    issue = _known_issue(["https://any-valid.example.com/x"])
+
+    sanitize_known_issues([issue], allowed_sources=set())
+
+    assert issue.sources == ["https://any-valid.example.com/x"]
