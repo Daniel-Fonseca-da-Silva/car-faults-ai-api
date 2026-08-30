@@ -9,6 +9,14 @@ from pydantic import BaseModel, ConfigDict, Field, model_validator
 _VEHICLE_FIELD_MAX_LENGTH = 64
 _VEHICLE_FIELD_PATTERN = r"^[A-Za-zÀ-ÖØ-öø-ÿ0-9 .\-/()+]+$"
 
+# Free-text fields (titles, descriptions, summaries, steps): same idea as
+# VehicleField but with common prose punctuation allowed, including the
+# "[pt-PT] " style locale-tag prefix used by the translate stub/providers.
+# The allow-list excludes "<", ">", "&", quotes and control chars by
+# construction, so it also rejects control-char and basic HTML/script
+# injection attempts without needing separate denylist checks.
+_SAFE_TEXT_PATTERN = r"^[A-Za-zÀ-ÖØ-öø-ÿ0-9 .\-/()+,\n!?;:\[\]]+$"
+
 _NAME_MAX_LENGTH = 200
 _TITLE_MAX_LENGTH = 200
 _DESCRIPTION_MAX_LENGTH = 4000
@@ -25,6 +33,10 @@ VehicleField = Annotated[
     ),
 ]
 Source = Annotated[str, Field(max_length=_SOURCE_MAX_LENGTH)]
+
+
+def _safe_text_field(max_length: int) -> Any:
+    return Field(max_length=max_length, pattern=_SAFE_TEXT_PATTERN)
 
 
 class IssueSeverity(str, Enum):
@@ -53,10 +65,10 @@ class LookupRequest(BaseModel):
 
     brand: VehicleField
     model: VehicleField
-    year: int
+    year: Annotated[int, Field(ge=1900, le=2030)]
     engine: VehicleField
     fuelType: FuelType
-    doors: int | None = None
+    doors: Annotated[int | None, Field(ge=0, le=10)] = None
     language: Locale = Locale.EN_GB
 
 
@@ -81,16 +93,16 @@ class TechSpecs(BaseModel):
 class AiFixResult(BaseModel):
     model_config = ConfigDict(extra="forbid")
 
-    summary: str = Field(max_length=_SUMMARY_MAX_LENGTH)
-    steps: str = Field(max_length=_STEPS_MAX_LENGTH)
+    summary: str = _safe_text_field(_SUMMARY_MAX_LENGTH)
+    steps: str = _safe_text_field(_STEPS_MAX_LENGTH)
     estimatedCostEur: float | None = None
 
 
 class AiKnownIssueResult(BaseModel):
     model_config = ConfigDict(extra="forbid")
 
-    title: str = Field(max_length=_TITLE_MAX_LENGTH)
-    description: str = Field(max_length=_DESCRIPTION_MAX_LENGTH)
+    title: str = _safe_text_field(_TITLE_MAX_LENGTH)
+    description: str = _safe_text_field(_DESCRIPTION_MAX_LENGTH)
     severity: IssueSeverity
     typicalKm: int | None = None
     sources: list[Source] | None = None

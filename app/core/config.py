@@ -24,6 +24,9 @@ class Settings(BaseSettings):
     LOG_LEVEL: str = "INFO"
 
     RATE_LIMIT: str = "60/minute"
+    REDIS_URL: str | None = None
+
+    MAX_REQUEST_BODY_BYTES: int = 262_144
 
     model_config = SettingsConfigDict(
         env_file=".env",
