@@ -1,0 +1,12 @@
+{
+  "id": "seat-ibiza-6j-coilpack",
+  "brand": "Seat",
+  "model": "Ibiza",
+  "yearFrom": 2008,
+  "yearTo": 2017,
+  "engine": "1.4 TSI",
+  "issue": "Ignition coil pack failure causing misfires",
+  "content": "Shares the VW Group EA111 1.4 TSI ignition system - coil packs can fail intermittently, causing rough idle and misfires, worse in damp weather. From around 100,000 km; prolonged misfiring can damage the catalytic converter if not addressed.",
+  "severity": "medium",
+  "typicalKm": 100000
+}

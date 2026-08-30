@@ -1,0 +1,12 @@
+{
+  "id": "opel-corsa-d-clutch",
+  "brand": "Opel",
+  "model": "Corsa",
+  "yearFrom": 2006,
+  "yearTo": 2014,
+  "engine": "1.3 CDTI",
+  "issue": "Clutch and dual-mass flywheel wear",
+  "content": "Corsa D 1.3 CDTI models can wear through the clutch and dual-mass flywheel faster than average, especially with frequent stop-start city driving, producing a slipping clutch feel or vibration at idle. Typically from 90,000 km; replacing both together is recommended.",
+  "severity": "medium",
+  "typicalKm": 90000
+}

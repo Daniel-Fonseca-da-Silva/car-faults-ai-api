@@ -1,0 +1,12 @@
+{
+  "id": "skoda-octavia-2-dsg",
+  "brand": "Skoda",
+  "model": "Octavia",
+  "yearFrom": 2004,
+  "yearTo": 2013,
+  "engine": "1.6 FSI",
+  "issue": "DSG gearbox mechatronic unit wear",
+  "content": "Shares the VW Group 7-speed dry-clutch DSG - mechatronic unit wear can cause jerky low-speed engagement or a fault code putting the box into limp mode. Typically from 100,000 km, more common with heavy stop-start city use.",
+  "severity": "medium",
+  "typicalKm": 100000
+}

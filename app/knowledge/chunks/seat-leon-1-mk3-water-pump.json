@@ -1,0 +1,12 @@
+{
+  "id": "seat-leon-1-mk3-water-pump",
+  "brand": "Seat",
+  "model": "Leon",
+  "yearFrom": 2012,
+  "yearTo": 2020,
+  "engine": "1.4 TSI",
+  "issue": "Electric water pump premature failure",
+  "content": "The electric auxiliary water pump used on 1.4/1.8 TSI engines in this generation Leon can fail early, leading to overheating warnings or poor cabin heating. Typically from 80,000-100,000 km; a failed pump should be replaced promptly to avoid overheating damage.",
+  "severity": "medium",
+  "typicalKm": 90000
+}

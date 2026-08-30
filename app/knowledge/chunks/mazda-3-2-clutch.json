@@ -1,0 +1,12 @@
+{
+  "id": "mazda-3-2-clutch",
+  "brand": "Mazda",
+  "model": "3",
+  "yearFrom": 2013,
+  "yearTo": 2018,
+  "engine": "2.2 SkyActiv-D",
+  "issue": "Dual-mass flywheel wear on 2.2 SkyActiv-D",
+  "content": "The 2.2 SkyActiv-D diesel's dual-mass flywheel can wear prematurely under heavy stop-start use, producing a rattle at idle or a shudder on clutch engagement. Typically from around 100,000-130,000 km; replacing flywheel and clutch together is recommended.",
+  "severity": "medium",
+  "typicalKm": 110000
+}

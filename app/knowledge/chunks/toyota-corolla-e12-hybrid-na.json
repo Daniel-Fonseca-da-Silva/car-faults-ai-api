@@ -1,0 +1,12 @@
+{
+  "id": "toyota-corolla-e12-hybrid-na",
+  "brand": "Toyota",
+  "model": "Corolla",
+  "yearFrom": 2000,
+  "yearTo": 2007,
+  "engine": "1.4 D-4D",
+  "issue": "Diesel injector wear on early D-4D units",
+  "content": "Early common-rail D-4D injectors in this generation Corolla can wear and lose spray precision over very high mileage, causing rough idle and slightly higher consumption. Generally reliable otherwise; typically appears only past 200,000 km.",
+  "severity": "low",
+  "typicalKm": 200000
+}

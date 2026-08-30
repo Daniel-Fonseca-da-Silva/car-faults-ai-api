@@ -1,0 +1,12 @@
+{
+  "id": "renault-clio-4-injectors",
+  "brand": "Renault",
+  "model": "Clio",
+  "yearFrom": 2012,
+  "yearTo": 2019,
+  "engine": "1.5 dCi",
+  "issue": "Fuel injector seal and pump wear on 1.5 dCi",
+  "content": "Rough idle, hard starting and a diesel smell are commonly traced to injector O-ring seals hardening or the high-pressure fuel pump wearing, especially on cars run frequently low on fuel. Appears from around 130,000 km; using poor-quality diesel accelerates it.",
+  "severity": "medium",
+  "typicalKm": 130000
+}

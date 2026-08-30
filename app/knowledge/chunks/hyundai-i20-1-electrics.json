@@ -1,0 +1,12 @@
+{
+  "id": "hyundai-i20-1-electrics",
+  "brand": "Hyundai",
+  "model": "i20",
+  "yearFrom": 2008,
+  "yearTo": 2014,
+  "engine": "1.2",
+  "issue": "Alternator and battery drain issues",
+  "content": "Some first-generation i20 units suffer premature alternator wear or a parasitic electrical drain, leading to a flat battery or dimming lights at idle. Usually a straightforward alternator or connector fix; from around 100,000 km.",
+  "severity": "low",
+  "typicalKm": 100000
+}

@@ -1,0 +1,12 @@
+{
+  "id": "bmw-3-e90-vanos",
+  "brand": "BMW",
+  "model": "3 Series",
+  "yearFrom": 2005,
+  "yearTo": 2012,
+  "engine": "2.0i",
+  "issue": "VANOS variable valve timing solenoid wear",
+  "content": "N46/N43 four-cylinder petrol engines in the E90 3 Series commonly develop VANOS solenoid wear, causing a rattle on cold start and reduced low-end torque. From around 100,000-130,000 km; a well documented issue with a known repair procedure rather than a major engine defect.",
+  "severity": "medium",
+  "typicalKm": 110000
+}

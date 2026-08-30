@@ -1,0 +1,12 @@
+{
+  "id": "audi-a3-8p-carbon",
+  "brand": "Audi",
+  "model": "A3",
+  "yearFrom": 2003,
+  "yearTo": 2012,
+  "engine": "2.0 TFSI",
+  "issue": "Intake valve carbon buildup on direct-injection FSI/TFSI",
+  "content": "Direct injection means no fuel washes over the intake valves, so carbon deposits build up over time, causing rough idle, hesitation and misfires. Typically needs a walnut-blast cleaning service from around 100,000-120,000 km; a known characteristic of this engine family rather than a defect.",
+  "severity": "medium",
+  "typicalKm": 110000
+}

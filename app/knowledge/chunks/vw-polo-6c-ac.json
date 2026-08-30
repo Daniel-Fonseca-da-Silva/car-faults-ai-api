@@ -1,0 +1,13 @@
+{
+  "id": "vw-polo-6c-ac",
+  "brand": "Volkswagen",
+  "model": "Polo",
+  "yearFrom": 2014,
+  "yearTo": 2017,
+  "engine": "1.2 TSI",
+  "issue": "Air conditioning compressor and refrigerant leak",
+  "content": "Weak or absent cooling on the Polo 6C 1.2 TSI is usually a slow refrigerant leak at hose fittings or the condenser, or a worn/seized compressor. Appears from around 90,000 km, more noticeable in summer, does not affect drivability but reduces cabin comfort.",
+  "severity": "medium",
+  "sourceUrl": "https://www.auto-doc.pt/info/volkswagen-polo-problemas-associados",
+  "typicalKm": 90000
+}

@@ -1,0 +1,12 @@
+{
+  "id": "citroen-c3-2-egr",
+  "brand": "Citroen",
+  "model": "C3",
+  "yearFrom": 2009,
+  "yearTo": 2016,
+  "engine": "1.4 HDi",
+  "issue": "EGR valve clogging and limp mode",
+  "content": "The 1.4 HDi EGR valve accumulates soot and can stick partially open or closed, triggering limp mode and an illuminated engine light. More common with short urban journeys and infrequent servicing, typically from 100,000 km.",
+  "severity": "medium",
+  "typicalKm": 100000
+}

@@ -1,0 +1,12 @@
+{
+  "id": "vw-golf-mk7-carbon",
+  "brand": "Volkswagen",
+  "model": "Golf",
+  "yearFrom": 2013,
+  "yearTo": 2019,
+  "engine": "2.0 TDI",
+  "issue": "Intake manifold and EGR carbon buildup",
+  "content": "Direct-injection diesel Golf Mk7 2.0 TDI engines accumulate carbon deposits on intake valves and the EGR valve, causing rough idle, reduced power and occasional limp mode. Typically appears from 120,000 km, worse with short urban trips that never reach full operating temperature.",
+  "severity": "medium",
+  "typicalKm": 120000
+}

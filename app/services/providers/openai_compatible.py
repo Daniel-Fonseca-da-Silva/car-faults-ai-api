@@ -12,6 +12,7 @@ from app.schemas.lookup import LookupRequest, LookupResponse
 from app.schemas.translate import TranslateRequest, TranslateResponse
 from app.services.providers.base import ProviderError
 from app.services.providers.util import extract_json_object
+from app.services.retrieval.models import KnowledgeChunk
 
 
 class OpenAICompatibleProvider:
@@ -34,10 +35,15 @@ class OpenAICompatibleProvider:
         self._timeout = timeout
         self._missing_key_env = missing_key_env
 
-    async def generate(self, request: LookupRequest) -> LookupResponse:
+    async def generate(
+        self,
+        request: LookupRequest,
+        retrieved_chunks: list[KnowledgeChunk] | None = None,
+    ) -> LookupResponse:
         self._require_api_key()
 
-        text = await self._complete(load_system_prompt(), build_user_prompt(request))
+        user_prompt = build_user_prompt(request, retrieved_chunks=retrieved_chunks)
+        text = await self._complete(load_system_prompt(), user_prompt)
 
         try:
             payload = extract_json_object(text)

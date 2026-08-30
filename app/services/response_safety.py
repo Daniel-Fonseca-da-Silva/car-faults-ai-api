@@ -38,7 +38,21 @@ def sanitize_sources(sources: list[str] | None) -> list[str] | None:
 
 def sanitize_known_issues(
     known_issues: list[AiKnownIssueResult],
+    *,
+    allowed_sources: set[str] | None = None,
 ) -> list[AiKnownIssueResult]:
+    """Sanitize `sources` on every issue, optionally grounding against RAG.
+
+    `allowed_sources` is the set of `sourceUrl` values from the knowledge
+    chunks retrieved for this request (RAG Fase 1). When given and
+    non-empty, any source the model cites that isn't one of those known-good
+    URLs is dropped too, on top of the usual https/domain validation - the
+    model must not attach a chunk's authority to a URL it made up itself.
+    """
     for issue in known_issues:
-        issue.sources = sanitize_sources(issue.sources)
+        sources = sanitize_sources(issue.sources)
+        if allowed_sources and sources:
+            grounded = [source for source in sources if source in allowed_sources]
+            sources = grounded or None
+        issue.sources = sources
     return known_issues

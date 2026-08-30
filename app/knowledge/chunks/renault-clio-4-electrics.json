@@ -1,0 +1,12 @@
+{
+  "id": "renault-clio-4-electrics",
+  "brand": "Renault",
+  "model": "Clio",
+  "yearFrom": 2012,
+  "yearTo": 2019,
+  "engine": "1.2 16V",
+  "issue": "UCH body control unit and window regulator faults",
+  "content": "Intermittent central locking, dashboard warning lights or slow/stuck electric windows are frequently caused by connector corrosion at the UCH (Unite Centrale Habitacle) or a worn window regulator cable. Mostly a comfort/reliability annoyance rather than a safety issue, common from 80,000 km.",
+  "severity": "low",
+  "typicalKm": 80000
+}

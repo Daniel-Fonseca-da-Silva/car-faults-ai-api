@@ -8,6 +8,7 @@ from app.services.providers.gemini import GeminiProvider
 from app.services.providers.groq import GroqProvider
 from app.services.providers.openrouter import OpenRouterProvider
 from app.services.providers.stub import StubProvider
+from app.services.retrieval.keyword_retriever import KeywordRetriever
 from app.services.translate_service import TranslateService
 
 PRODUCTION_APP_ENVS = {"production", "prod"}
@@ -47,7 +48,14 @@ def build_provider_chain(settings: Settings) -> ProviderChain:
 
 
 def get_lookup_service(settings: Settings = Depends(get_settings)) -> LookupService:
-    return LookupService(build_provider_chain(settings))
+    retriever = (
+        KeywordRetriever(settings.KNOWLEDGE_DIR) if settings.RAG_ENABLED else None
+    )
+    return LookupService(
+        build_provider_chain(settings),
+        retriever,
+        rag_max_chunks=settings.RAG_MAX_CHUNKS,
+    )
 
 
 def get_translate_service(

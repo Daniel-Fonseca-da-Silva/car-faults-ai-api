@@ -1,0 +1,12 @@
+{
+  "id": "renault-megane-3-dpf",
+  "brand": "Renault",
+  "model": "Megane",
+  "yearFrom": 2008,
+  "yearTo": 2015,
+  "engine": "1.5 dCi",
+  "issue": "DPF clogging on short urban journeys",
+  "content": "The diesel particulate filter on the Megane III 1.5 dCi clogs prematurely when the car is mostly used for short trips that never reach the temperature needed for passive regeneration, triggering a DPF warning light and reduced power. From around 100,000 km if driven mostly in town.",
+  "severity": "medium",
+  "typicalKm": 100000
+}

@@ -1,0 +1,12 @@
+{
+  "id": "ford-focus-mk3-dpf",
+  "brand": "Ford",
+  "model": "Focus",
+  "yearFrom": 2011,
+  "yearTo": 2018,
+  "engine": "1.6 TDCi",
+  "issue": "DPF and EGR clogging from urban use",
+  "content": "1.6 TDCi Focus Mk3 units are prone to DPF and EGR clogging when driven mostly in town, producing reduced power and a DPF warning light. Occasional motorway runs to allow regeneration reduce the risk; issue typically appears from 100,000 km.",
+  "severity": "medium",
+  "typicalKm": 100000
+}

@@ -5,6 +5,7 @@ from typing import TypeVar
 from app.schemas.lookup import LookupRequest, LookupResponse
 from app.schemas.translate import TranslateRequest, TranslateResponse
 from app.services.providers.base import AiLookupProvider, ProviderError
+from app.services.retrieval.models import KnowledgeChunk
 
 logger = logging.getLogger(__name__)
 
@@ -19,8 +20,14 @@ class ProviderChain:
     def __init__(self, providers: list[AiLookupProvider]) -> None:
         self._providers = providers
 
-    async def generate(self, request: LookupRequest) -> LookupResponse:
-        return await self._run("ai_lookup", lambda provider: provider.generate(request))
+    async def generate(
+        self,
+        request: LookupRequest,
+        retrieved_chunks: list[KnowledgeChunk] | None = None,
+    ) -> LookupResponse:
+        return await self._run(
+            "ai_lookup", lambda provider: provider.generate(request, retrieved_chunks)
+        )
 
     async def translate(self, request: TranslateRequest) -> TranslateResponse:
         return await self._run(
