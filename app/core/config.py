@@ -21,6 +21,7 @@ class Settings(BaseSettings):
 
     AI_TIMEOUT_SECONDS: float = 20.0
     AI_PROVIDER_MODE: Literal["chain", "stub"] = "chain"
+    AI_LOG_METRICS: bool = True
 
     LOG_LEVEL: str = "INFO"
 
