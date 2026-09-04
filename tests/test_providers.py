@@ -420,7 +420,7 @@ async def test_openai_compatible_requests_json_object_mode():
     assert kwargs["json"]["response_format"] == {"type": "json_object"}
 
 
-async def test_gemini_requests_json_mime_type_and_response_schema():
+async def test_gemini_requests_json_mime_type_without_response_schema():
     provider = GeminiProvider(_settings(GEMINI_API_KEY="key"))
     fake = FakeResponse(
         200,
@@ -442,7 +442,7 @@ async def test_gemini_requests_json_mime_type_and_response_schema():
     _, kwargs = mock_post.call_args
     generation_config = kwargs["json"]["generationConfig"]
     assert generation_config["responseMimeType"] == "application/json"
-    assert "responseSchema" in generation_config
+    assert "responseSchema" not in generation_config
     assert "systemInstruction" in kwargs["json"]
     assert "contents" in kwargs["json"]
 
