@@ -1,3 +1,4 @@
+import unicodedata
 from enum import Enum
 from typing import Annotated, Any
 
@@ -9,39 +10,36 @@ from pydantic import BaseModel, BeforeValidator, ConfigDict, Field, model_valida
 _VEHICLE_FIELD_MAX_LENGTH = 64
 _VEHICLE_FIELD_PATTERN = r"^[A-Za-zÀ-ÖØ-öø-ÿ0-9 .\-/()+]+$"
 
-# Free-text fields (titles, descriptions, summaries, steps): same idea as
-# VehicleField but with common prose punctuation allowed, including the
-# "[pt-PT] " style locale-tag prefix used by the translate stub/providers.
-# "'" and "%" are included because they show up in ordinary LLM prose
-# (contractions, EV charge percentages - see app/prompts/v1/electric_example.json).
-# The allow-list excludes "<", ">", "&", double quotes and control chars by
-# construction, so it also rejects control-char and basic HTML/script
-# injection attempts without needing separate denylist checks.
-_SAFE_TEXT_PATTERN = r"^[A-Za-zÀ-ÖØ-öø-ÿ0-9 .\-/()+,\n!?;:\[\]'%]+$"
-
-# Unicode punctuation that well-behaved LLM prose commonly uses but that
-# falls outside the safe-text allow-list. Normalized to its closest ASCII
-# equivalent *before* pattern validation so legitimate prose isn't rejected.
-# This is a small, explicit translation table - not a generic "strip
-# anything invalid" pass, which would turn "<script>alert(1)</script>" into
-# text that passes the pattern.
+# LLM output prose (titles, descriptions, summaries, steps): intentionally
+# loose so provider text is not rejected for ordinary punctuation. We still
+# NFC-normalize, map a few typographic characters, strip C0 controls (keep
+# newlines), and reject angle brackets to block basic HTML/script markup.
 _PROSE_PUNCTUATION_NORMALIZATION = {
-    "‘": "'",  # left single quotation mark
-    "’": "'",  # right single quotation mark / apostrophe
-    "ʼ": "'",  # modifier letter apostrophe
-    "–": "-",  # en dash
-    "—": "-",  # em dash
-    "“": "",  # left double quotation mark
-    "”": "",  # right double quotation mark
-    "…": "...",  # horizontal ellipsis
+    "‘": "'",
+    "’": "'",
+    "ʼ": "'",
+    "–": "-",
+    "—": "-",
+    "“": '"',
+    "”": '"',
+    "«": '"',
+    "»": '"',
+    "…": "...",
+    "\u00a0": " ",
 }
 
 
-def _normalize_prose_punctuation(value: Any) -> Any:
+def _normalize_llm_prose(value: Any) -> Any:
     if not isinstance(value, str):
         return value
+    value = unicodedata.normalize("NFC", value)
     for source, replacement in _PROSE_PUNCTUATION_NORMALIZATION.items():
         value = value.replace(source, replacement)
+    value = "".join(
+        ch for ch in value if ch == "\n" or (ord(ch) >= 32 and ord(ch) != 127)
+    )
+    if "<" in value or ">" in value:
+        raise ValueError("HTML/angle brackets are not allowed in prose fields")
     return value
 
 
@@ -64,23 +62,23 @@ Source = Annotated[str, Field(max_length=_SOURCE_MAX_LENGTH)]
 
 TitleField = Annotated[
     str,
-    BeforeValidator(_normalize_prose_punctuation),
-    Field(max_length=_TITLE_MAX_LENGTH, pattern=_SAFE_TEXT_PATTERN),
+    BeforeValidator(_normalize_llm_prose),
+    Field(max_length=_TITLE_MAX_LENGTH),
 ]
 DescriptionField = Annotated[
     str,
-    BeforeValidator(_normalize_prose_punctuation),
-    Field(max_length=_DESCRIPTION_MAX_LENGTH, pattern=_SAFE_TEXT_PATTERN),
+    BeforeValidator(_normalize_llm_prose),
+    Field(max_length=_DESCRIPTION_MAX_LENGTH),
 ]
 SummaryField = Annotated[
     str,
-    BeforeValidator(_normalize_prose_punctuation),
-    Field(max_length=_SUMMARY_MAX_LENGTH, pattern=_SAFE_TEXT_PATTERN),
+    BeforeValidator(_normalize_llm_prose),
+    Field(max_length=_SUMMARY_MAX_LENGTH),
 ]
 StepsField = Annotated[
     str,
-    BeforeValidator(_normalize_prose_punctuation),
-    Field(max_length=_STEPS_MAX_LENGTH, pattern=_SAFE_TEXT_PATTERN),
+    BeforeValidator(_normalize_llm_prose),
+    Field(max_length=_STEPS_MAX_LENGTH),
 ]
 
 
