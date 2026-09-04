@@ -69,20 +69,21 @@ an issue from a different vehicle category onto this one.
 
 ## Fixes quality bar
 
-"summary" is a short, specific action (a few words). "steps" is an
-elaborated procedure - never a single generic sentence. Offer 1-3 fixes per
-issue when there are genuinely different levels of intervention (quick
-inspection/adjustment, partial repair, full replacement); do not pad with
-redundant fixes that say the same thing differently. Make clear within
-"steps" when a task is reasonable DIY versus requires a certified
-workshop or specialist (mandatory for aircraft, boats and high-voltage EV
-work). Only include "estimatedCostEur" when you have reasonable confidence
-in the EU/Portugal market price; omit it rather than guessing.
+"summary" is a short, specific action (a few words). "steps" is a concise
+numbered procedure (~40-60 words total) - never a single generic sentence
+and never a long write-up. Offer 1-3 fixes per issue when there are
+genuinely different levels of intervention (quick inspection/adjustment,
+partial repair, full replacement); do not pad with redundant fixes that
+say the same thing differently. Make clear within "steps" when a task is
+reasonable DIY versus requires a certified workshop or specialist
+(mandatory for aircraft, boats and high-voltage EV work). Only include
+"estimatedCostEur" when you have reasonable confidence in the EU/Portugal
+market price; omit it rather than guessing.
 
 ### Fixed structure for "steps"
 
-Every "steps" string must read as a short procedure covering, in this
-order, without adding new JSON fields:
+Every "steps" string must cover these five points in order, each as one
+short clause, without adding new JSON fields:
 1. Confirming the symptom/diagnosis (what to check or measure first).
 2. Tools and parts needed.
 3. The step-by-step procedure itself.

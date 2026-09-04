@@ -14,51 +14,51 @@
   "knownIssues": [
     {
       "title": "Accelerated battery capacity loss without active thermal management",
-      "description": "This generation lacks active liquid cooling for the traction battery, so cells degrade faster than liquid-cooled EVs under frequent DC fast charging or hot-climate use, showing up as a lower usable range and fewer bars on the battery capacity gauge. It typically becomes noticeable from around 60,000-80,000 km or 4-5 years, and severe cases reduce real-world range enough to affect longer trips, though it does not affect safety.",
+      "description": "No liquid battery cooling means faster capacity loss with frequent DC fast charging or hot climates, usually noticeable from ~60,000-80,000 km; range drops, safety unaffected.",
       "severity": "medium",
       "typicalKm": 70000,
       "sources": ["https://www.mynissanleaf.com/"],
       "fixes": [
         {
           "summary": "Confirm degradation with a battery health check",
-          "steps": "1) Confirm the symptom by comparing the dashboard capacity/range estimate against the original rated range and, if available, reading battery State of Health (SOH) via an OBD app such as LeafSpy. 2) Tools/parts: OBD-II Bluetooth adapter, LeafSpy or equivalent app. 3) Connect the adapter, read SOH and remaining capacity bars, and log results over a few charge cycles to confirm a genuine downward trend rather than a temporary display glitch. 4) Verify by comparing the reading against expected degradation curves for the model year and mileage. 5) No certified workshop needed for this diagnostic step; only escalate if SOH is abnormally low for the mileage, which may indicate a warranty claim."
+          "steps": "1) Confirm lower range/capacity vs original rating; read SOH if possible. 2) Tools: OBD-II adapter, LeafSpy or equivalent. 3) Log SOH over a few charge cycles. 4) Compare against expected degradation for year/mileage. 5) Escalate only if SOH is abnormally low for mileage."
         },
         {
           "summary": "Prefer AC charging and moderate charge limits to slow further degradation",
-          "steps": "1) Confirm the vehicle is regularly DC fast-charged or routinely charged to 100% and left at high state of charge. 2) Tools/parts: none - this is a usage-pattern change. 3) Switch routine charging to AC (Type 2) charging, avoid frequent DC fast charging, and where the vehicle allows it, target an 80% daily charge limit rather than 100%. 4) Verify over subsequent months that the SOH decline rate slows compared to the prior logged trend. 5) No workshop escalation needed - this is a preventive habit change, not a repair."
+          "steps": "1) Confirm frequent DC fast charging or routine 100% charge. 2) Tools: none - usage change. 3) Prefer AC charging and ~80% daily limit when available. 4) Check SOH decline slows over following months. 5) No workshop needed - preventive habit."
         },
         {
           "summary": "Replace or recondition the traction battery pack",
-          "steps": "1) Confirm degradation is severe enough (well below expected SOH for the mileage/age) via SOH readings and range testing before considering replacement. 2) Tools/parts: replacement or reconditioned high-voltage battery pack, specialist high-voltage tooling and PPE. 3) A certified EV technician isolates and removes the high-voltage battery pack, fits a replacement or reconditioned pack, and re-commissions the high-voltage system. 4) Verify via the dealer/specialist's post-installation SOH check and a full charge/range test. 5) This step must always be done at a certified EV workshop due to high-voltage risk - never attempt pack removal or opening as a DIY task.",
+          "steps": "1) Confirm severe SOH/range loss before replacement. 2) Tools: HV pack, specialist tooling and PPE. 3) Certified EV tech removes, fits and re-commissions pack. 4) Verify SOH and a full charge/range test. 5) Always certified EV workshop - never DIY HV pack work.",
           "estimatedCostEur": 6500
         }
       ]
     },
     {
       "title": "Onboard charger (OBC) intermittent AC charging faults",
-      "description": "Some vehicles develop an intermittent fault in the onboard AC charger, causing charging to stop early, charge slower than expected, or fail to start on AC (Type 2/wallbox) charging while DC fast charging continues to work normally. It can appear at any mileage and, while it does not affect driving safety, it limits practical daily use if home AC charging becomes unreliable.",
+      "description": "Intermittent OBC faults stop, slow or block AC charging while DC fast charging still works; limits daily use, not driving safety.",
       "severity": "medium",
       "fixes": [
         {
           "summary": "Diagnose the onboard charger with a dealer scan tool",
-          "steps": "1) Confirm the fault is charger-specific by testing with a different cable/wallbox and, if it persists, checking for stored fault codes with a manufacturer-level diagnostic tool. 2) Tools/parts: manufacturer-compatible diagnostic scanner (dealer-level, not generic OBD-II). 3) A technician reads high-voltage system fault codes to isolate whether the OBC, the charge port or the wallbox/cable is at fault. 4) Verify by clearing codes and performing a full AC charge cycle to confirm no fault recurs. 5) This diagnostic step should be done at a workshop with EV-specific tooling rather than generic OBD-II readers.",
+          "steps": "1) Confirm fault persists with another cable/wallbox. 2) Tools: dealer-level EV diagnostic scanner. 3) Tech reads HV codes to isolate OBC vs port/cable. 4) Clear codes and complete a full AC charge. 5) Workshop with EV tooling, not generic OBD-II.",
           "estimatedCostEur": 90
         },
         {
           "summary": "Replace a faulty onboard charger unit",
-          "steps": "1) Confirm the OBC itself (not the cable, wallbox or charge port) is the confirmed fault source via dealer diagnostics. 2) Tools/parts: replacement OBC unit, high-voltage isolation equipment. 3) A certified EV technician isolates the high-voltage system, removes and replaces the onboard charger unit, and re-commissions the system. 4) Verify with a full AC charge cycle at both slow and higher AC rates. 5) Always performed at a certified EV workshop due to high-voltage risk.",
+          "steps": "1) Confirm OBC is the fault, not cable/port. 2) Tools: replacement OBC, HV isolation equipment. 3) Certified EV tech isolates HV, replaces OBC, re-commissions. 4) Verify full AC charge at slow and higher rates. 5) Always certified EV workshop.",
           "estimatedCostEur": 900
         }
       ]
     },
     {
       "title": "12V auxiliary battery drain and failure",
-      "description": "The small 12V battery that powers accessories and the DC-DC converter startup circuit can fail or drain faster than expected, leaving the car unable to 'wake up' its high-voltage system even though the traction battery is fully charged. It is unrelated to main battery health and tends to appear after the vehicle sits unused for extended periods.",
+      "description": "Failed or drained 12V auxiliary battery prevents the car from waking the HV system even with a charged traction battery, often after long sits.",
       "severity": "medium",
       "fixes": [
         {
           "summary": "Test and replace the 12V auxiliary battery",
-          "steps": "1) Confirm diagnosis: the car fails to power on or charge despite a healthy high-voltage battery, and the 12V battery tests low on a multimeter/battery tester. 2) Tools/parts: 12V battery tester or multimeter, correct-spec replacement 12V battery. 3) Test the 12V battery's voltage and load capacity, and replace it if it fails the test, ensuring correct polarity and a secure connection. 4) Verify by confirming the vehicle powers on and charges normally afterward. 5) DIY-feasible for those comfortable with basic 12V battery replacement; escalate to a workshop if the DC-DC converter itself is suspected rather than the battery.",
+          "steps": "1) Confirm no power-on/charge despite healthy HV pack; 12V tests low. 2) Tools: multimeter/tester, correct-spec 12V battery. 3) Test and replace if failed; check polarity and terminals. 4) Confirm vehicle powers on and charges. 5) DIY for basic 12V swap; escalate if DC-DC converter suspected.",
           "estimatedCostEur": 100
         }
       ]

@@ -13,69 +13,69 @@
   "knownIssues": [
     {
       "title": "Instrument cluster / speedometer failure",
-      "description": "The speedometer and warning lights stop working reliably, usually because a solder joint on the instrument cluster's circuit board cracks with vibration and heat cycling over time, rather than a fault in the gauge or sender itself. It typically appears from around 40,000 km and, while not an engine-safety issue, riding without a working speedometer is a legal and practical concern.",
+      "description": "Speedometer and warning lights fail from cracked solder joints on the cluster PCB, typically from ~40,000 km; legal/practical concern, not engine safety.",
       "severity": "high",
       "typicalKm": 40000,
       "fixes": [
         {
           "summary": "Resolder the cluster circuit board",
-          "steps": "1) Confirm diagnosis: speedometer needle stuck or erratic and/or warning lights not illuminating on ignition, with the cluster otherwise powering on. 2) Tools/parts: soldering iron, fine solder, multimeter, small Torx/Phillips screwdrivers to remove the cluster. 3) Remove the instrument cluster, open the housing, inspect the PCB under magnification for cracked or dry joints (especially around the connector pins and stepper motor), and resolder them. 4) Reassemble, refit the cluster and verify the speedometer sweeps correctly and warning lights function on ignition-on. 5) This is a feasible DIY repair for someone comfortable soldering small electronics; escalate to a specialist if the stepper motor itself is faulty rather than the solder joints.",
+          "steps": "1) Confirm stuck/erratic needle or dead warning lights. 2) Tools: soldering iron, fine solder, multimeter, small screwdrivers. 3) Remove cluster, resolder cracked PCB joints. 4) Refit and check speedo sweep and lights. 5) DIY if comfortable soldering; escalate if stepper motor failed.",
           "estimatedCostEur": 60
         },
         {
           "summary": "Replace with a compatible cluster from another year or model",
-          "steps": "1) Confirm the existing cluster is unrepairable or the fault is intermittent enough that a swap is more practical than resoldering. 2) Tools/parts: a used or aftermarket cluster confirmed compatible with this VL125 generation, wiring adapter if connectors differ. 3) Remove the failed cluster, fit the replacement, reconnect the wiring loom and recalibrate the odometer/trip settings as needed for the replacement unit. 4) Verify the speedometer, odometer and warning lights all function correctly across a short test ride. 5) No certified workshop escalation needed unless the wiring loom itself is damaged.",
+          "steps": "1) Confirm resolder is impractical or fault keeps returning. 2) Tools: compatible used/aftermarket cluster, adapter if needed. 3) Swap cluster and reconnect loom. 4) Verify speedo, odometer and lights on a short ride. 5) Escalate only if wiring loom is damaged.",
           "estimatedCostEur": 120
         }
       ]
     },
     {
       "title": "Fragile electrical system and connector corrosion",
-      "description": "Compared to the simple and robust engine and drivetrain, the wiring harness, connectors and switches are the more common source of intermittent electrical faults on this model - flickering lights, erratic neutral/side-stand indicators or an occasional no-start. It tends to worsen with age and exposure to damp storage rather than mileage, and can leave the bike temporarily unrideable if a critical earth or ignition connector fails.",
+      "description": "Corroded connectors and wiring cause intermittent lights, indicators or no-start, worse with damp storage; can leave the bike temporarily unrideable.",
       "severity": "medium",
       "fixes": [
         {
           "summary": "Inspect and repair corroded or damaged wiring and connectors",
-          "steps": "1) Confirm diagnosis: intermittent electrical faults that change with vibration or when wiggling a connector, checked with a multimeter for continuity/resistance at suspect earths and connectors. 2) Tools/parts: multimeter, contact cleaner, dielectric grease, replacement connectors/crimps and heat-shrink if wiring is damaged. 3) Check all earth points, connectors and switches for corrosion or damage, clean contacts with contact cleaner, repair or replace any damaged wiring sections. 4) Verify by re-testing continuity at the repaired points and confirming the original symptom no longer occurs across several ignition cycles. 5) DIY-feasible with basic electrical tools; escalate to a specialist only if the main wiring harness itself needs partial replacement.",
+          "steps": "1) Confirm faults that change when wiggling connectors. 2) Tools: multimeter, contact cleaner, dielectric grease, crimps. 3) Clean earths/connectors; repair damaged wiring. 4) Recheck continuity and symptom over several cycles. 5) DIY with basic tools; escalate for main-harness replacement.",
           "estimatedCostEur": 50
         }
       ]
     },
     {
       "title": "Excessive vibration at higher engine speed",
-      "description": "The single-cylinder engine transmits noticeable vibration through the frame, footpegs and handlebars at higher revs, which over time can loosen bodywork and mirror fasteners and fatigue mounted components such as mirrors or the number plate bracket. This is inherent to the engine design rather than a fault, but ignoring it can lead to lost fasteners or cracked brackets.",
+      "description": "Single-cylinder vibration loosens fasteners and fatigues mounts over time; inherent to the design, but ignored fasteners can be lost.",
       "severity": "medium",
       "fixes": [
         {
           "summary": "Check and retighten fasteners, inspect mounts",
-          "steps": "1) Confirm which fasteners or panels are loose or rattling by inspecting bodywork, mirrors and the number plate bracket after a highway-speed ride. 2) Tools/parts: metric socket/wrench set, thread-locking compound for fasteners prone to repeated loosening. 3) Retighten bodywork, mirror and engine mount fasteners to spec, applying thread-locker where appropriate, and inspect rubber engine mounts and footpeg/handlebar mounts for cracking or wear. 4) Verify by riding at higher revs and confirming no new rattles or looseness. 5) No workshop escalation needed unless a mount itself is cracked or a threaded insert has stripped."
+          "steps": "1) Confirm loose panels, mirrors or brackets after a fast ride. 2) Tools: metric socket set, thread-locker. 3) Retighten fasteners; inspect rubber mounts. 4) Ride again and confirm no new rattles. 5) Escalate only if a mount is cracked or an insert stripped."
         }
       ]
     },
     {
       "title": "Carburettor gumming with poor-quality or stale fuel",
-      "description": "The carburettor accumulates dirt and forms a white, paste-like residue when run on poor-quality or stale fuel, especially if the bike sits unused for weeks, causing rough idling, hesitation on throttle or stalling. It is a fuel-system issue rather than an engine defect and worsens the longer degraded fuel is left in the tank and float bowl.",
+      "description": "Stale or poor fuel gums the carburettor, causing rough idle, hesitation or stalling, especially after the bike sits unused.",
       "severity": "medium",
       "fixes": [
         {
           "summary": "Clean the carburettor and fuel system",
-          "steps": "1) Confirm diagnosis: rough idle, hesitation or stalling that improves temporarily after throttle blips, with visible white/chalky residue in the float bowl or jets on inspection. 2) Tools/parts: carburettor cleaner spray, small jet-cleaning wire/kit, replacement float bowl gasket, fresh fuel. 3) Remove and disassemble the carburettor, clean jets and internal passages with carburettor cleaner, and flush the fuel line and tank of contaminated fuel. 4) Reassemble, refit, and verify smooth idle and clean throttle response across a full rev range. 5) DIY-feasible for a single-carburettor bike with basic tools; escalate to a specialist only if idle/mixture screws are damaged or missing.",
+          "steps": "1) Confirm rough idle/hesitation and residue in the float bowl. 2) Tools: carb cleaner, jet kit, bowl gasket, fresh fuel. 3) Clean jets/passages; flush tank and line. 4) Verify smooth idle and throttle response. 5) DIY for a single carb; escalate if mixture screws are damaged.",
           "estimatedCostEur": 40
         },
         {
           "summary": "Use quality fuel and fit an inline fuel filter",
-          "steps": "1) Confirm the bike is otherwise mechanically sound and the issue is fuel-quality related rather than a worn carburettor. 2) Tools/parts: inline fuel filter compatible with the fuel line diameter, fresh fuel from a reputable station. 3) Fit the inline filter between the tank and carburettor, and going forward refuel only with fuel from reputable stations. 4) Verify over several weeks of normal use that rough running does not recur. 5) No workshop escalation needed."
+          "steps": "1) Confirm the bike is sound and the issue is fuel quality. 2) Tools: inline fuel filter, fresh fuel. 3) Fit filter between tank and carb; use reputable fuel. 4) Confirm rough running does not return over weeks. 5) No workshop escalation needed."
         }
       ]
     },
     {
       "title": "Limited performance for sustained high-speed or long-distance use",
-      "description": "As a 125cc single, top speed is limited to roughly 80-100 km/h and the engine is underpowered for sustained motorway riding or long trips against headwinds or with a passenger, making it best suited to urban and short journeys rather than a mechanical fault to be fixed.",
+      "description": "As a 125cc single, top speed is roughly 80-100 km/h; better for urban/short trips than sustained motorway use - usage limit, not a fault.",
       "severity": "low",
       "fixes": [
         {
           "summary": "Match usage to the bike's power class",
-          "steps": "1) Confirm this is a usage-expectation issue rather than a fault: acceleration and top speed feel adequate in town but strained on motorways or with a pillion. 2) Tools/parts: none - this is a riding-pattern adjustment, not a repair. 3) Favor urban and secondary-road routes, and plan longer trips around realistic average speeds and rest stops rather than sustained high-speed riding. 4) Verify by confirming the riding experience matches expectations once routes are adjusted. 5) No escalation applicable - this is not a repairable defect."
+          "steps": "1) Confirm town power is fine but motorway/pillion use feels strained. 2) Tools: none - riding-pattern change. 3) Prefer urban/secondary routes and realistic trip pacing. 4) Confirm expectations match adjusted routes. 5) No escalation - not a repairable defect."
         }
       ]
     }

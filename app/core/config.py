@@ -15,9 +15,16 @@ class Settings(BaseSettings):
     GROQ_API_KEY: str | None = None
     OPENROUTER_API_KEY: str | None = None
 
-    GEMINI_MODEL: str = "gemini-1.5-flash"
-    GROQ_MODEL: str = "llama-3.3-70b-versatile"
+    GEMINI_MODEL: str = "gemini-3.6-flash"
+    GROQ_MODEL: str = "openai/gpt-oss-120b"
     OPENROUTER_MODEL: str = "meta-llama/llama-3.3-70b-instruct:free"
+
+    # OpenAI-compatible JSON mode (`response_format: json_object`).
+    # Some free OpenRouter models reject this and return HTTP 400 - set the
+    # matching flag to false to omit it (prompt + extract_json_object still
+    # enforce JSON).
+    AI_RESPONSE_FORMAT_JSON: bool = True
+    OPENROUTER_JSON_OBJECT: bool = True
 
     AI_TIMEOUT_SECONDS: float = 20.0
     AI_PROVIDER_MODE: Literal["chain", "stub"] = "chain"
