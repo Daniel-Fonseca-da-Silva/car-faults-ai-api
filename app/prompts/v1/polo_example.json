@@ -14,35 +14,35 @@
   "knownIssues": [
     {
       "title": "Air conditioning refrigerant loss and compressor wear",
-      "description": "Weak, intermittent or absent cooling is common on this generation, usually caused by a slow refrigerant leak at hose fittings or the condenser, or by a worn/seized compressor. It typically appears from around 90,000 km onward, is more noticeable in summer, and does not affect drivability but reduces cabin comfort.",
+      "description": "Weak or absent cooling from a slow refrigerant leak or worn compressor, typically from around 90,000 km; comfort issue only.",
       "severity": "medium",
       "typicalKm": 90000,
       "sources": ["https://www.auto-doc.pt/info/volkswagen-polo-problemas-associados"],
       "fixes": [
         {
           "summary": "Recharge refrigerant and seal a leak",
-          "steps": "1) Confirm the diagnosis with a manifold gauge set to check refrigerant pressure and a UV dye/electronic leak detector to locate the leak. 2) Tools/parts: manifold gauge set, UV dye or electronic sniffer, replacement refrigerant (R134a), vacuum pump. 3) Vacuum the A/C circuit to remove air and moisture, seal or replace the leaking fitting/hose, then recharge to the specified refrigerant weight from the underbonnet label. 4) Verify by running the A/C for 15-20 minutes and confirming stable low/high side pressures and vent temperature below 10°C. 5) If the leak is inside the condenser core or evaporator, escalate to a workshop with A/C recovery equipment rather than attempting it as a driveway DIY job."
+          "steps": "1) Confirm low pressure / leak with gauges or dye. 2) Tools: gauges, dye, R134a, vacuum pump. 3) Vacuum, seal leak, recharge to label weight. 4) Run A/C ~15 min; check pressures and vent temp. 5) Escalate if condenser/evaporator needs recovery gear."
         },
         {
           "summary": "Replace a seized or noisy A/C compressor",
-          "steps": "1) Confirm diagnosis: a compressor that is noisy, seized, or not engaging the clutch when A/C is requested, verified with an A/C system scan or manual clutch check. 2) Tools/parts: replacement compressor, receiver-drier, refrigerant, vacuum pump, torque wrench. 3) Recover the existing refrigerant, remove the drive belt, disconnect the refrigerant lines, replace the compressor and receiver-drier, then evacuate the system to remove moisture. 4) Recharge with the correct refrigerant and oil quantities and verify stable pressures and cold air at the vents. 5) This job requires refrigerant recovery/handling equipment - have it done at a workshop rather than releasing refrigerant to atmosphere.",
+          "steps": "1) Confirm noisy, seized or non-engaging clutch. 2) Tools: compressor, receiver-drier, refrigerant, vacuum pump. 3) Recover refrigerant, replace compressor and drier, evacuate. 4) Recharge and check cold air and pressures. 5) Workshop job - needs recovery equipment.",
           "estimatedCostEur": 550
         },
         {
           "summary": "Clean or replace a blocked condenser",
-          "steps": "1) Confirm diagnosis: reduced cooling with high head pressure and visible debris or bent fins on the condenser (in front of the radiator). 2) Tools/parts: soft brush or low-pressure air/water, fin comb, replacement condenser and O-rings if damaged. 3) Remove the front bumper cover for access, clean the condenser fins or replace the unit if leaking or badly damaged, then reconnect and evacuate/recharge the circuit. 4) Verify by checking head pressure returns to normal range and airflow through the fins is unobstructed. 5) Escalate to a workshop if replacement requires refrigerant recovery equipment you do not have."
+          "steps": "1) Confirm high head pressure and debris/bent fins. 2) Tools: soft brush or air, fin comb, condenser if needed. 3) Access condenser, clean or replace, evacuate/recharge. 4) Check head pressure and airflow. 5) Escalate if replacement needs recovery gear."
         }
       ]
     },
     {
       "title": "Ignition coil pack failure causing misfires",
-      "description": "Ignition coils on this 1.2 TSI engine family can fail intermittently, producing a rough idle, hesitation under load and an illuminated engine warning light due to misfires. It is more common in damp or cold weather and typically appears from around 100,000 km, and while not a safety issue, prolonged driving with a misfire can damage the catalytic converter.",
+      "description": "Intermittent coil failure causes rough idle, hesitation and misfire codes, often from ~100,000 km; prolonged misfire can damage the catalytic converter.",
       "severity": "medium",
       "typicalKm": 100000,
       "fixes": [
         {
           "summary": "Replace faulty ignition coil(s)",
-          "steps": "1) Confirm diagnosis by reading OBD-II fault codes to identify the misfiring cylinder(s), and check for a rough idle or hesitation matching that cylinder. 2) Tools/parts: OBD-II scanner, replacement ignition coil(s) matched to the affected cylinder(s), spark plug socket if plugs are inspected at the same time. 3) Disconnect the battery, remove the engine cover, unplug and unbolt the faulty coil(s), fit the new coil(s) and reconnect. 4) Clear the fault codes and verify with a test drive and a follow-up OBD-II scan that no new misfire codes appear. 5) This is a straightforward DIY job with basic tools; escalate to a workshop only if misfires persist after coil replacement, which points to a spark plug or wiring harness fault instead.",
+          "steps": "1) Confirm misfire cylinder via OBD-II codes. 2) Tools: scanner, matching coil(s), plug socket if needed. 3) Disconnect battery, swap faulty coil(s). 4) Clear codes and recheck after a short drive. 5) DIY with basic tools; escalate if misfires persist.",
           "estimatedCostEur": 120
         }
       ]

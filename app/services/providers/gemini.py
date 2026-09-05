@@ -10,10 +10,6 @@ from app.prompts.loader import (
     load_system_prompt,
     load_translate_system_prompt,
 )
-from app.schemas.json_schemas import (
-    lookup_response_json_schema,
-    translate_response_json_schema,
-)
 from app.schemas.lookup import LookupRequest, LookupResponse
 from app.schemas.translate import TranslateRequest, TranslateResponse
 from app.services.ai_metrics import AiCallMetrics
@@ -47,9 +43,7 @@ class GeminiProvider:
             raise ProviderError("GEMINI_API_KEY is not configured")
 
         user_prompt = build_user_prompt(request, retrieved_chunks=retrieved_chunks)
-        text = await self._generate_content(
-            load_system_prompt(), user_prompt, lookup_response_json_schema()
-        )
+        text = await self._generate_content(load_system_prompt(), user_prompt)
 
         try:
             payload = extract_json_object(text)
@@ -62,11 +56,7 @@ class GeminiProvider:
             raise ProviderError("GEMINI_API_KEY is not configured")
 
         user_prompt = build_translate_user_prompt(request)
-        text = await self._generate_content(
-            load_translate_system_prompt(),
-            user_prompt,
-            translate_response_json_schema(),
-        )
+        text = await self._generate_content(load_translate_system_prompt(), user_prompt)
 
         try:
             payload = extract_json_object(text)
@@ -78,7 +68,6 @@ class GeminiProvider:
         self,
         system_prompt: str,
         user_prompt: str,
-        response_schema: dict[str, object],
     ) -> str:
         started = time.perf_counter()
         try:
@@ -93,7 +82,6 @@ class GeminiProvider:
                         "generationConfig": {
                             "temperature": 0.2,
                             "responseMimeType": "application/json",
-                            "responseSchema": response_schema,
                         },
                     },
                 )
@@ -101,7 +89,9 @@ class GeminiProvider:
             raise ProviderError(f"Gemini request failed: {exc}") from exc
 
         if response.status_code != 200:
-            raise ProviderError(f"Gemini responded with status {response.status_code}")
+            raise ProviderError(
+                f"Gemini responded with status {response.status_code}: {response.text}"
+            )
 
         try:
             data = response.json()

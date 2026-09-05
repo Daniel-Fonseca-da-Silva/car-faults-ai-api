@@ -227,7 +227,7 @@ def build_user_prompt(
         f"{_DATA_END}\n\n"
         f"{retrieved_context}"
         "Below are two examples for different vehicle types; copy their "
-        "shape and detail level only, never their content:\n"
+        "shape and brevity only, never their content:\n"
         f"{examples_json}"
     )
 

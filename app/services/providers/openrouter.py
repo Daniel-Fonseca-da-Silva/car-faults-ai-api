@@ -13,4 +13,5 @@ class OpenRouterProvider(OpenAICompatibleProvider):
             model=settings.OPENROUTER_MODEL,
             timeout=settings.AI_TIMEOUT_SECONDS,
             missing_key_env="OPENROUTER_API_KEY",
+            use_json_response_format=settings.OPENROUTER_JSON_OBJECT,
         )

@@ -30,6 +30,7 @@ class OpenAICompatibleProvider:
         model: str,
         timeout: float,
         missing_key_env: str,
+        use_json_response_format: bool = True,
     ) -> None:
         self.name = name
         self._url = url
@@ -37,6 +38,7 @@ class OpenAICompatibleProvider:
         self._model = model
         self._timeout = timeout
         self._missing_key_env = missing_key_env
+        self._use_json_response_format = use_json_response_format
         self._last_metrics: AiCallMetrics | None = None
 
     @property
@@ -82,28 +84,33 @@ class OpenAICompatibleProvider:
 
     async def _complete(self, system_prompt: str, user_prompt: str) -> str:
         started = time.perf_counter()
+        payload: dict[str, object] = {
+            "model": self._model,
+            "messages": [
+                {"role": "system", "content": system_prompt},
+                {"role": "user", "content": user_prompt},
+            ],
+            "temperature": 0.2,
+        }
+        if self._use_json_response_format:
+            payload["response_format"] = {"type": "json_object"}
+
         try:
             async with httpx.AsyncClient(timeout=self._timeout) as client:
                 response = await post_with_retry(
                     client,
                     self._url,
                     headers={"Authorization": f"Bearer {self._api_key}"},
-                    json={
-                        "model": self._model,
-                        "messages": [
-                            {"role": "system", "content": system_prompt},
-                            {"role": "user", "content": user_prompt},
-                        ],
-                        "temperature": 0.2,
-                        "response_format": {"type": "json_object"},
-                    },
+                    json=payload,
                 )
         except httpx.HTTPError as exc:
             raise ProviderError(f"{self.name} request failed: {exc}") from exc
 
         if response.status_code != 200:
+            body = response.text.strip()
+            detail = f": {body}" if body else ""
             raise ProviderError(
-                f"{self.name} responded with status {response.status_code}"
+                f"{self.name} responded with status {response.status_code}{detail}"
             )
 
         try:

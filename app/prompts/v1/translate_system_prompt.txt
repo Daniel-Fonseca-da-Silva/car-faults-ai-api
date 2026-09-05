@@ -34,7 +34,7 @@ Rules:
    are prose (e.g. "VW owner forums"), but leave real URLs untouched.
    "steps" often follows a fixed procedure order (diagnosis, tools/parts,
    procedure, verification, when to escalate) - preserve that order and its
-   technical detail exactly, translating the wording only.
+   meaning exactly, translating the wording only.
 4. Never change "severity", "typicalKm" or "estimatedCostEur" - copy them
    through exactly as given.
 5. Return the SAME NUMBER of known issues, in the SAME ORDER, each with the

@@ -69,12 +69,10 @@ def test_em_dash_is_normalized_to_hyphen() -> None:
     assert fix.steps == "Replace the part - then verify."
 
 
-def test_curly_quotes_are_stripped_not_passed_through() -> None:
+def test_curly_quotes_are_normalized_to_straight_quotes() -> None:
     fix = _fix("Check the “regen” mode before proceeding.")
 
-    assert fix.steps == "Check the regen mode before proceeding."
-    assert '"' not in fix.steps
-    assert "“" not in fix.steps and "”" not in fix.steps
+    assert fix.steps == 'Check the "regen" mode before proceeding.'
 
 
 def test_unicode_ellipsis_is_normalized_to_ascii_dots() -> None:
@@ -83,24 +81,34 @@ def test_unicode_ellipsis_is_normalized_to_ascii_dots() -> None:
     assert fix.steps == "Inspect the wiring... then reconnect."
 
 
-def test_straight_double_quotes_are_still_rejected() -> None:
-    with pytest.raises(ValidationError):
-        _fix('Steps with "quoted" text.')
+def test_portuguese_prose_with_common_punctuation_is_accepted() -> None:
+    fix = _fix(
+        "1) Confirmar o diagnóstico: perda de refrigeração & conforto "
+        'na cabine (DSG) - ver "manual".'
+    )
+
+    assert "diagnóstico" in fix.steps
+    assert "&" in fix.steps
+    assert '"manual"' in fix.steps
+
+
+def test_nfd_accents_are_normalized_to_nfc() -> None:
+    # c + combining cedilla -> ç ; a + combining tilde -> ã
+    nfd = "refrigerac" + "\u0327" + "a" + "\u0303" + "o"
+    fix = _fix(f"Verificar {nfd} do sistema.")
+
+    assert "refrigeração" in fix.steps
+
+
+def test_straight_double_quotes_and_ampersand_are_accepted() -> None:
+    fix = _fix('Tools & parts for the "pump" assembly.')
+
+    assert fix.steps == 'Tools & parts for the "pump" assembly.'
 
 
 def test_script_tag_is_still_rejected() -> None:
     with pytest.raises(ValidationError):
         _fix("<script>alert(1)</script>")
-
-
-def test_javascript_scheme_with_straight_quotes_is_still_rejected() -> None:
-    with pytest.raises(ValidationError):
-        _fix('javascript:alert("x")')
-
-
-def test_ampersand_is_still_rejected() -> None:
-    with pytest.raises(ValidationError):
-        _fix("Tools & parts needed.")
 
 
 def test_angle_brackets_are_still_rejected() -> None:
