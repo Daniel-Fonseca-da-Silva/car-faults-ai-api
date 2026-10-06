@@ -25,8 +25,7 @@
         },
         {
           "summary": "Replace a seized or noisy A/C compressor",
-          "steps": "1) Confirm noisy, seized or non-engaging clutch. 2) Tools: compressor, receiver-drier, refrigerant, vacuum pump. 3) Recover refrigerant, replace compressor and drier, evacuate. 4) Recharge and check cold air and pressures. 5) Workshop job - needs recovery equipment.",
-          "estimatedCostEur": 550
+          "steps": "1) Confirm noisy, seized or non-engaging clutch. 2) Tools: compressor, receiver-drier, refrigerant, vacuum pump. 3) Recover refrigerant, replace compressor and drier, evacuate. 4) Recharge and check cold air and pressures. 5) Workshop job - needs recovery equipment."
         },
         {
           "summary": "Clean or replace a blocked condenser",
@@ -42,8 +41,7 @@
       "fixes": [
         {
           "summary": "Replace faulty ignition coil(s)",
-          "steps": "1) Confirm misfire cylinder via OBD-II codes. 2) Tools: scanner, matching coil(s), plug socket if needed. 3) Disconnect battery, swap faulty coil(s). 4) Clear codes and recheck after a short drive. 5) DIY with basic tools; escalate if misfires persist.",
-          "estimatedCostEur": 120
+          "steps": "1) Confirm misfire cylinder via OBD-II codes. 2) Tools: scanner, matching coil(s), plug socket if needed. 3) Disconnect battery, swap faulty coil(s). 4) Clear codes and recheck after a short drive. 5) DIY with basic tools; escalate if misfires persist."
         }
       ]
     }

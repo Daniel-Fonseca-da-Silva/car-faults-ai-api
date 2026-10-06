@@ -10,7 +10,7 @@ Structured AI answers for Nest: *for this model, what typically fails, how sever
 
 We return camelCase JSON that matches Nest’s
 [`AiLookupResult`](../car-faults-api/src/ai/ai-lookup.provider.ts)
-(`knownIssues`, `estimatedCostEur`, `techSpecs`, …). Providers run as a free-tier chain: **Gemini → Groq → OpenRouter `:free`**. Local/CI can use a deterministic **stub** with no network calls.
+(`knownIssues`, `techSpecs`, …). Providers run as a free-tier chain: **Gemini → Groq → OpenRouter `:free`**. Local/CI can use a deterministic **stub** with no network calls.
 
 ## What we are not
 

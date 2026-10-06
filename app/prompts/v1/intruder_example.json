@@ -19,13 +19,11 @@
       "fixes": [
         {
           "summary": "Resolder the cluster circuit board",
-          "steps": "1) Confirm stuck/erratic needle or dead warning lights. 2) Tools: soldering iron, fine solder, multimeter, small screwdrivers. 3) Remove cluster, resolder cracked PCB joints. 4) Refit and check speedo sweep and lights. 5) DIY if comfortable soldering; escalate if stepper motor failed.",
-          "estimatedCostEur": 60
+          "steps": "1) Confirm stuck/erratic needle or dead warning lights. 2) Tools: soldering iron, fine solder, multimeter, small screwdrivers. 3) Remove cluster, resolder cracked PCB joints. 4) Refit and check speedo sweep and lights. 5) DIY if comfortable soldering; escalate if stepper motor failed."
         },
         {
           "summary": "Replace with a compatible cluster from another year or model",
-          "steps": "1) Confirm resolder is impractical or fault keeps returning. 2) Tools: compatible used/aftermarket cluster, adapter if needed. 3) Swap cluster and reconnect loom. 4) Verify speedo, odometer and lights on a short ride. 5) Escalate only if wiring loom is damaged.",
-          "estimatedCostEur": 120
+          "steps": "1) Confirm resolder is impractical or fault keeps returning. 2) Tools: compatible used/aftermarket cluster, adapter if needed. 3) Swap cluster and reconnect loom. 4) Verify speedo, odometer and lights on a short ride. 5) Escalate only if wiring loom is damaged."
         }
       ]
     },
@@ -36,8 +34,7 @@
       "fixes": [
         {
           "summary": "Inspect and repair corroded or damaged wiring and connectors",
-          "steps": "1) Confirm faults that change when wiggling connectors. 2) Tools: multimeter, contact cleaner, dielectric grease, crimps. 3) Clean earths/connectors; repair damaged wiring. 4) Recheck continuity and symptom over several cycles. 5) DIY with basic tools; escalate for main-harness replacement.",
-          "estimatedCostEur": 50
+          "steps": "1) Confirm faults that change when wiggling connectors. 2) Tools: multimeter, contact cleaner, dielectric grease, crimps. 3) Clean earths/connectors; repair damaged wiring. 4) Recheck continuity and symptom over several cycles. 5) DIY with basic tools; escalate for main-harness replacement."
         }
       ]
     },
@@ -59,8 +56,7 @@
       "fixes": [
         {
           "summary": "Clean the carburettor and fuel system",
-          "steps": "1) Confirm rough idle/hesitation and residue in the float bowl. 2) Tools: carb cleaner, jet kit, bowl gasket, fresh fuel. 3) Clean jets/passages; flush tank and line. 4) Verify smooth idle and throttle response. 5) DIY for a single carb; escalate if mixture screws are damaged.",
-          "estimatedCostEur": 40
+          "steps": "1) Confirm rough idle/hesitation and residue in the float bowl. 2) Tools: carb cleaner, jet kit, bowl gasket, fresh fuel. 3) Clean jets/passages; flush tank and line. 4) Verify smooth idle and throttle response. 5) DIY for a single carb; escalate if mixture screws are damaged."
         },
         {
           "summary": "Use quality fuel and fit an inline fuel filter",

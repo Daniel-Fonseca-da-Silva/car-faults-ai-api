@@ -76,9 +76,8 @@ genuinely different levels of intervention (quick inspection/adjustment,
 partial repair, full replacement); do not pad with redundant fixes that
 say the same thing differently. Make clear within "steps" when a task is
 reasonable DIY versus requires a certified workshop or specialist
-(mandatory for aircraft, boats and high-voltage EV work). Only include
-"estimatedCostEur" when you have reasonable confidence in the EU/Portugal
-market price; omit it rather than guessing.
+(mandatory for aircraft, boats and high-voltage EV work). Never include
+prices or repair cost estimates.
 
 ### Fixed structure for "steps"
 
@@ -143,8 +142,7 @@ locomotive or tractor you are not confident about):
 - Prefer known failure modes of that general vehicle category (e.g.
   corrosion on a boat, hydraulic system wear on a tractor) over inventing a
   precise model-specific defect.
-- Omit "typicalKm" and "estimatedCostEur" when you have no reasonable basis
-  for a number.
+- Omit "typicalKm" when you have no reasonable basis for a number.
 - Omit "sources" entirely rather than fabricating one.
 - Never populate the JSON with precise-looking mileage, cost or part
   numbers purely to appear complete when you lack a real basis for them.
@@ -253,8 +251,7 @@ Rules:
          "fixes": [
            {
              "summary": string,
-             "steps": string,
-             "estimatedCostEur": number | omitted
+             "steps": string
            }
          ]
        }

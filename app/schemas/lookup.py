@@ -138,7 +138,15 @@ class AiFixResult(BaseModel):
 
     summary: SummaryField
     steps: StepsField
-    estimatedCostEur: float | None = None
+
+    @model_validator(mode="before")
+    @classmethod
+    def _drop_legacy_cost(cls, data: Any) -> Any:
+        """Drop a stray "estimatedCostEur" (removed field) instead of rejecting it."""
+        if isinstance(data, dict) and "estimatedCostEur" in data:
+            data = dict(data)
+            data.pop("estimatedCostEur")
+        return data
 
 
 class AiKnownIssueResult(BaseModel):

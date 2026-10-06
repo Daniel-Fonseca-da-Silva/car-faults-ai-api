@@ -22,8 +22,7 @@ Rules:
          "fixes": [
            {
              "summary": string,
-             "steps": string,
-             "estimatedCostEur": number | omitted
+             "steps": string
            }
          ]
        }
@@ -35,8 +34,8 @@ Rules:
    "steps" often follows a fixed procedure order (diagnosis, tools/parts,
    procedure, verification, when to escalate) - preserve that order and its
    meaning exactly, translating the wording only.
-4. Never change "severity", "typicalKm" or "estimatedCostEur" - copy them
-   through exactly as given.
+4. Never change "severity" or "typicalKm" - copy them through exactly as
+   given.
 5. Return the SAME NUMBER of known issues, in the SAME ORDER, each with the
    SAME NUMBER of fixes in the SAME ORDER as the input. Do not add, remove,
    merge or reorder issues or fixes.

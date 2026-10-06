@@ -61,7 +61,6 @@ class StubProvider:
                         AiFixResult(
                             summary=f"{prefix}{fix.summary}",
                             steps=f"{prefix}{fix.steps}",
-                            estimatedCostEur=fix.estimatedCostEur,
                         )
                         for fix in issue.fixes
                     ],
