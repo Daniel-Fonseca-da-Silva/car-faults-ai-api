@@ -29,8 +29,7 @@
         },
         {
           "summary": "Replace or recondition the traction battery pack",
-          "steps": "1) Confirm severe SOH/range loss before replacement. 2) Tools: HV pack, specialist tooling and PPE. 3) Certified EV tech removes, fits and re-commissions pack. 4) Verify SOH and a full charge/range test. 5) Always certified EV workshop - never DIY HV pack work.",
-          "estimatedCostEur": 6500
+          "steps": "1) Confirm severe SOH/range loss before replacement. 2) Tools: HV pack, specialist tooling and PPE. 3) Certified EV tech removes, fits and re-commissions pack. 4) Verify SOH and a full charge/range test. 5) Always certified EV workshop - never DIY HV pack work."
         }
       ]
     },
@@ -41,13 +40,11 @@
       "fixes": [
         {
           "summary": "Diagnose the onboard charger with a dealer scan tool",
-          "steps": "1) Confirm fault persists with another cable/wallbox. 2) Tools: dealer-level EV diagnostic scanner. 3) Tech reads HV codes to isolate OBC vs port/cable. 4) Clear codes and complete a full AC charge. 5) Workshop with EV tooling, not generic OBD-II.",
-          "estimatedCostEur": 90
+          "steps": "1) Confirm fault persists with another cable/wallbox. 2) Tools: dealer-level EV diagnostic scanner. 3) Tech reads HV codes to isolate OBC vs port/cable. 4) Clear codes and complete a full AC charge. 5) Workshop with EV tooling, not generic OBD-II."
         },
         {
           "summary": "Replace a faulty onboard charger unit",
-          "steps": "1) Confirm OBC is the fault, not cable/port. 2) Tools: replacement OBC, HV isolation equipment. 3) Certified EV tech isolates HV, replaces OBC, re-commissions. 4) Verify full AC charge at slow and higher rates. 5) Always certified EV workshop.",
-          "estimatedCostEur": 900
+          "steps": "1) Confirm OBC is the fault, not cable/port. 2) Tools: replacement OBC, HV isolation equipment. 3) Certified EV tech isolates HV, replaces OBC, re-commissions. 4) Verify full AC charge at slow and higher rates. 5) Always certified EV workshop."
         }
       ]
     },
@@ -58,8 +55,7 @@
       "fixes": [
         {
           "summary": "Test and replace the 12V auxiliary battery",
-          "steps": "1) Confirm no power-on/charge despite healthy HV pack; 12V tests low. 2) Tools: multimeter/tester, correct-spec 12V battery. 3) Test and replace if failed; check polarity and terminals. 4) Confirm vehicle powers on and charges. 5) DIY for basic 12V swap; escalate if DC-DC converter suspected.",
-          "estimatedCostEur": 100
+          "steps": "1) Confirm no power-on/charge despite healthy HV pack; 12V tests low. 2) Tools: multimeter/tester, correct-spec 12V battery. 3) Test and replace if failed; check polarity and terminals. 4) Confirm vehicle powers on and charges. 5) DIY for basic 12V swap; escalate if DC-DC converter suspected."
         }
       ]
     }

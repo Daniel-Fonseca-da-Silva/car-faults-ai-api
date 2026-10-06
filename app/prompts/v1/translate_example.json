@@ -13,8 +13,7 @@
         },
         {
           "summary": "Substituir um compressor de A/C gripado ou ruidoso",
-          "steps": "Remover a correia de acessórios, desligar as linhas de refrigerante, substituir o compressor e o filtro secador, depois evacuar e recarregar o sistema.",
-          "estimatedCostEur": 550
+          "steps": "Remover a correia de acessórios, desligar as linhas de refrigerante, substituir o compressor e o filtro secador, depois evacuar e recarregar o sistema."
         },
         {
           "summary": "Limpar ou substituir um condensador obstruído",
@@ -30,8 +29,7 @@
       "fixes": [
         {
           "summary": "Substituir a(s) bobina(s) de ignição avariada(s)",
-          "steps": "Identificar o cilindro com falha através dos códigos de erro OBD-II e substituir a(s) bobina(s) afetada(s).",
-          "estimatedCostEur": 120
+          "steps": "Identificar o cilindro com falha através dos códigos de erro OBD-II e substituir a(s) bobina(s) afetada(s)."
         }
       ]
     }

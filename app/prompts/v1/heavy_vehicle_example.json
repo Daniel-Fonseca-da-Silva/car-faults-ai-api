@@ -20,13 +20,11 @@
       "fixes": [
         {
           "summary": "Diagnose SCR fault codes with fleet diagnostic tool",
-          "steps": "1) Confirm SCR-related derate via fleet scanner and AdBlue/NOx data. 2) Tools: fleet diagnostic scanner, AdBlue quality tester. 3) Isolate dosing module vs NOx sensor vs bad AdBlue. 4) Clear codes and confirm derate does not return. 5) Commercial workshop with fleet-level tooling.",
-          "estimatedCostEur": 150
+          "steps": "1) Confirm SCR-related derate via fleet scanner and AdBlue/NOx data. 2) Tools: fleet diagnostic scanner, AdBlue quality tester. 3) Isolate dosing module vs NOx sensor vs bad AdBlue. 4) Clear codes and confirm derate does not return. 5) Commercial workshop with fleet-level tooling."
         },
         {
           "summary": "Replace a faulty NOx sensor or dosing module",
-          "steps": "1) Confirm which part failed before ordering. 2) Tools: replacement sensor or dosing module, removal tools. 3) Replace faulty part; torque and seat connectors. 4) Rescan and road-test for no derate. 5) Authorized commercial workshop - emissions calibration tools needed.",
-          "estimatedCostEur": 800
+          "steps": "1) Confirm which part failed before ordering. 2) Tools: replacement sensor or dosing module, removal tools. 3) Replace faulty part; torque and seat connectors. 4) Rescan and road-test for no derate. 5) Authorized commercial workshop - emissions calibration tools needed."
         }
       ]
     },
@@ -38,13 +36,11 @@
       "fixes": [
         {
           "summary": "Inspect turbo shaft play and oil supply",
-          "steps": "1) Confirm whine, oil in intake/exhaust or boost code; check shaft play. 2) Tools: boost gauge, borescope if available. 3) Check oil feed/return and shaft play. 4) Confirm boost to spec and no abnormal noise. 5) Escalate immediately if metal debris is in the oil.",
-          "estimatedCostEur": 250
+          "steps": "1) Confirm whine, oil in intake/exhaust or boost code; check shaft play. 2) Tools: boost gauge, borescope if available. 3) Check oil feed/return and shaft play. 4) Confirm boost to spec and no abnormal noise. 5) Escalate immediately if metal debris is in the oil."
         },
         {
           "summary": "Replace the turbocharger unit",
-          "steps": "1) Confirm failed turbo (play, seize or debris), not wastegate only. 2) Tools: turbo unit, gaskets, oil and filter. 3) Replace turbo, renew gaskets, pre-lube before first start. 4) Check oil pressure, load road test and boost. 5) Authorized commercial diesel workshop.",
-          "estimatedCostEur": 2200
+          "steps": "1) Confirm failed turbo (play, seize or debris), not wastegate only. 2) Tools: turbo unit, gaskets, oil and filter. 3) Replace turbo, renew gaskets, pre-lube before first start. 4) Check oil pressure, load road test and boost. 5) Authorized commercial diesel workshop."
         }
       ]
     },
@@ -59,8 +55,7 @@
         },
         {
           "summary": "Replace a worn air compressor",
-          "steps": "1) Confirm compressor wear (oil carryover or no cut-out pressure), not a leak. 2) Tools: compressor unit, gaskets, drive belt if needed. 3) Replace compressor; bleed/prime air system. 4) Verify build time and governor cut-in/out. 5) Certified heavy-vehicle workshop - braking safety.",
-          "estimatedCostEur": 900
+          "steps": "1) Confirm compressor wear (oil carryover or no cut-out pressure), not a leak. 2) Tools: compressor unit, gaskets, drive belt if needed. 3) Replace compressor; bleed/prime air system. 4) Verify build time and governor cut-in/out. 5) Certified heavy-vehicle workshop - braking safety."
         }
       ]
     }
