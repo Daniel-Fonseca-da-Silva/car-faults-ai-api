@@ -12,7 +12,6 @@ VALID_PAYLOAD = {
                 {
                     "summary": "Replace gearbox synchros",
                     "steps": "Remove gearbox, replace synchro rings, reassemble.",
-                    "estimatedCostEur": 450,
                 }
             ],
         }
@@ -88,7 +87,7 @@ async def test_translate_with_valid_request_returns_stub_result(
     fix = issue["fixes"][0]
     assert fix["summary"] == "[pt-PT] Replace gearbox synchros"
     assert fix["steps"] == "[pt-PT] Remove gearbox, replace synchro rings, reassemble."
-    assert fix["estimatedCostEur"] == 450
+    assert "estimatedCostEur" not in fix
 
 
 async def test_translate_preserves_known_issue_and_fix_count(
