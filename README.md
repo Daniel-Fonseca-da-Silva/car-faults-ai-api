@@ -2,7 +2,7 @@
 
 AI microservice for **Auto Crónica** - generates structured **chronic reliability** lookups by vehicle make / model / year / engine, and translates known-issue content between product locales.
 
-Consumed by [`car-faults-api`](../car-faults-api) (Nest backend) when Redis and Postgres miss. Product languages: `pt-PT`, `en-GB` and `es-ES`. Initial market: **Portugal**.
+Consumed by [`car-faults-api`](../car-faults-api) (Nest backend) when Redis and Postgres miss. Product languages: `pt-PT`, `pt-BR`, `en-GB`, `en-US`, `es-ES`, `es-MX`, `fr-FR`, `de-DE` and `it-IT`. Initial market: **Portugal**.
 
 ## What we are
 
@@ -45,7 +45,7 @@ Nest needs structured known-issue JSON without embedding provider SDKs, prompts,
    when-to-escalate format, and the model is instructed to stay cautious
    (fewer issues, no invented costs/mileage) for obscure or poorly
    documented vehicles.
-2. `POST /translate` - translate existing `knownIssues` between `pt-PT`, `en-GB` and `es-ES`
+2. `POST /translate` - translate existing `knownIssues` between `pt-PT`, `pt-BR`, `en-GB`, `en-US`, `es-ES`, `es-MX`, `fr-FR`, `de-DE` and `it-IT`
 3. `GET /health` - liveness only (no auth, no external calls)
 4. Provider chain with sequential failover; stub mode for local/CI
 5. Versioned prompts (bump folder to `v2` without changing provider code)
@@ -109,7 +109,7 @@ when `APP_ENV=production` (or `prod`).
 }
 ```
 
-`language` defaults to `en-GB` (`pt-PT` | `en-GB` | `es-ES`).
+`language` defaults to `en-GB` (`pt-PT` | `pt-BR` | `en-GB` | `en-US` | `es-ES` | `es-MX` | `fr-FR` | `de-DE` | `it-IT`).
 `fuelType`: `gasoline` | `diesel` | `electric` | `gpl` | `hybrid`. When
 `electric`, `engine` may be the sentinel `"electric"` instead of a real
 engine code.
