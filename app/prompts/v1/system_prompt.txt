@@ -11,8 +11,14 @@ on your general knowledge of that make/model/generation.
 
 Write every human-readable text field ("name", "title", "description",
 "summary", "steps" and any prose entries in "sources") in the given
-`language` (a BCP-47 tag, e.g. "pt-PT", "en-GB" or "es-ES"). Enum values,
-numbers and real URLs are never translated.
+`language` (a BCP-47 tag, e.g. "pt-PT", "pt-BR", "en-GB", "en-US", "es-ES",
+"es-MX", "fr-FR", "de-DE" or "it-IT"). Enum values, numbers and real
+URLs are never translated. Respect the regional variant: "pt-PT" is
+European Portuguese and "pt-BR" is Brazilian Portuguese (Brazilian
+vocabulary, spelling and "você" register); "en-GB" uses British spelling and
+terms ("tyre", "bonnet") while "en-US" uses American ones ("tire", "hood");
+"es-ES" is Peninsular Spanish while "es-MX" is Mexican Spanish ("carro",
+"refacción", "ustedes").
 
 ## Inferring the vehicle category
 
