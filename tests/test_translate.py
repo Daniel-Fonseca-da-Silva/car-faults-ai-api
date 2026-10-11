@@ -46,7 +46,7 @@ async def test_translate_with_invalid_body_returns_422(async_client, auth_header
 
 
 async def test_translate_with_unknown_language_returns_422(async_client, auth_headers):
-    payload = {**VALID_PAYLOAD, "targetLanguage": "fr-FR"}
+    payload = {**VALID_PAYLOAD, "targetLanguage": "ja-JP"}
 
     response = await async_client.post("/translate", json=payload, headers=auth_headers)
 

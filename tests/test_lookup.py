@@ -122,7 +122,7 @@ async def test_lookup_with_es_es_language_returns_200(async_client, auth_headers
 
 
 async def test_lookup_with_unknown_language_returns_422(async_client, auth_headers):
-    payload = {**VALID_PAYLOAD, "language": "fr-FR"}
+    payload = {**VALID_PAYLOAD, "language": "ja-JP"}
 
     response = await async_client.post("/lookup", json=payload, headers=auth_headers)
 
