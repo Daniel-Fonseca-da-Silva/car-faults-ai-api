@@ -95,6 +95,8 @@ class FuelType(str, Enum):
     ELECTRIC = "electric"
     GPL = "gpl"
     HYBRID = "hybrid"
+    ETHANOL = "ethanol"
+    FLEX = "flex"
 
 
 class Locale(str, Enum):
