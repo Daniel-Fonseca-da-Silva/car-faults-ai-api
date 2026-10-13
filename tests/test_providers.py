@@ -15,6 +15,7 @@ from app.schemas.translate import TranslateRequest
 from app.services.providers.base import ProviderError
 from app.services.providers.gemini import GeminiProvider
 from app.services.providers.groq import GroqProvider
+from app.services.providers.mistral import MistralProvider
 from app.services.providers.openai_compatible import OpenAICompatibleProvider
 from app.services.providers.openrouter import OpenRouterProvider
 
@@ -139,6 +140,48 @@ async def test_gemini_sends_api_key_as_header_not_query_param():
     _, kwargs = mock_post.call_args
     assert kwargs.get("headers", {}).get("x-goog-api-key") == "key"
     assert "params" not in kwargs
+
+
+async def test_gemini_backup_uses_backup_key_and_name():
+    provider = GeminiProvider(
+        _settings(GEMINI_API_KEY="primary"),
+        api_key="backup",
+        name="gemini_backup",
+        api_key_env="GEMINI_API_KEY_BACKUP",
+    )
+    fake = FakeResponse(
+        200,
+        {
+            "candidates": [
+                {
+                    "content": {
+                        "parts": [{"text": __import__("json").dumps(VALID_RESULT)}]
+                    }
+                }
+            ]
+        },
+    )
+    mock_post = AsyncMock(return_value=fake)
+
+    with patch("httpx.AsyncClient.post", new=mock_post):
+        await provider.generate(REQUEST)
+
+    _, kwargs = mock_post.call_args
+    assert kwargs["headers"]["x-goog-api-key"] == "backup"
+    assert provider.name == "gemini_backup"
+    assert provider.last_metrics.provider == "gemini_backup"
+
+
+async def test_gemini_backup_missing_key_names_backup_env_var():
+    provider = GeminiProvider(
+        _settings(GEMINI_API_KEY="primary"),
+        api_key="",
+        name="gemini_backup",
+        api_key_env="GEMINI_API_KEY_BACKUP",
+    )
+
+    with pytest.raises(ProviderError, match="GEMINI_API_KEY_BACKUP"):
+        await provider.generate(REQUEST)
 
 
 async def test_gemini_non_200_raises():
@@ -365,6 +408,7 @@ def _openai_compatible_provider(
         model="model-x",
         timeout=5.0,
         missing_key_env="CUSTOM_API_KEY",
+        missing_model_env="CUSTOM_MODEL",
     )
 
 
@@ -530,3 +574,87 @@ async def test_openai_compatible_gives_up_after_max_retries():
             await provider.generate(REQUEST)
 
     assert mock_post.call_count == 3
+
+
+async def test_gemini_quota_exhausted_429_fails_over_without_retry():
+    provider = GeminiProvider(_settings(GEMINI_API_KEY="key"))
+    quota_exhausted = FakeResponse(
+        429,
+        {},
+        text='{"error": {"code": 429, "message": "You exceeded your current '
+        'quota", "status": "RESOURCE_EXHAUSTED"}}',
+    )
+    mock_post = AsyncMock(return_value=quota_exhausted)
+    mock_sleep = AsyncMock()
+
+    with (
+        patch("httpx.AsyncClient.post", new=mock_post),
+        patch("app.services.providers.retry.asyncio.sleep", new=mock_sleep),
+    ):
+        with pytest.raises(ProviderError):
+            await provider.generate(REQUEST)
+
+    assert mock_post.call_count == 1
+    mock_sleep.assert_not_called()
+
+
+async def test_openrouter_daily_limit_429_fails_over_without_retry():
+    provider = _openai_compatible_provider()
+    daily_limit = FakeResponse(429, {}, text="Rate limit exceeded: free-models-per-day")
+    mock_post = AsyncMock(return_value=daily_limit)
+
+    with (
+        patch("httpx.AsyncClient.post", new=mock_post),
+        patch("app.services.providers.retry.asyncio.sleep", new=AsyncMock()),
+    ):
+        with pytest.raises(ProviderError):
+            await provider.generate(REQUEST)
+
+    assert mock_post.call_count == 1
+
+
+# --- Mistral -----------------------------------------------------------------
+
+
+async def test_mistral_calls_mistral_endpoint_with_bearer_key_and_json_mode():
+    provider = MistralProvider(
+        _settings(MISTRAL_API_KEY="mistral-key", AI_RESPONSE_FORMAT_JSON=True)
+    )
+    success = FakeResponse(
+        200,
+        {"choices": [{"message": {"content": __import__("json").dumps(VALID_RESULT)}}]},
+    )
+    mock_post = AsyncMock(return_value=success)
+
+    with patch("httpx.AsyncClient.post", new=mock_post):
+        result = await provider.generate(REQUEST)
+
+    args, kwargs = mock_post.call_args
+    assert args[0] == "https://api.mistral.ai/v1/chat/completions"
+    assert kwargs["headers"]["Authorization"] == "Bearer mistral-key"
+    assert kwargs["json"]["response_format"] == {"type": "json_object"}
+    assert result.vehicle.brand == "Volkswagen"
+    assert provider.last_metrics.provider == "mistral"
+
+
+async def test_mistral_missing_api_key_raises():
+    provider = MistralProvider(_settings(MISTRAL_API_KEY=None))
+
+    with pytest.raises(ProviderError, match="MISTRAL_API_KEY"):
+        await provider.generate(REQUEST)
+
+
+async def test_openai_compatible_missing_model_raises():
+    provider = MistralProvider(
+        _settings(MISTRAL_API_KEY="mistral-key", MISTRAL_MODEL=None)
+    )
+
+    with pytest.raises(ProviderError, match="MISTRAL_MODEL"):
+        await provider.generate(REQUEST)
+
+
+async def test_gemini_missing_model_raises():
+    provider = GeminiProvider(_settings(GEMINI_API_KEY="key", GEMINI_MODEL=None))
+
+    with pytest.raises(ProviderError, match="GEMINI_MODEL"):
+        await provider.generate(REQUEST)

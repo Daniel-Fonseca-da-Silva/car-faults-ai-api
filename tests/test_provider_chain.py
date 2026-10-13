@@ -66,6 +66,20 @@ async def test_chain_fails_over_to_next_provider():
     assert result.vehicle.brand == "Renault"
 
 
+async def test_chain_falls_through_both_geminis_to_groq():
+    chain = ProviderChain(
+        [
+            FailingProvider("gemini"),
+            FailingProvider("gemini_backup"),
+            WorkingProvider(),
+        ]
+    )
+
+    result = await chain.generate(REQUEST)
+
+    assert result.vehicle.brand == "Renault"
+
+
 async def test_chain_raises_when_all_providers_fail():
     chain = ProviderChain([FailingProvider("gemini"), FailingProvider("groq")])
 
