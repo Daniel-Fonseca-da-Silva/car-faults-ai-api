@@ -2,6 +2,7 @@ from functools import lru_cache
 from pathlib import Path
 from typing import Literal
 
+from pydantic import model_validator
 from pydantic_settings import BaseSettings, SettingsConfigDict
 
 
@@ -12,12 +13,19 @@ class Settings(BaseSettings):
     CORS_ALLOWED_ORIGINS: list[str] = []
 
     GEMINI_API_KEY: str | None = None
+    # Second Gemini key (separate project/quota) tried right after the
+    # primary one - same GEMINI_MODEL.
+    GEMINI_API_KEY_BACKUP: str | None = None
     GROQ_API_KEY: str | None = None
     OPENROUTER_API_KEY: str | None = None
+    MISTRAL_API_KEY: str | None = None
 
-    GEMINI_MODEL: str = "gemini-3.6-flash"
-    GROQ_MODEL: str = "openai/gpt-oss-120b"
-    OPENROUTER_MODEL: str = "meta-llama/llama-3.3-70b-instruct:free"
+    # Model ids come only from the environment - no hardcoded defaults.
+    # Each one is required as soon as its provider's API key is set.
+    GEMINI_MODEL: str | None = None
+    GROQ_MODEL: str | None = None
+    OPENROUTER_MODEL: str | None = None
+    MISTRAL_MODEL: str | None = None
 
     # OpenAI-compatible JSON mode (`response_format: json_object`).
     # Some free OpenRouter models reject this and return HTTP 400 - set the
@@ -43,6 +51,29 @@ class Settings(BaseSettings):
     RAG_ENABLED: bool = True
     RAG_MAX_CHUNKS: int = 5
     KNOWLEDGE_DIR: Path = Path("app/knowledge")
+
+    @model_validator(mode="after")
+    def _require_model_for_each_configured_key(self) -> "Settings":
+        key_to_model = {
+            "GEMINI_API_KEY": "GEMINI_MODEL",
+            "GEMINI_API_KEY_BACKUP": "GEMINI_MODEL",
+            "GROQ_API_KEY": "GROQ_MODEL",
+            "MISTRAL_API_KEY": "MISTRAL_MODEL",
+            "OPENROUTER_API_KEY": "OPENROUTER_MODEL",
+        }
+        missing = sorted(
+            {
+                model
+                for key, model in key_to_model.items()
+                if getattr(self, key) and not getattr(self, model)
+            }
+        )
+        if missing:
+            raise ValueError(
+                f"{', '.join(missing)} must be set when the matching API key is "
+                "configured"
+            )
+        return self
 
     model_config = SettingsConfigDict(
         env_file=".env",

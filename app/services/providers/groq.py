@@ -13,5 +13,6 @@ class GroqProvider(OpenAICompatibleProvider):
             model=settings.GROQ_MODEL,
             timeout=settings.AI_TIMEOUT_SECONDS,
             missing_key_env="GROQ_API_KEY",
+            missing_model_env="GROQ_MODEL",
             use_json_response_format=settings.AI_RESPONSE_FORMAT_JSON,
         )

@@ -22,10 +22,17 @@ _URL = "https://generativelanguage.googleapis.com/v1beta/models/{model}:generate
 
 
 class GeminiProvider:
-    name = "gemini"
-
-    def __init__(self, settings: Settings) -> None:
-        self._api_key = settings.GEMINI_API_KEY
+    def __init__(
+        self,
+        settings: Settings,
+        *,
+        api_key: str | None = None,
+        name: str = "gemini",
+        api_key_env: str = "GEMINI_API_KEY",
+    ) -> None:
+        self.name = name
+        self._api_key = api_key if api_key is not None else settings.GEMINI_API_KEY
+        self._api_key_env = api_key_env
         self._model = settings.GEMINI_MODEL
         self._timeout = settings.AI_TIMEOUT_SECONDS
         self._last_metrics: AiCallMetrics | None = None
@@ -40,7 +47,9 @@ class GeminiProvider:
         retrieved_chunks: list[KnowledgeChunk] | None = None,
     ) -> LookupResponse:
         if not self._api_key:
-            raise ProviderError("GEMINI_API_KEY is not configured")
+            raise ProviderError(f"{self._api_key_env} is not configured")
+        if not self._model:
+            raise ProviderError("GEMINI_MODEL is not configured")
 
         user_prompt = build_user_prompt(request, retrieved_chunks=retrieved_chunks)
         text = await self._generate_content(load_system_prompt(), user_prompt)
@@ -53,7 +62,9 @@ class GeminiProvider:
 
     async def translate(self, request: TranslateRequest) -> TranslateResponse:
         if not self._api_key:
-            raise ProviderError("GEMINI_API_KEY is not configured")
+            raise ProviderError(f"{self._api_key_env} is not configured")
+        if not self._model:
+            raise ProviderError("GEMINI_MODEL is not configured")
 
         user_prompt = build_translate_user_prompt(request)
         text = await self._generate_content(load_translate_system_prompt(), user_prompt)
@@ -74,7 +85,7 @@ class GeminiProvider:
             async with httpx.AsyncClient(timeout=self._timeout) as client:
                 response = await post_with_retry(
                     client,
-                    _URL.format(model=self._model),
+                    _URL.format(model=cast(str, self._model)),
                     headers={"x-goog-api-key": cast(str, self._api_key)},
                     json={
                         "systemInstruction": {"parts": [{"text": system_prompt}]},

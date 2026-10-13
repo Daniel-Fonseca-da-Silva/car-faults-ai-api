@@ -27,9 +27,10 @@ class OpenAICompatibleProvider:
         name: str,
         url: str,
         api_key: str | None,
-        model: str,
+        model: str | None,
         timeout: float,
         missing_key_env: str,
+        missing_model_env: str,
         use_json_response_format: bool = True,
     ) -> None:
         self.name = name
@@ -38,6 +39,7 @@ class OpenAICompatibleProvider:
         self._model = model
         self._timeout = timeout
         self._missing_key_env = missing_key_env
+        self._missing_model_env = missing_model_env
         self._use_json_response_format = use_json_response_format
         self._last_metrics: AiCallMetrics | None = None
 
@@ -81,6 +83,8 @@ class OpenAICompatibleProvider:
     def _require_api_key(self) -> None:
         if not self._api_key:
             raise ProviderError(f"{self._missing_key_env} is not configured")
+        if not self._model:
+            raise ProviderError(f"{self._missing_model_env} is not configured")
 
     async def _complete(self, system_prompt: str, user_prompt: str) -> str:
         started = time.perf_counter()
