@@ -6,6 +6,7 @@ from app.services.providers.base import AiLookupProvider
 from app.services.providers.chain import ProviderChain
 from app.services.providers.gemini import GeminiProvider
 from app.services.providers.groq import GroqProvider
+from app.services.providers.mistral import MistralProvider
 from app.services.providers.openrouter import OpenRouterProvider
 from app.services.providers.stub import StubProvider
 from app.services.retrieval.keyword_retriever import KeywordRetriever
@@ -28,8 +29,19 @@ def build_provider_chain(settings: Settings) -> ProviderChain:
     providers: list[AiLookupProvider] = []
     if settings.GEMINI_API_KEY:
         providers.append(GeminiProvider(settings))
+    if settings.GEMINI_API_KEY_BACKUP:
+        providers.append(
+            GeminiProvider(
+                settings,
+                api_key=settings.GEMINI_API_KEY_BACKUP,
+                name="gemini_backup",
+                api_key_env="GEMINI_API_KEY_BACKUP",
+            )
+        )
     if settings.GROQ_API_KEY:
         providers.append(GroqProvider(settings))
+    if settings.MISTRAL_API_KEY:
+        providers.append(MistralProvider(settings))
     if settings.OPENROUTER_API_KEY:
         providers.append(OpenRouterProvider(settings))
 
