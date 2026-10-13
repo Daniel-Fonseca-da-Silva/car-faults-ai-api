@@ -47,9 +47,11 @@ app = FastAPI(
     description=(
         "Lean FastAPI microservice that generates structured known-issue "
         "lookups for a vehicle (brand/model/year/engine) and translates "
-        "existing known issues into another locale, via a Gemini -> Groq -> "
-        "OpenRouter free-tier provider chain. Consumed by the car-faults-api "
-        "Nest service over POST /lookup and POST /translate with a shared "
+        "existing known issues into another locale, via a Gemini -> Gemini "
+        "backup -> Groq -> Mistral -> OpenRouter free-tier "
+        "provider chain. Consumed by the "
+        "car-faults-api Nest service over POST /lookup and POST /translate with "
+        "a shared "
         "Bearer API key."
     ),
     docs_url=None if is_production else "/docs",

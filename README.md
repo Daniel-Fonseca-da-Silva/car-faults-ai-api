@@ -10,7 +10,7 @@ Structured AI answers for Nest: *for this model, what typically fails, how sever
 
 We return camelCase JSON that matches Nest’s
 [`AiLookupResult`](../car-faults-api/src/ai/ai-lookup.provider.ts)
-(`knownIssues`, `techSpecs`, …). Providers run as a free-tier chain: **Gemini → Groq → OpenRouter `:free`**. Local/CI can use a deterministic **stub** with no network calls.
+(`knownIssues`, `techSpecs`, …). Providers run as a free-tier chain: **Gemini → Gemini backup → Groq → Mistral → OpenRouter `:free`**. Local/CI can use a deterministic **stub** with no network calls.
 
 ## What we are not
 
@@ -29,7 +29,7 @@ Nest needs structured known-issue JSON without embedding provider SDKs, prompts,
 |-------|------------|
 | API | FastAPI + Pydantic |
 | HTTP client | httpx (provider calls) |
-| AI | Gemini → Groq → OpenRouter `:free` (or stub) |
+| AI | Gemini → Gemini backup → Groq → Mistral → OpenRouter `:free` (or stub) |
 | Prompts | Versioned text files under `app/prompts/v1/` |
 | Auth | Shared `API_KEY` as `Authorization: Bearer …` |
 | Runtime | Distroless Docker image (optional) |
@@ -61,8 +61,10 @@ Nest lookup path: Redis → Postgres → **this service** on miss. Then Nest per
 flowchart LR
   Nest[car-faults-api] -->|"POST /lookup Bearer"| Py[car-faults-ai-api]
   Py --> Gemini
-  Gemini -->|fail| Groq
-  Groq -->|fail| OpenRouter
+  Gemini -->|fail| GeminiBackup[Gemini backup]
+  GeminiBackup -->|fail| Groq
+  Groq -->|fail| Mistral
+  Mistral -->|fail| OpenRouter
   Py -->|"AiLookupResult JSON"| Nest
 ```
 
@@ -260,8 +262,9 @@ Copy [`.env.example`](.env.example) to `.env`:
 | `CORS_ALLOWED_ORIGINS` | JSON array of explicit allowed origins. Empty/omitted → no CORS middleware is registered at all (never falls back to `*`) |
 | `RATE_LIMIT` | Limit applied to `POST /lookup` and `POST /translate`, e.g. `60/minute` (default) |
 | `AI_PROVIDER_MODE` | `stub` (no network) or `chain` (real providers) |
-| `GEMINI_API_KEY` / `GROQ_API_KEY` / `OPENROUTER_API_KEY` | Omit a key to skip that provider |
-| `GEMINI_MODEL` / `GROQ_MODEL` / `OPENROUTER_MODEL` | Model ids per provider |
+| `GEMINI_API_KEY` / `GROQ_API_KEY` / `MISTRAL_API_KEY` / `OPENROUTER_API_KEY` | Omit a key to skip that provider |
+| `GEMINI_API_KEY_BACKUP` | Optional second Gemini key (separate quota), tried right after `GEMINI_API_KEY` with the same `GEMINI_MODEL` |
+| `GEMINI_MODEL` / `GROQ_MODEL` / `MISTRAL_MODEL` / `OPENROUTER_MODEL` | Model ids per provider - **required** for each provider whose key is set (no defaults in code; startup fails otherwise) |
 | `AI_TIMEOUT_SECONDS` | Per-provider request timeout |
 | `LOG_LEVEL` | Python logging level |
 | `RAG_ENABLED` | Enable keyword-search grounding on `/lookup` (default `true`; forced `false` in `.env.test`) |
